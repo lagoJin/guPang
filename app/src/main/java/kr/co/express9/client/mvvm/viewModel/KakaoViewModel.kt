@@ -1,9 +1,7 @@
 package kr.co.express9.client.mvvm.viewModel
 
-import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.kakao.auth.AuthType
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.network.ErrorResult
@@ -12,10 +10,9 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.mvvm.view.LoginActivity
 import kr.co.express9.client.util.Logger
 
-class LoginViewModel : BaseViewModel() {
+class KakaoViewModel : BaseViewModel() {
 
     val me: LiveData<MeV2Response> get() = _me
     val event: LiveData<Event> get() = _event
@@ -43,11 +40,7 @@ class LoginViewModel : BaseViewModel() {
             override fun onSuccess(result: MeV2Response?) {
                 result?.let {
                     _me.value = result
-                    Logger.d("user id : " + result.id)
-                    Logger.d("email: " + result.kakaoAccount.email)
-                    Logger.d("profile image: " + result.profileImagePath)
-                    Logger.d("profile image: " + result.thumbnailImagePath)
-                    Logger.d("profile image: " + result.forPartners())
+                    Logger.d("user id : $result")
                     _event.value = Event.KAKAO_LOGIN_SUCCESS
                 }
             }

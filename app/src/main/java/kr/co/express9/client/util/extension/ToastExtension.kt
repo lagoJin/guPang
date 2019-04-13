@@ -10,3 +10,7 @@ fun toast(ctxt: Context, msg: String) {
 fun toast(ctxt: Context, msg: Int) {
     Toast.makeText(ctxt, ctxt.getString(msg), Toast.LENGTH_SHORT).show()
 }
+
+fun toast(ctxt: Context, msg: Int, arg: String) {
+    Toast.makeText(ctxt, String.format(ctxt.getString(msg), arg), Toast.LENGTH_SHORT).show()
+}

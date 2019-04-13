@@ -1,23 +1,37 @@
 package kr.co.express9.client.base
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
+import kr.co.express9.client.util.Logger
 
-abstract class BaseActivity<T: ViewDataBinding, U: ViewModel>(private val layoutId: Int): AppCompatActivity() {
+abstract class BaseActivity<T: ViewDataBinding>(private val layoutId: Int): AppCompatActivity() {
 
-    protected lateinit var viewDataBinding: T
+    companion object {
+        private val arrayList = ArrayList<Activity>()
+    }
 
-    abstract val viewModel: U
+    protected lateinit var dataBinding: T
 
     abstract fun initStartView()
 
+    internal fun clearActivity() {
+        arrayList.clear()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewDataBinding = DataBindingUtil.setContentView(this, layoutId)
+        dataBinding = DataBindingUtil.setContentView(this, layoutId)
+        Logger.d("onCreate ${this.javaClass.simpleName}")
+        arrayList.add(this)
         initStartView()
+    }
+
+    override fun onDestroy() {
+        arrayList.remove(this)
+        Logger.d("onDestroy ${this.javaClass.simpleName}")
+        super.onDestroy()
     }
 }

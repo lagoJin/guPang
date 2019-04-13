@@ -2,7 +2,7 @@ package kr.co.express9.client.util
 
 import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
-import kr.co.express9.client.mvvm.viewModel.LoginViewModel
+import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,7 +42,7 @@ val apiModule = module {
 
 var viewModelModule = module {
     viewModel { MainViewModel(get()) }
-    viewModel { LoginViewModel() }
+    viewModel { KakaoViewModel() }
 }
 
 var diModule = listOf(apiModule, viewModelModule)
