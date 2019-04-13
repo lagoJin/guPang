@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                     launchActivity<MainActivity>()
                 }
 
-                KakaoViewModel.Event.LOGIN_FAILURE -> {
+                KakaoViewModel.Event.SESSION_CLOSED -> {
                     launchActivity<LoginActivity>()
                 }
             }

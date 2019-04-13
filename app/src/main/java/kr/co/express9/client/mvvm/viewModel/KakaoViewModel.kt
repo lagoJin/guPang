@@ -28,14 +28,12 @@ class KakaoViewModel : BaseViewModel() {
         }
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
-            logout()
             Logger.e("kakao onSessionOpenFailed : $exception")
         }
     }
 
     enum class Event {
         LOGIN_SUCCESS,
-        LOGIN_FAILURE,
         LOGOUT,
         SESSION_CLOSED,
         NOT_SIGNED
@@ -60,7 +58,10 @@ class KakaoViewModel : BaseViewModel() {
 
     fun setSessionCallback() {
         Session.getCurrentSession().addCallback(sessionCallback)
-        Session.getCurrentSession().checkAndImplicitOpen()
+        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+            _event.value = Event.SESSION_CLOSED
+            Logger.d("session closed")
+        }
     }
 
     fun removeSessionCallback() {
