@@ -69,6 +69,9 @@ dependencies {
     // preference
     implementation "com.orhanobut:hawk:$hawkVersion"
 
+    //permission
+    implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
+
     // test
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

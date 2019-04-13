@@ -14,3 +14,7 @@ fun toast(ctxt: Context, msg: Int) {
 fun toast(ctxt: Context, msg: Int, arg: String) {
     Toast.makeText(ctxt, String.format(ctxt.getString(msg), arg), Toast.LENGTH_SHORT).show()
 }
+
+fun Context.toast(msg:String, time :Int = Toast.LENGTH_SHORT){
+    Toast.makeText(this, msg, time).show()
+}
