@@ -15,10 +15,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private val kakaoViewModel: KakaoViewModel by inject()
 
     override fun initStartView() {
-        dataBinding.btnMain.setOnClickListener {
-            launchActivity<MainActivity>()
-        }
-
         // kakao session
         kakaoViewModel.setSessionCallback()
         kakaoViewModel.event.observe(this, Observer { event ->
