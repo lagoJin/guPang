@@ -29,7 +29,7 @@ class KakaoSDKAdapter(private val applicationContext: Context) : KakaoAdapter() 
              * KAKAO_LOGIN_ALL : 모든 로그인 방식을 제공
              */
             override fun getAuthTypes(): Array<AuthType> {
-                return arrayOf(AuthType.KAKAO_LOGIN_ALL)
+                return arrayOf(AuthType.KAKAO_TALK)
             }
 
             /**

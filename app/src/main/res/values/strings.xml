@@ -9,5 +9,4 @@
 
     <!-- LoginActivity -->
     <string name="toast_kakao_login_success">%1$s님 반갑습니다.</string>
-    <string name="toast_kakao_login_failure">로그인 실패</string>
 </resources>

@@ -66,6 +66,9 @@ dependencies {
     // kakao
     implementation "com.kakao.sdk:usermgmt:$kakaoSdkVersion"
 
+    // preference
+    implementation "com.orhanobut:hawk:$hawkVersion"
+
     // test
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

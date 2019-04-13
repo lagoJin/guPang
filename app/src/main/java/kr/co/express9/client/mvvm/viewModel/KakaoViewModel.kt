@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kakao.auth.ISessionCallback
@@ -17,10 +18,10 @@ import kr.co.express9.client.util.Logger
 
 class KakaoViewModel : BaseViewModel() {
 
-    val me: LiveData<KakaoUser> get() = _me
+    val kakaoProfile: LiveData<KakaoUser> get() = _kakaoProfile
     val event: LiveData<Event> get() = _event
 
-    private val _me = MutableLiveData<KakaoUser>()
+    private val _kakaoProfile = MutableLiveData<KakaoUser>()
     private val _event = MutableLiveData<Event>()
     private val sessionCallback = object : ISessionCallback {
         override fun onSessionOpened() {
@@ -36,16 +37,24 @@ class KakaoViewModel : BaseViewModel() {
         LOGIN_SUCCESS,
         LOGOUT,
         SESSION_CLOSED,
+        TOKEN_REFRESHED,
         NOT_SIGNED
     }
 
     private fun requestMe() {
         UserManagement.getInstance().me(object : MeV2ResponseCallback() {
             override fun onSuccess(result: MeV2Response?) {
+                // preference에 유저 정
+                // 토큰(id)는 갱신될 수 있음
                 result?.let {
-                    _me.value = KakaoUser(result.id, result.nickname)
-                    _event.value = Event.LOGIN_SUCCESS
-                    Logger.d("user id : $result")
+                    _kakaoProfile.value = KakaoUser(result.id, result.nickname, result.kakaoAccount.email)
+                    /**
+                     * preference에 일치하는 email 확인
+                     * - 존재 : refreshToken()
+                     * - 미존재 : signUp()
+                     */
+                    refreshToken()
+                    Logger.d("requestMe success : $result")
                 }
             }
 
@@ -56,11 +65,30 @@ class KakaoViewModel : BaseViewModel() {
         })
     }
 
+    // 회원가입
+    private fun signUp() {
+
+    }
+
+    // 토큰 갱신
+    private fun refreshToken() {
+        // 토큰 갱신 API 추가예정
+        _event.value = Event.LOGIN_SUCCESS
+    }
+
+    /**
+     * 네이티브앱 로그인시 호출되며, 로그인 성공시 내부적으로 sessionCallback을 호출함
+     * 웹 로그인시에는 바로 sessionCallback을 호출함
+     */
+    fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        return Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)
+    }
+
     fun setSessionCallback() {
         Session.getCurrentSession().addCallback(sessionCallback)
         if (!Session.getCurrentSession().checkAndImplicitOpen()) {
             _event.value = Event.SESSION_CLOSED
-            Logger.d("session closed")
+            Logger.d("session closed or has invalid token")
         }
     }
 

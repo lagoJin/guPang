@@ -18,12 +18,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         kakaoViewModel.event.observe(this, Observer { event ->
             when (event) {
                 KakaoViewModel.Event.LOGIN_SUCCESS -> {
-                    toast(this, R.string.toast_kakao_login_success, kakaoViewModel.me.value?.nickname!!)
-                    // DB에 유저 존재여부 확인 후 메인으로 이동
+                    toast(this, R.string.toast_kakao_login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
+                    // DB 유저 토큰 갱신 API 추가 예정
+                    // 갱신 성공시 메인화면으로 이동
                     launchActivity<MainActivity>()
                 }
 
-                KakaoViewModel.Event.SESSION_CLOSED -> {
+                KakaoViewModel.Event.SESSION_CLOSED-> {
+                    toast(this, "SESSION_CLOSED")
                     launchActivity<LoginActivity>()
                 }
             }
