@@ -23,11 +23,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                     // 갱신 성공시 메인화면으로 이동
                     launchActivity<MainActivity>()
                 }
-
-                KakaoViewModel.Event.SESSION_CLOSED-> {
-                    toast(this, "SESSION_CLOSED")
-                    launchActivity<LoginActivity>()
-                }
+                else -> launchActivity<LoginActivity>()
             }
             finish()
         })

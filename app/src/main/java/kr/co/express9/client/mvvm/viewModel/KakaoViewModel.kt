@@ -29,6 +29,8 @@ class KakaoViewModel : BaseViewModel() {
         }
 
         override fun onSessionOpenFailed(exception: KakaoException?) {
+            // 유저가 카카오 연결해제 후 세션 만료 전에 앱에 들어온 경우 호출됨
+            _event.value = Event.SESSION_OPEN_FAILED
             Logger.e("kakao onSessionOpenFailed : $exception")
         }
     }
@@ -36,6 +38,7 @@ class KakaoViewModel : BaseViewModel() {
     enum class Event {
         LOGIN_SUCCESS,
         LOGOUT,
+        SESSION_OPEN_FAILED,
         SESSION_CLOSED,
         TOKEN_REFRESHED,
         NOT_SIGNED
@@ -44,11 +47,9 @@ class KakaoViewModel : BaseViewModel() {
     private fun requestMe() {
         UserManagement.getInstance().me(object : MeV2ResponseCallback() {
             override fun onSuccess(result: MeV2Response?) {
-                // preference에 유저 정
-                // 토큰(id)는 갱신될 수 있음
                 result?.let {
                     _kakaoProfile.value = KakaoUser(result.id, result.nickname)
-                    refreshToken()
+                    checkUser()
                     Logger.d("requestMe success : $result")
                 }
             }
@@ -60,14 +61,11 @@ class KakaoViewModel : BaseViewModel() {
         })
     }
 
-    // 회원가입
-    private fun signUp() {
-
-    }
-
-    // 토큰 갱신
-    private fun refreshToken() {
-        // 토큰 갱신 API 추가예정
+    /**
+     * 카카오에서 받은 id를 전달하여 유저 식별자 발급받은 후 MainActivity로 이동
+     */
+    private fun checkUser() {
+        // API 추가 예정
         _event.value = Event.LOGIN_SUCCESS
     }
 
