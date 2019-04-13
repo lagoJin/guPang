@@ -47,12 +47,7 @@ class KakaoViewModel : BaseViewModel() {
                 // preference에 유저 정
                 // 토큰(id)는 갱신될 수 있음
                 result?.let {
-                    _kakaoProfile.value = KakaoUser(result.id, result.nickname, result.kakaoAccount.email)
-                    /**
-                     * preference에 일치하는 email 확인
-                     * - 존재 : refreshToken()
-                     * - 미존재 : signUp()
-                     */
+                    _kakaoProfile.value = KakaoUser(result.id, result.nickname)
                     refreshToken()
                     Logger.d("requestMe success : $result")
                 }
@@ -80,8 +75,8 @@ class KakaoViewModel : BaseViewModel() {
      * 네이티브앱 로그인시 호출되며, 로그인 성공시 내부적으로 sessionCallback을 호출함
      * 웹 로그인시에는 바로 sessionCallback을 호출함
      */
-    fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        return Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)
+    fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)
     }
 
     fun setSessionCallback() {
