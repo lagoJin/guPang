@@ -1,10 +1,14 @@
 package kr.co.express9.client.mvvm.view
 
 import android.content.Intent
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityLoginBinding
+import kr.co.express9.client.databinding.AlertAgreeWithTermsBinding
 import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
@@ -20,7 +24,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         kakaoViewModel.event.observe(this, Observer { event ->
             when (event) {
                 KakaoViewModel.Event.LOGIN_SUCCESS -> {
-                    toast(this, R.string.toast_kakao_login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
+                    // 약관 동의 > DB에 유저 기록 > 메인화면으로 이동
+                    toast(R.string.kakao_login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<MainActivity>()
                     finish()
                 }
@@ -36,5 +41,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         kakaoViewModel.handleActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun getAgreeWithTerms() {
+        val binding = DataBindingUtil.inflate<AlertAgreeWithTermsBinding>(
+            LayoutInflater.from(this),
+            R.layout.alert_agree_with_terms,
+            null,
+            false)
+        AlertDialog.Builder(this)
+            .setView(binding.root)
+            .show()
     }
 }

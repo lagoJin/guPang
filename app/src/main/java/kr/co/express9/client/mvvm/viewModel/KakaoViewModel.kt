@@ -39,9 +39,7 @@ class KakaoViewModel : BaseViewModel() {
         LOGIN_SUCCESS,
         LOGOUT,
         SESSION_OPEN_FAILED,
-        SESSION_CLOSED,
-        TOKEN_REFRESHED,
-        NOT_SIGNED
+        SESSION_CLOSED
     }
 
     private fun requestMe() {

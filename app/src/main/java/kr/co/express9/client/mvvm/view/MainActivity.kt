@@ -18,13 +18,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         viewModel.event.observe(this, Observer { event ->
             when (event) {
                 MainViewModel.Event.WRITE_SEARCH_ADDRESS -> {
-                    toast(this, R.string.toast_write_search_address)
+                    toast(R.string.write_search_address)
                 }
                 MainViewModel.Event.NO_ADDRESS -> {
-                    toast(this, R.string.toast_no_address)
+                    toast(R.string.no_address)
                 }
                 MainViewModel.Event.NETWORK_ERROR -> {
-                    toast(this, R.string.toast_network_error)
+                    toast(R.string.network_error)
                 }
             }
         })
