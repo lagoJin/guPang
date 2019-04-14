@@ -3,21 +3,18 @@ package kr.co.express9.client.mvvm.view
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.widget.Toast
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.tedpark.tedpermission.rx2.TedRx2Permission
-import kr.co.express9.client.R
-import android.content.pm.PackageManager
-import android.R
-import androidx.annotation.RequiresPermission
-import androidx.core.content.ContextCompat
 import kr.co.express9.client.util.extension.toast
 
 
