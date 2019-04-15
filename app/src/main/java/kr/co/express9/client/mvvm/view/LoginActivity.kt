@@ -24,7 +24,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         kakaoViewModel.event.observe(this, Observer { event ->
             when (event) {
                 KakaoViewModel.Event.LOGIN_SUCCESS -> {
-                    // 약관 동의 > DB에 유저 기록 > 메인화면으로 이동
                     toast(R.string.kakao_login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<MainActivity>()
                     finish()

@@ -18,11 +18,15 @@ import kr.co.express9.client.util.Logger
 
 class KakaoViewModel : BaseViewModel() {
 
-    val kakaoProfile: LiveData<KakaoUser> get() = _kakaoProfile
-    val event: LiveData<Event> get() = _event
+
+    private val _event = MutableLiveData<Event>()
+    val event: LiveData<Event>
+        get() = _event
 
     private val _kakaoProfile = MutableLiveData<KakaoUser>()
-    private val _event = MutableLiveData<Event>()
+    val kakaoProfile: LiveData<KakaoUser>
+        get() = _kakaoProfile
+
     private val sessionCallback = object : ISessionCallback {
         override fun onSessionOpened() {
             requestMe()
@@ -47,24 +51,21 @@ class KakaoViewModel : BaseViewModel() {
             override fun onSuccess(result: MeV2Response?) {
                 result?.let {
                     _kakaoProfile.value = KakaoUser(result.id, result.nickname)
-                    checkUser()
+                    // 카카오톡 로그인(카카오톡id, 닉네임 발급)
+                    // 이미 가입한 유저인지 확인(firebase 토큰, 닉네임 갱신) > 이미 가입한 유저인 경우 유저키, 닉네임 preference에 저장 > MainActivity로 이동
+                    // 약관 동의
+                    // 회원가입(카카오톡id, 닉네임, firebase 토큰)
+                    // 유저키, 닉네임 preference에 저장
+                    // MainActivity로 이동
+                    _event.value = Event.LOGIN_SUCCESS
                     Logger.d("requestMe success : $result")
                 }
             }
 
             override fun onSessionClosed(errorResult: ErrorResult?) {
-                logout()
                 Logger.e("requestMe onSessionClosed : ${errorResult?.errorMessage}")
             }
         })
-    }
-
-    /**
-     * 카카오에서 받은 id를 전달하여 유저 식별자 발급받은 후 MainActivity로 이동
-     */
-    private fun checkUser() {
-        // API 추가 예정
-        _event.value = Event.LOGIN_SUCCESS
     }
 
     /**
