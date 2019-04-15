@@ -28,5 +28,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 }
             }
         })
+
+        dataBinding.btnCurrentPosition.setOnClickListener {
+
+        }
+
+        viewModel.user.observe(this, Observer {
+            dataBinding.txtIntro.text = String.format(getString(R.string.intro_guide), it.nickname)
+        })
+
+        viewModel.getUser()
     }
 }

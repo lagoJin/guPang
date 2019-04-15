@@ -7,7 +7,7 @@ import kr.co.express9.client.BuildConfig
 import kr.co.express9.client.R
 import kr.co.express9.client.thirdParty.kakao.KakaoSDKAdapter
 import kr.co.express9.client.util.Logger
-import kr.co.express9.client.util.diModule
+import kr.co.express9.client.di.diModule
 import org.koin.android.ext.android.startKoin
 
 class BaseApplication : Application() {

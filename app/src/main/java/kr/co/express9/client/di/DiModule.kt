@@ -1,7 +1,11 @@
-package kr.co.express9.client.util
+package kr.co.express9.client.di
 
 import kr.co.express9.client.constant.KAKAO_URL
+import kr.co.express9.client.mvvm.model.KakaoRepository
+import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
+import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
+import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import okhttp3.OkHttpClient
@@ -41,8 +45,23 @@ val apiModule = module {
 }
 
 var viewModelModule = module {
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel() }
     viewModel { KakaoViewModel() }
 }
 
-var diModule = listOf(apiModule, viewModelModule)
+var repositoryModule = module {
+    single { KakaoRepository() }
+    single { UserRepository() }
+}
+
+var dataSourceModule = module {
+    single { KakaoRemoteDataSource() }
+    single { UserRemoteDataSource() }
+}
+
+var diModule = listOf(
+    apiModule,
+    viewModelModule,
+    repositoryModule,
+    dataSourceModule
+)

@@ -3,21 +3,36 @@ package kr.co.express9.client.mvvm.viewModel
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.mvvm.model.api.KakaoAPI
+import kr.co.express9.client.mvvm.model.KakaoRepository
+import kr.co.express9.client.mvvm.model.UserRepository
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.Logger
-import kr.co.express9.client.util.extension.networkCommunication
+import org.koin.standalone.inject
 
-class MainViewModel(private val kakaoApi: KakaoAPI) : BaseViewModel() {
+class MainViewModel : BaseViewModel() {
+
+    private val kakaoRepository: KakaoRepository by inject()
+    private val userRepository: UserRepository by inject()
 
     val searchAddress: MutableLiveData<String> = MutableLiveData() // two way binding
-    val addressResultSample: LiveData<String> get() = _addressResultSample
-    val progressView: LiveData<Int> get() = _progressView
-    val event: LiveData<Event> get() = _event
 
     private val _addressResultSample = MutableLiveData<String>()
+    val addressResultSample: LiveData<String>
+        get() = _addressResultSample
+
     private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
+
     private val _event = MutableLiveData<Event>()
+    val event: LiveData<Event>
+        get() = _event
+
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User>
+        get() = _user
 
     enum class Event {
         WRITE_SEARCH_ADDRESS,
@@ -31,8 +46,8 @@ class MainViewModel(private val kakaoApi: KakaoAPI) : BaseViewModel() {
             return
         }
 
-        kakaoApi.getAddress(searchAddress.value!!)
-            .networkCommunication()
+        kakaoRepository.getAddress(searchAddress.value!!)
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showProgress() }
             .subscribe({
                 if (it.meta.total_count == 0) _event.value = Event.NO_ADDRESS
@@ -43,6 +58,10 @@ class MainViewModel(private val kakaoApi: KakaoAPI) : BaseViewModel() {
                 _event.value = Event.NETWORK_ERROR
                 hideProgress()
             }).apply { addDisposable(this) }
+    }
+
+    fun getUser() {
+        _user.value = userRepository.getUser().value
     }
 
     private fun showProgress() {

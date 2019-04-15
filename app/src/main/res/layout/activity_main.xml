@@ -1,55 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-                name="model"
-                type="kr.co.express9.client.mvvm.viewModel.MainViewModel"/>
+            name="model"
+            type="kr.co.express9.client.mvvm.viewModel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            tools:context=".mvvm.view.MainActivity">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mvvm.view.MainActivity">
 
-        <EditText
+        <LinearLayout
+            android:id="@+id/layoutIntro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txtIntro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="32dp"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutIntro">
+
+            <EditText
                 android:id="@+id/etAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={model.searchAddress}"
-                app:layout_constraintEnd_toStartOf="@id/btnAddress"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_weight="1"
+                android:text="@={model.searchAddress}" />
 
-        <Button
+            <Button
                 android:id="@+id/btnAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{_ -> model.getAddress()}"
-                android:text="@string/btn_get_address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:text="@string/btn_get_address" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnCurrentPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/btn_current_position"
+            app:layout_constraintTop_toBottomOf="@id/layoutAddress" />
 
         <TextView
-                android:id="@+id/tvTest"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="@{model.addressResultSample}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnAddress"/>
+            android:id="@+id/tvTest"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@{model.addressResultSample}"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ProgressBar
-                android:id="@+id/pb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{model.progressView}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{model.progressView}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

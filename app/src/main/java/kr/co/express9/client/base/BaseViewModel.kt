@@ -3,8 +3,9 @@ package kr.co.express9.client.base
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import org.koin.standalone.KoinComponent
 
-open class BaseViewModel: ViewModel() {
+open class BaseViewModel: ViewModel(), KoinComponent {
 
     private val compositeDisposable = CompositeDisposable()
 
