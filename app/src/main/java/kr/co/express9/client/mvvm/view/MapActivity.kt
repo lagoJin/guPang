@@ -35,15 +35,17 @@ class MapActivity : BaseActivity<ActivityMapBinding>(R.layout.activity_map), OnM
 
     override fun onMapReady(map: GoogleMap?) {
         map?.let {
-            this.map = map
+            this.map = it
+            //addMarker(it)
         }
     }
 
     fun addMarker(map: GoogleMap) {
-        map.addMarker(MarkerOptions()
-                .position(LatLng(0.0, 0.0)))
+        map.addMarker(
+                MarkerOptions()
+                        .position(LatLng(0.0, 0.0))
+        )
                 .tag = "1"
-
     }
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
@@ -52,15 +54,8 @@ class MapActivity : BaseActivity<ActivityMapBinding>(R.layout.activity_map), OnM
                 supportFragmentManager.findFragmentById(kr.co.express9.client.R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-        ) {
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             initPermission()
             return
         }
