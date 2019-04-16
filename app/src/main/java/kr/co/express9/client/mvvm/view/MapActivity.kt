@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -37,14 +39,28 @@ class MapActivity : BaseActivity<ActivityMapBinding>(R.layout.activity_map), OnM
         }
     }
 
+    fun addMarker(map: GoogleMap) {
+        map.addMarker(MarkerOptions()
+                .position(LatLng(0.0, 0.0)))
+                .tag = "1"
+
+    }
+
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     fun initLocation() {
         val mapFragment =
                 supportFragmentManager.findFragmentById(kr.co.express9.client.R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+        ) {
             initPermission()
             return
         }

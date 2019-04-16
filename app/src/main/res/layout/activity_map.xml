@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="model"
             type="kr.co.express9.client.mvvm.viewModel.MapViewModel" />
@@ -15,6 +16,16 @@
             android:id="@+id/google_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp">
+
+
+
+        </FrameLayout>
 
 
     </FrameLayout>

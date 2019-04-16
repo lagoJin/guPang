@@ -36,6 +36,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$supportLibraryVersion"
     implementation "com.google.android.material:material:$supportLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha03'
 
     //google map
     implementation "com.google.android.gms:play-services-maps:16.0.0"
