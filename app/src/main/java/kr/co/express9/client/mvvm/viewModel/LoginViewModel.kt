@@ -16,8 +16,13 @@ import kr.co.express9.client.mvvm.model.data.KakaoUser
 import kr.co.express9.client.util.Logger
 
 
-class KakaoViewModel : BaseViewModel() {
+class LoginViewModel : BaseViewModel() {
 
+    enum class Event {
+        LOGIN_SUCCESS,
+        SESSION_OPEN_FAILED,
+        SESSION_CLOSED
+    }
 
     private val _event = MutableLiveData<Event>()
     val event: LiveData<Event>
@@ -37,13 +42,6 @@ class KakaoViewModel : BaseViewModel() {
             _event.value = Event.SESSION_OPEN_FAILED
             Logger.e("kakao onSessionOpenFailed : $exception")
         }
-    }
-
-    enum class Event {
-        LOGIN_SUCCESS,
-        LOGOUT,
-        SESSION_OPEN_FAILED,
-        SESSION_CLOSED
     }
 
     private fun requestMe() {
@@ -86,13 +84,5 @@ class KakaoViewModel : BaseViewModel() {
 
     fun removeSessionCallback() {
         Session.getCurrentSession().removeCallback(sessionCallback)
-    }
-
-    fun logout() {
-        UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-            override fun onCompleteLogout() {
-                _event.value = Event.LOGOUT
-            }
-        })
     }
 }

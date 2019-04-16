@@ -4,21 +4,21 @@ import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivitySplashBinding
-import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
+import kr.co.express9.client.mvvm.viewModel.LoginViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
-    private val kakaoViewModel: KakaoViewModel by inject()
+    private val loginViewModel: LoginViewModel by inject()
 
     override fun initStartView() {
-        kakaoViewModel.setSessionCallback()
-        kakaoViewModel.event.observe(this, Observer { event ->
+        loginViewModel.setSessionCallback()
+        loginViewModel.event.observe(this, Observer { event ->
             when (event) {
-                KakaoViewModel.Event.LOGIN_SUCCESS -> {
-                    toast(R.string.kakao_login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
+                LoginViewModel.Event.LOGIN_SUCCESS -> {
+                    toast(R.string.kakao_login_success, loginViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<MainActivity>()
                 }
 
@@ -30,6 +30,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
     override fun onDestroy() {
         super.onDestroy()
-        kakaoViewModel.removeSessionCallback()
+        loginViewModel.removeSessionCallback()
     }
 }
