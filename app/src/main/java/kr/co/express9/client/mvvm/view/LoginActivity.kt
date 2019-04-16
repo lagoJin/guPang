@@ -24,7 +24,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         loginViewModel.event.observe(this, Observer { event ->
             when (event) {
                 LoginViewModel.Event.LOGIN_SUCCESS -> {
-                    toast(R.string.kakao_login_success, loginViewModel.kakaoProfile.value?.nickname!!)
+                    toast(R.string.login_success, loginViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<MainActivity>()
                     finish()
                 }

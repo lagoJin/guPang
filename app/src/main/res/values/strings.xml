@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">Magarine</string>
 
+    <!--common-->
+    <string name="no">아니요</string>
+    <string name="yes">네</string>
+
+    <!--logout-->
+    <string name="logout">로그아웃</string>
+    <string name="do_you_want_logout">로그아웃 하시겠습니까?</string>
+    <string name="logout_toast">로그아웃 되었습니다</string>
+
     <!--activity_login-->
     <string name="find_market_info_around_you">내 주변 마트 정보를 찾아보세요</string>
-    <string name="kakao_login_success">%1$s님 반갑습니다.</string>
+    <string name="login_success">%1$s님 반갑습니다.</string>
 
     <!--activity_main-->
     <string name="btn_get_address">주소 검색</string>
