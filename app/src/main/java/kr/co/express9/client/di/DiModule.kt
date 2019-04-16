@@ -6,9 +6,7 @@ import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
-import kr.co.express9.client.mvvm.viewModel.LoginViewModel
-import kr.co.express9.client.mvvm.viewModel.MainViewModel
-import kr.co.express9.client.mvvm.viewModel.MapViewModel
+import kr.co.express9.client.mvvm.viewModel.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -46,8 +44,10 @@ val apiModule = module {
 }
 
 var viewModelModule = module {
-    viewModel { MainViewModel() }
     viewModel { LoginViewModel() }
+    viewModel { LogoutViewModel() }
+    viewModel { UserViewModel() }
+    viewModel { MainViewModel() }
     viewModel { MapViewModel() }
 }
 
