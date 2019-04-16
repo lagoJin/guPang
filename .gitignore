@@ -210,6 +210,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 ### Gradle Patch ###
-**/build/
 
 # End of https://www.gitignore.io/api/gradle,android,androidstudio

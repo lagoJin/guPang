@@ -9,18 +9,27 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import androidx.annotation.RequiresPermission
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.tedpark.tedpermission.rx2.TedRx2Permission
+import kr.co.express9.client.R
+import kr.co.express9.client.base.BaseActivity
+import kr.co.express9.client.databinding.ActivityMapBinding
+import kr.co.express9.client.mvvm.viewModel.MapViewModel
 import kr.co.express9.client.util.extension.toast
+import org.koin.android.ext.android.inject
 
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapActivity : BaseActivity<ActivityMapBinding>(R.layout.activity_map), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
+    private val viewModel: MapViewModel by inject()
+
+    override fun initStartView() {
+        dataBinding.model = viewModel
+    }
 
     override fun onMapReady(map: GoogleMap?) {
         map?.let {
@@ -30,7 +39,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     fun initLocation() {
-        val mapFragment = supportFragmentManager.findFragmentById(kr.co.express9.client.R.id.google_map) as SupportMapFragment
+        val mapFragment =
+                supportFragmentManager.findFragmentById(kr.co.express9.client.R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -42,8 +52,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 10f, locationListener)
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10f, locationListener)
-
-
     }
 
     private val locationListener = object : LocationListener {

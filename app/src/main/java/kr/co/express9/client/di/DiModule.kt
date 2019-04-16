@@ -8,6 +8,7 @@ import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
+import kr.co.express9.client.mvvm.viewModel.MapViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -22,12 +23,12 @@ val apiModule = module {
     // KakaoAPI
     single {
         Retrofit.Builder()
-                .baseUrl(KAKAO_URL)
-                .client(get())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(KakaoAPI::class.java)
+            .baseUrl(KAKAO_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(KakaoAPI::class.java)
     }
 
     // OkHttpClient
@@ -47,6 +48,7 @@ val apiModule = module {
 var viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { KakaoViewModel() }
+    viewModel { MapViewModel() }
 }
 
 var repositoryModule = module {

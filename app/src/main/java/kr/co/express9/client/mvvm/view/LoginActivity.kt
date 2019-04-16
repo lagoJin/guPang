@@ -14,7 +14,6 @@ import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 
-
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val kakaoViewModel: KakaoViewModel by inject()
 
