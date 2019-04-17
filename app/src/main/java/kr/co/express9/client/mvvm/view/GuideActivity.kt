@@ -5,19 +5,20 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
-import kr.co.express9.client.databinding.ActivityIntroBinding
-import kr.co.express9.client.mvvm.model.UserRepository
-import kr.co.express9.client.mvvm.viewModel.IntroViewModel
+import kr.co.express9.client.databinding.ActivityGuideBinding
+import kr.co.express9.client.mvvm.viewModel.GuideViewModel
 import kr.co.express9.client.mvvm.viewModel.LogoutViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 
+/**
+ * 삭제될 예정
+ */
+class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide) {
 
-class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro) {
-
-    private val viewModel: IntroViewModel by inject()
+    private val viewModel: GuideViewModel by inject()
     private val logoutViewModel: LogoutViewModel by inject()
     private val userViewModel: UserViewModel by inject()
 
@@ -27,13 +28,13 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         dataBinding.lifecycleOwner = this
         viewModel.event.observe(this, Observer { event ->
             when (event) {
-                IntroViewModel.Event.WRITE_SEARCH_ADDRESS -> {
+                GuideViewModel.Event.WRITE_SEARCH_ADDRESS -> {
                     toast(R.string.write_search_address)
                 }
-                IntroViewModel.Event.NO_ADDRESS -> {
+                GuideViewModel.Event.NO_ADDRESS -> {
                     toast(R.string.no_address)
                 }
-                IntroViewModel.Event.NETWORK_ERROR -> {
+                GuideViewModel.Event.NETWORK_ERROR -> {
                     toast(R.string.network_error)
                 }
             }

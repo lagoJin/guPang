@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="kr.co.express9.client.mvvm.viewModel.IntroViewModel" />
+            type="kr.co.express9.client.mvvm.viewModel.GuideViewModel" />
 
         <variable
             name="userViewModel"
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".mvvm.view.IntroActivity">
+        tools:context=".mvvm.view.GuideActivity">
 
         <Button
             android:id="@+id/btnLogout"

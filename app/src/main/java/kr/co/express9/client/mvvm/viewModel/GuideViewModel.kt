@@ -12,7 +12,7 @@ import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
 
-class IntroViewModel : BaseViewModel() {
+class GuideViewModel : BaseViewModel() {
 
     private val kakaoRepository: KakaoRepository by inject()
     private val userRepository: UserRepository by inject()

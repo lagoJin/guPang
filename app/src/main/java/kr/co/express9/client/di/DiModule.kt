@@ -47,7 +47,7 @@ var viewModelModule = module {
     viewModel { KakaoViewModel() }
     viewModel { LogoutViewModel() }
     viewModel { UserViewModel() }
-    viewModel { IntroViewModel() }
+    viewModel { GuideViewModel() }
     viewModel { TermsViewModel() }
     viewModel { MapViewModel() }
 }

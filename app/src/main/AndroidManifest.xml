@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".mvvm.view.LoginActivity" />
-        <activity android:name=".mvvm.view.IntroActivity" />
+        <activity android:name=".mvvm.view.GuideActivity" />
         <activity android:name=".mvvm.view.MapActivity"/>
 
         <meta-data
