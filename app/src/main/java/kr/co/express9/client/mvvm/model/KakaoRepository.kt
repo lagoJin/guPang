@@ -2,17 +2,14 @@ package kr.co.express9.client.mvvm.model
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.data.Address
+import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class KakaoRepository : KoinComponent {
 
-    private val kakaoApi: KakaoAPI by inject()
+    private val kakaoRemoteDataSource: KakaoRemoteDataSource by inject()
 
-    fun getAddress(searchAddress: String): Single<Address> {
-        return kakaoApi.getAddress(searchAddress)
-                .subscribeOn(Schedulers.io())
-    }
+    fun getAddress(searchAddress: String) = kakaoRemoteDataSource.getAddress(searchAddress)
 }

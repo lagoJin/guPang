@@ -3,19 +3,15 @@ package kr.co.express9.client.mvvm.viewModel
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.KakaoRepository
-import kr.co.express9.client.mvvm.model.UserRepository
-import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
 
-class GuideViewModel : BaseViewModel() {
+class KakaoAddressViewModel: BaseViewModel() {
 
     private val kakaoRepository: KakaoRepository by inject()
-    private val userRepository: UserRepository by inject()
 
     val searchAddress: MutableLiveData<String> = MutableLiveData() // two way binding
 
@@ -37,6 +33,9 @@ class GuideViewModel : BaseViewModel() {
         NETWORK_ERROR
     }
 
+    /**
+     * 주소 to 위도경도
+     */
     fun getAddress() {
         if (searchAddress.value == null) {
             _event.value = Event.WRITE_SEARCH_ADDRESS
@@ -44,7 +43,7 @@ class GuideViewModel : BaseViewModel() {
         }
 
         kakaoRepository.getAddress(searchAddress.value!!)
-//            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showProgress() }
             .subscribe({
                 if (it.meta.total_count == 0) _event.value = Event.NO_ADDRESS

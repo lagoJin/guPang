@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="model"
-            type="kr.co.express9.client.mvvm.viewModel.GuideViewModel" />
+            name="kakaoAddressViewModel"
+            type="kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel" />
 
         <variable
             name="userViewModel"
@@ -63,13 +63,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@={model.searchAddress}" />
+                android:text="@={kakaoAddressViewModel.searchAddress}" />
 
             <Button
                 android:id="@+id/btnAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{_ -> model.getAddress()}"
+                android:onClick="@{_ -> kakaoAddressViewModel.getAddress()}"
                 android:text="@string/btn_get_address" />
         </LinearLayout>
 
@@ -86,14 +86,16 @@
             android:id="@+id/tvTest"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@{model.addressResultSample}"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:padding="16dp"
+            tools:text="주소 검색 결과"
+            android:text="@{kakaoAddressViewModel.addressResultSample}"
+            app:layout_constraintTop_toBottomOf="@id/btnCurrentPosition" />
 
         <ProgressBar
             android:id="@+id/pb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{model.progressView}"
+            android:visibility="@{kakaoAddressViewModel.progressView}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

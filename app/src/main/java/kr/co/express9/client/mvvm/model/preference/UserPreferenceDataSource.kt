@@ -20,7 +20,7 @@ class UserPreferenceDataSource {
         }
     }
 
-    fun create(user: User) {
+    fun put(user: User) {
         Hawk.put(UserPref.USER.name, user)
     }
 

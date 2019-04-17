@@ -5,6 +5,7 @@ import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
+import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.viewModel.*
 import okhttp3.OkHttpClient
@@ -44,12 +45,11 @@ val apiModule = module {
 }
 
 var viewModelModule = module {
-    viewModel { KakaoViewModel() }
-    viewModel { LogoutViewModel() }
-    viewModel { UserViewModel() }
-    viewModel { GuideViewModel() }
-    viewModel { TermsViewModel() }
+    viewModel { KakaoAddressViewModel() }
+    viewModel { KakaoUserViewModel() }
     viewModel { MapViewModel() }
+    viewModel { TermsViewModel() }
+    viewModel { UserViewModel() }
 }
 
 var repositoryModule = module {
@@ -58,13 +58,14 @@ var repositoryModule = module {
 }
 
 var dataSourceModule = module {
+    single { KakaoRemoteDataSource() }
     single { UserRemoteDataSource() }
     single { UserPreferenceDataSource() }
 }
 
 var diModule = listOf(
         apiModule,
-        viewModelModule,
+        dataSourceModule,
         repositoryModule,
-        dataSourceModule
+        viewModelModule
 )

@@ -22,10 +22,16 @@ class TermsViewModel: BaseViewModel() {
     val marketingAgreement: LiveData<Boolean>
         get() = _marketingAgreement
 
+    /**
+     * 약관 데이터 조회 (수정 예정)
+     */
     fun get() {
-        // 약관 데이터 불러오기
+        // 약관 데이터 불러오기 (수정 예정)
     }
 
+    /**
+     * 동의하기
+     */
     fun agreement() {
         if(requiredTermsAgreement.value!!) _event.value = Event.AGREE
         else _event.value = Event.DISAGREE

@@ -1,13 +1,9 @@
 package kr.co.express9.client.mvvm.model.remote
 
-import io.reactivex.Single
-import kr.co.express9.client.mvvm.model.data.User
 import org.koin.standalone.KoinComponent
 
 
 class UserRemoteDataSource: KoinComponent {
-
-
 
     /**
      * 기존 유저인지 확인
@@ -20,7 +16,7 @@ class UserRemoteDataSource: KoinComponent {
     /**
      * 회원가입
      */
-//    fun create(user: User): Single<User> {
+//    fun put(user: User): Single<User> {
 //
 //    }
 }

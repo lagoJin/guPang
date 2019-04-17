@@ -9,7 +9,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityLoginBinding
 import kr.co.express9.client.databinding.AlertAgreeWithTermsBinding
-import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
+import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.TermsViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
@@ -18,22 +18,23 @@ import org.koin.android.ext.android.inject
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
-    private val kakaoViewModel: KakaoViewModel by inject()
+    private val kakaoUserViewModel: KakaoUserViewModel by inject()
     private val userViewModel: UserViewModel by inject()
     private val termsViewModel: TermsViewModel by inject()
 
     override fun initStartView() {
         // kakao session
-        kakaoViewModel.setSessionCallback()
-        kakaoViewModel.event.observe(this, Observer { event ->
+        kakaoUserViewModel.setSessionCallback()
+        kakaoUserViewModel.event.observe(this, Observer { event ->
             when (event) {
                 // 1. 카카오톡 로그인(카카오톡id, 닉네임 발급)
-                KakaoViewModel.Event.LOGIN_SUCCESS -> {
+                KakaoUserViewModel.Event.LOGIN -> {
                     // 2. 이미 가입한 유저인지 확인(firebase 토큰, 닉네임 갱신)
-                    userViewModel.check(
-                            kakaoViewModel.kakaoProfile.value?.id.toString(),
-                            kakaoViewModel.kakaoProfile.value?.nickname.toString(),
-                            "향후 추가 예정")
+                    userViewModel.checkIsOldUser(
+                        kakaoUserViewModel.kakaoProfile.value?.id.toString(),
+                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                        "향후 추가 예정"
+                    )
                 }
             }
         })
@@ -50,10 +51,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             when (event) {
                 TermsViewModel.Event.AGREE -> { // 4. 회원가입(카카오톡id, 닉네임, firebase 토큰)
                     userViewModel.signup(
-                            kakaoViewModel.kakaoProfile.value?.id.toString(),
-                            kakaoViewModel.kakaoProfile.value?.nickname.toString(),
-                            "임시토큰",
-                            termsViewModel.marketingAgreement.value!!)
+                        kakaoUserViewModel.kakaoProfile.value?.id.toString(),
+                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                        "임시토큰",
+                        termsViewModel.marketingAgreement.value!!
+                    )
                 }
                 TermsViewModel.Event.DISAGREE -> toast(R.string.you_cannot_signup_without_agreement)
             }
@@ -62,28 +64,32 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onDestroy() {
         super.onDestroy()
-        kakaoViewModel.removeSessionCallback()
+        kakaoUserViewModel.removeSessionCallback()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        kakaoViewModel.handleActivityResult(requestCode, resultCode, data)
+        kakaoUserViewModel.handleActivityResult(requestCode, resultCode, data)
     }
 
+    /**
+     * 개인정보 이용약관
+     */
     private fun getAgreeWithTerms() {
         val binding = DataBindingUtil.inflate<AlertAgreeWithTermsBinding>(
-                LayoutInflater.from(this),
-                R.layout.alert_agree_with_terms,
-                null,
-                false)
+            LayoutInflater.from(this),
+            R.layout.alert_agree_with_terms,
+            null,
+            false
+        )
         binding.termsViewModel = termsViewModel
         AlertDialog.Builder(this)
-                .setView(binding.root)
-                .show()
+            .setView(binding.root)
+            .show()
     }
 
     private fun launchActivity() {
-        toast(R.string.login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
+        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
         launchActivity<GuideActivity>()
         finish()
     }
