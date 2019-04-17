@@ -72,7 +72,7 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
         }
 
         dataBinding.btnCurrentPosition.setOnClickListener {
-
+            launchActivity<MainActivity> {  }
         }
     }
 }
