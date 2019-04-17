@@ -18,6 +18,8 @@ class BaseApplication : Application() {
         Logger.init(BuildConfig.DEBUG, getString(R.string.app_name))
         startKoin(this, diModule)
         KakaoSDK.init(KakaoSDKAdapter(this))
-        Hawk.init(this).build()
+        Hawk.init(this)
+                .setLogInterceptor { Logger.d("Preference Logger :: $it") }
+                .build()
     }
 }

@@ -1,15 +1,26 @@
 package kr.co.express9.client.mvvm.model.remote
 
-import androidx.lifecycle.MutableLiveData
-import kr.co.express9.client.mvvm.model.UserDataSource
+import io.reactivex.Single
 import kr.co.express9.client.mvvm.model.data.User
+import org.koin.standalone.KoinComponent
 
-class UserRemoteDataSource: UserDataSource {
 
-    override fun getUser(): MutableLiveData<User> {
-        // api가 없어서 임시로 만들음
-        return MutableLiveData<User>().apply {
-            value = User("1", "kakaoId", "magarine", "token")
-        }
-    }
+class UserRemoteDataSource: KoinComponent {
+
+
+
+    /**
+     * 기존 유저인지 확인
+     * - 해당 요청시 서버에서 firebase 토큰과 닉네임 갱신
+     */
+//    fun checkExistingUser(socialId: String, deviceToken: String, nickname: String): Single<User> {
+//
+//    }
+
+    /**
+     * 회원가입
+     */
+//    fun create(user: User): Single<User> {
+//
+//    }
 }

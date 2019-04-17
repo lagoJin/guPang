@@ -1,7 +1,7 @@
 package kr.co.express9.client.mvvm.model.data
 
 
-data class AddressResponse (
+data class Address (
     val meta: Meta,
     val documents: ArrayList<Document>
 ) {

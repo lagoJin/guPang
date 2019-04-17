@@ -3,6 +3,7 @@ package kr.co.express9.client.mvvm.viewModel
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.KakaoRepository
@@ -11,7 +12,7 @@ import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
 
-class MainViewModel : BaseViewModel() {
+class IntroViewModel : BaseViewModel() {
 
     private val kakaoRepository: KakaoRepository by inject()
     private val userRepository: UserRepository by inject()
@@ -30,10 +31,6 @@ class MainViewModel : BaseViewModel() {
     val event: LiveData<Event>
         get() = _event
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User>
-        get() = _user
-
     enum class Event {
         WRITE_SEARCH_ADDRESS,
         NO_ADDRESS,
@@ -47,7 +44,7 @@ class MainViewModel : BaseViewModel() {
         }
 
         kakaoRepository.getAddress(searchAddress.value!!)
-            .observeOn(AndroidSchedulers.mainThread())
+//            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showProgress() }
             .subscribe({
                 if (it.meta.total_count == 0) _event.value = Event.NO_ADDRESS
@@ -58,10 +55,6 @@ class MainViewModel : BaseViewModel() {
                 _event.value = Event.NETWORK_ERROR
                 hideProgress()
             }).apply { addDisposable(this) }
-    }
-
-    fun getUser() {
-        _user.value = userRepository.getUser().value
     }
 
     private fun showProgress() {

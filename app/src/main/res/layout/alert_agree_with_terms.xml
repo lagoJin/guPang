@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="model"
+            name="termsViewModel"
             type="kr.co.express9.client.mvvm.viewModel.TermsViewModel" />
     </data>
 
@@ -30,7 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@string/agree_with_all_terms" />
+            android:text="@string/agree_with_all_terms"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
@@ -46,6 +47,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@={termsViewModel.requiredTermsAgreement}"
                 android:paddingTop="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="16dp" />
@@ -72,9 +74,10 @@
 
         <Button
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/agree_and_keep_going"
             android:background="@color/yellow"
-            android:layout_height="wrap_content" />
+            android:onClick="@{_ ->termsViewModel.agreement()}"
+            android:text="@string/agree_and_keep_going" />
     </LinearLayout>
 </layout>

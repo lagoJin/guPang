@@ -4,7 +4,7 @@ import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
-import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
+import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.viewModel.*
 import okhttp3.OkHttpClient
@@ -21,12 +21,12 @@ val apiModule = module {
     // KakaoAPI
     single {
         Retrofit.Builder()
-            .baseUrl(KAKAO_URL)
-            .client(get())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(KakaoAPI::class.java)
+                .baseUrl(KAKAO_URL)
+                .client(get())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(KakaoAPI::class.java)
     }
 
     // OkHttpClient
@@ -44,10 +44,11 @@ val apiModule = module {
 }
 
 var viewModelModule = module {
-    viewModel { LoginViewModel() }
+    viewModel { KakaoViewModel() }
     viewModel { LogoutViewModel() }
     viewModel { UserViewModel() }
-    viewModel { MainViewModel() }
+    viewModel { IntroViewModel() }
+    viewModel { TermsViewModel() }
     viewModel { MapViewModel() }
 }
 
@@ -57,13 +58,13 @@ var repositoryModule = module {
 }
 
 var dataSourceModule = module {
-    single { KakaoRemoteDataSource() }
     single { UserRemoteDataSource() }
+    single { UserPreferenceDataSource() }
 }
 
 var diModule = listOf(
-    apiModule,
-    viewModelModule,
-    repositoryModule,
-    dataSourceModule
+        apiModule,
+        viewModelModule,
+        repositoryModule,
+        dataSourceModule
 )

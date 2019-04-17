@@ -12,17 +12,18 @@
 
     <!--activity_login-->
     <string name="find_market_info_around_you">내 주변 마트 정보를 찾아보세요</string>
-    <string name="login_success">%1$s님 반갑습니다.</string>
+    <string name="you_cannot_signup_without_agreement">약관에 동의하셔야 가입 가능합니다.</string>
+    <string name="login_success">%s님 반갑습니다.</string>
 
-    <!--activity_main-->
+    <!--activity_intro-->
     <string name="btn_get_address">주소 검색</string>
     <string name="write_search_address">주소를 입력해주세요</string>
     <string name="no_address">일치하는 주소가 없습니다.</string>
     <string name="network_error">통신실패</string>
-    <string name="intro_guide">%1$s님, 반갑습니다.\n어느 지역의 마트 정보를\n알려드릴까요?</string>
+    <string name="intro_guide">%s님, 반갑습니다.\n어느 지역의 마트 정보를\n알려드릴까요?</string>
     <string name="btn_current_position">현 위치로 주소 설정</string>
 
-    <!--activity_main-->
+    <!--activity_intro-->
     <string name="permission_title">권한 요청</string>
     <string name="permission_content">제공하는 서비스를 원할하게 이용하시려면 권한 승인이 필요합니다.</string>
 

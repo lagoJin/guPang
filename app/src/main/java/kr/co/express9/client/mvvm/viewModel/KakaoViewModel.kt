@@ -7,16 +7,19 @@ import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.network.ErrorResult
 import com.kakao.usermgmt.UserManagement
-import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.mvvm.model.data.KakaoUser
+import kr.co.express9.client.mvvm.model.UserRepository
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.Logger
+import org.koin.standalone.inject
 
 
-class LoginViewModel : BaseViewModel() {
+class KakaoViewModel : BaseViewModel() {
+
+    private val userRepository: UserRepository by inject()
 
     enum class Event {
         LOGIN_SUCCESS,
@@ -28,8 +31,8 @@ class LoginViewModel : BaseViewModel() {
     val event: LiveData<Event>
         get() = _event
 
-    private val _kakaoProfile = MutableLiveData<KakaoUser>()
-    val kakaoProfile: LiveData<KakaoUser>
+    private val _kakaoProfile = MutableLiveData<MeV2Response>()
+    val kakaoProfile: LiveData<MeV2Response>
         get() = _kakaoProfile
 
     private val sessionCallback = object : ISessionCallback {
@@ -48,13 +51,13 @@ class LoginViewModel : BaseViewModel() {
         UserManagement.getInstance().me(object : MeV2ResponseCallback() {
             override fun onSuccess(result: MeV2Response?) {
                 result?.let {
-                    _kakaoProfile.value = KakaoUser(result.id, result.nickname)
-                    // 카카오톡 로그인(카카오톡id, 닉네임 발급)
-                    // 이미 가입한 유저인지 확인(firebase 토큰, 닉네임 갱신) > 이미 가입한 유저인 경우 유저키, 닉네임 preference에 저장 > MainActivity로 이동
-                    // 약관 동의
-                    // 회원가입(카카오톡id, 닉네임, firebase 토큰)
-                    // 유저키, 닉네임 preference에 저장
-                    // MainActivity로 이동
+                    _kakaoProfile.value = result
+
+                    userRepository.createPref(User("1",
+                            result.id.toString(),
+                            result.nickname,
+                            "token",
+                            true))
                     _event.value = Event.LOGIN_SUCCESS
                     Logger.d("requestMe success : $result")
                 }

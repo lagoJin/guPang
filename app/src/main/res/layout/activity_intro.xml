@@ -7,13 +7,17 @@
 
         <variable
             name="model"
-            type="kr.co.express9.client.mvvm.viewModel.MainViewModel" />
+            type="kr.co.express9.client.mvvm.viewModel.IntroViewModel" />
+
+        <variable
+            name="userViewModel"
+            type="kr.co.express9.client.mvvm.viewModel.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".mvvm.view.MainActivity">
+        tools:context=".mvvm.view.IntroActivity">
 
         <Button
             android:id="@+id/btnLogout"
@@ -41,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="32dp"
+                android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
                 android:textSize="25sp" />
         </LinearLayout>
 

@@ -4,22 +4,30 @@ import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivitySplashBinding
-import kr.co.express9.client.mvvm.viewModel.LoginViewModel
+import kr.co.express9.client.mvvm.viewModel.KakaoViewModel
+import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
-    private val loginViewModel: LoginViewModel by inject()
+    private val kakaoViewModel: KakaoViewModel by inject()
+    private val userViewModel: UserViewModel by inject()
 
     override fun initStartView() {
-        loginViewModel.setSessionCallback()
-        loginViewModel.event.observe(this, Observer { event ->
+        kakaoViewModel.setSessionCallback()
+        kakaoViewModel.event.observe(this, Observer { event ->
             when (event) {
-                LoginViewModel.Event.LOGIN_SUCCESS -> {
-                    toast(R.string.login_success, loginViewModel.kakaoProfile.value?.nickname!!)
-                    launchActivity<MainActivity>()
+                KakaoViewModel.Event.LOGIN_SUCCESS -> {
+                    // 우리 DB에 가입된 경우에만 통과로 수정해야함. 임시로 pref 존재시에 로그인 되도록 해둠
+                    if (userViewModel.get() != null) {
+                        toast(R.string.login_success, kakaoViewModel.kakaoProfile.value?.nickname!!)
+                        launchActivity<IntroActivity>()
+                    } else {
+                        launchActivity<LoginActivity>()
+                        kakaoViewModel.removeSessionCallback()
+                    }
                 }
 
                 else -> launchActivity<LoginActivity>()
@@ -30,6 +38,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
     override fun onDestroy() {
         super.onDestroy()
-        loginViewModel.removeSessionCallback()
+        kakaoViewModel.removeSessionCallback()
     }
 }
