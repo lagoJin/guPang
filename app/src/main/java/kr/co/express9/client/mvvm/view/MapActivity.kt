@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -20,6 +21,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityMapBinding
 import kr.co.express9.client.mvvm.viewModel.MapViewModel
+import kr.co.express9.client.util.extension.AnyTostring
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 
@@ -31,6 +33,11 @@ class MapActivity : BaseActivity<ActivityMapBinding>(R.layout.activity_map), OnM
 
     override fun initStartView() {
         dataBinding.model = viewModel
+        dataBinding.lifecycleOwner = this
+
+        viewModel.event.observe(this, Observer { event ->
+
+        })
     }
 
     override fun onMapReady(map: GoogleMap?) {
@@ -41,11 +48,8 @@ class MapActivity : BaseActivity<ActivityMapBinding>(R.layout.activity_map), OnM
     }
 
     fun addMarker(map: GoogleMap) {
-        map.addMarker(
-                MarkerOptions()
-                        .position(LatLng(0.0, 0.0))
-        )
-                .tag = "1"
+        map.addMarker(MarkerOptions().position(LatLng(0.0, 0.0))
+        ).apply { this.tag = "" }
     }
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])

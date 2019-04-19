@@ -27,6 +27,10 @@
     <string name="permission_title">권한 요청</string>
     <string name="permission_content">제공하는 서비스를 원할하게 이용하시려면 권한 승인이 필요합니다.</string>
 
+    <!--activity_location-->
+    <string name="location_hint">주소를 입력해주세요.</string>
+    <string name="location_now">현 위치로 주소 설정</string>
+
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>
     <string name="agree_with_all_terms">모두 동의합니다</string>

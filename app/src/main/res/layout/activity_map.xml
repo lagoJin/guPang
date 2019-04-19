@@ -20,13 +20,14 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_gravity="bottom"
-            android:layout_margin="20dp">
+            android:layout_gravity="bottom">
 
-
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp" />
 
         </FrameLayout>
-
 
     </FrameLayout>
 </layout>
