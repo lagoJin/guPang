@@ -8,12 +8,12 @@ import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
-    private val kakaoUserViewModel: KakaoUserViewModel by inject()
-    private val userViewModel: UserViewModel by inject()
+    private val kakaoUserViewModel: KakaoUserViewModel by viewModel()
+    private val userViewModel: UserViewModel by viewModel()
 
     override fun initStartView() {
         kakaoUserViewModel.setSessionCallback()

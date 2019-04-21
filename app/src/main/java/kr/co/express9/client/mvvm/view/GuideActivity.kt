@@ -11,16 +11,16 @@ import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 삭제될 예정
  */
 class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide) {
 
-    private val kakaoAddressViewModel: KakaoAddressViewModel by inject()
-    private val kakaoUserViewModel: KakaoUserViewModel by inject()
-    private val userViewModel: UserViewModel by inject()
+    private val kakaoAddressViewModel: KakaoAddressViewModel by viewModel()
+    private val kakaoUserViewModel: KakaoUserViewModel by viewModel()
+    private val userViewModel: UserViewModel by viewModel()
 
     override fun initStartView() {
         dataBinding.kakaoAddressViewModel = kakaoAddressViewModel
@@ -36,6 +36,8 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
                 }
                 KakaoAddressViewModel.Event.NETWORK_ERROR -> {
                     toast(R.string.network_error)
+                }
+                else -> {
                 }
             }
         })
@@ -54,6 +56,8 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
                     }
+                }
+                else -> {
                 }
             }
         })

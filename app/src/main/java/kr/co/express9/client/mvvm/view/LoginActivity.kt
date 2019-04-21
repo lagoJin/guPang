@@ -14,13 +14,13 @@ import kr.co.express9.client.mvvm.viewModel.TermsViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
-    private val kakaoUserViewModel: KakaoUserViewModel by inject()
-    private val userViewModel: UserViewModel by inject()
-    private val termsViewModel: TermsViewModel by inject()
+    private val kakaoUserViewModel: KakaoUserViewModel by viewModel()
+    private val userViewModel: UserViewModel by viewModel()
+    private val termsViewModel: TermsViewModel by viewModel()
 
     override fun initStartView() {
         // kakao session
@@ -36,6 +36,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                         "향후 추가 예정"
                     )
                 }
+                else -> {
+                }
             }
         })
 
@@ -44,6 +46,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 UserViewModel.Event.OLD_USER -> launchActivity() // 2.1 이미 가입한 유저인 경우 유저키, 닉네임 preference에 저장
                 UserViewModel.Event.NEW_USER -> getAgreeWithTerms() // 3. 약관 동의
                 UserViewModel.Event.SIGNUP_SUCCESS -> launchActivity() // 5. 회원가입 완료 및 메인으로
+                else -> {
+                }
             }
         })
 
@@ -58,6 +62,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     )
                 }
                 TermsViewModel.Event.DISAGREE -> toast(R.string.you_cannot_signup_without_agreement)
+                else -> {
+                }
             }
         })
     }

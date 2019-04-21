@@ -60,6 +60,7 @@ var viewModelModule = module {
     viewModel { KakaoAddressViewModel() }
     viewModel { KakaoUserViewModel() }
     viewModel { MapViewModel() }
+    viewModel { MainViewModel() }
     viewModel { TermsViewModel() }
     viewModel { UserViewModel() }
 }
