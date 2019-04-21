@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvvm.view.LocationActivity"></activity>
         <activity
             android:name=".mvvm.view.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -28,6 +27,8 @@
         <activity android:name=".mvvm.view.GuideActivity" />
         <activity android:name=".mvvm.view.MainActivity" />
         <activity android:name=".mvvm.view.MapActivity" />
+        <activity android:name=".mvvm.view.LocationActivity" />
+        <activity android:name=".mvvm.view.CartActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
