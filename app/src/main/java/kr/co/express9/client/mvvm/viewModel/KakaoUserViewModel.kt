@@ -60,6 +60,7 @@ class KakaoUserViewModel : BaseViewModel() {
             }
 
             override fun onSessionClosed(errorResult: ErrorResult?) {
+                _event.value = Event.SESSION_CLOSED
                 Logger.e("requestMe onSessionClosed : ${errorResult?.errorMessage}")
             }
         })
