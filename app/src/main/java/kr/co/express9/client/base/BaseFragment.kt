@@ -7,17 +7,26 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import io.reactivex.disposables.CompositeDisposable
 import kr.co.express9.client.util.Logger
 
-abstract class BaseFragment<T: ViewDataBinding>(private val layoutId: Int) : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding>(private val layoutId: Int) : Fragment() {
 
-    protected lateinit var dataBinding: T
+    internal lateinit var dataBinding: T
+    internal lateinit var disposable: CompositeDisposable
 
-    abstract fun initStartView()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), layoutId, null, false)
+        disposable = CompositeDisposable()
         Logger.d("onViewCreate ${this.javaClass.simpleName}")
         initStartView()
         return dataBinding.root
+    }
+
+    abstract fun initStartView()
+
+    override fun onDestroy() {
+        disposable.clear()
+        super.onDestroy()
     }
 }

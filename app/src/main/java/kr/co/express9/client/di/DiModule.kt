@@ -3,10 +3,12 @@ package kr.co.express9.client.di
 import androidx.fragment.app.FragmentManager
 import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.KakaoRepository
+import kr.co.express9.client.mvvm.model.MapRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
+import kr.co.express9.client.mvvm.model.remote.MapRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.view.fragment.MainFragment
 import kr.co.express9.client.mvvm.view.fragment.MartFragment
@@ -27,12 +29,12 @@ val apiModule = module {
     // KakaoAPI
     single {
         Retrofit.Builder()
-            .baseUrl(KAKAO_URL)
-            .client(get())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(KakaoAPI::class.java)
+                .baseUrl(KAKAO_URL)
+                .client(get())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(KakaoAPI::class.java)
     }
 
     // OkHttpClient
@@ -67,18 +69,20 @@ var viewModelModule = module {
 var repositoryModule = module {
     single { KakaoRepository() }
     single { UserRepository() }
+    single { MapRepository() }
 }
 
 var dataSourceModule = module {
     single { KakaoRemoteDataSource() }
     single { UserRemoteDataSource() }
     single { UserPreferenceDataSource() }
+    single { MapRemoteDataSource() }
 }
 
 var diModule = listOf(
-    apiModule,
-    fragmentModule,
-    dataSourceModule,
-    repositoryModule,
-    viewModelModule
+        apiModule,
+        fragmentModule,
+        dataSourceModule,
+        repositoryModule,
+        viewModelModule
 )

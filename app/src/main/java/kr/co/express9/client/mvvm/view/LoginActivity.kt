@@ -90,7 +90,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun launchActivity() {
         toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
-        launchActivity<GuideActivity>()
+        launchActivity<LocationActivity>()
         finish()
     }
 }

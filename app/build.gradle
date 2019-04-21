@@ -73,6 +73,9 @@ dependencies {
     //permission
     implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
 
+    //rxbinding
+    implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
+
     // test
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

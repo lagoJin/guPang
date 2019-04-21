@@ -1,42 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="kakaoAddressViewModel"
+            type="kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel" />
+
+        <variable
+            name="userViewModel"
+            type="kr.co.express9.client.mvvm.viewModel.UserViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="243dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="93dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="유진님, 반갑습니다.     어느 지역의 마트 정보를 알려드릴까요? :)"
-            android:textSize="24sp" />
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/location_hint"
-            android:padding="16dp"
-            android:textSize="16sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:text="@string/location_now"
-            android:textAlignment="center" />
+            <TextView
+                android:layout_width="243dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="93dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
+                android:textSize="24sp" />
 
-    </LinearLayout>
+            <AutoCompleteTextView
+                android:id="@+id/actv_location_address"
+                bind_array_adapter="@{kakaoAddressViewModel.addressResult}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/location_hint"
+                android:padding="16dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_location_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/location_now"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+
+    </FrameLayout>
 
 </layout>

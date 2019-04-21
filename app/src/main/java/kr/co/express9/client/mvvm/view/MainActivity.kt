@@ -10,7 +10,6 @@ import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import org.koin.android.ext.android.inject
 
-
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val mainFragment: MainFragment by inject()
