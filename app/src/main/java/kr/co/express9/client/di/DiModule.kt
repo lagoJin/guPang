@@ -1,5 +1,6 @@
 package kr.co.express9.client.di
 
+import androidx.fragment.app.FragmentManager
 import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.UserRepository
@@ -7,6 +8,10 @@ import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
+import kr.co.express9.client.mvvm.view.fragment.MainFragment
+import kr.co.express9.client.mvvm.view.fragment.MartFragment
+import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
+import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,12 +27,12 @@ val apiModule = module {
     // KakaoAPI
     single {
         Retrofit.Builder()
-                .baseUrl(KAKAO_URL)
-                .client(get())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(KakaoAPI::class.java)
+            .baseUrl(KAKAO_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(KakaoAPI::class.java)
     }
 
     // OkHttpClient
@@ -42,6 +47,13 @@ val apiModule = module {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
+}
+
+var fragmentModule = module {
+    factory { MainFragment() }
+    factory { SearchFragment() }
+    factory { MartFragment() }
+    factory { ProfileFragment() }
 }
 
 var viewModelModule = module {
@@ -64,8 +76,9 @@ var dataSourceModule = module {
 }
 
 var diModule = listOf(
-        apiModule,
-        dataSourceModule,
-        repositoryModule,
-        viewModelModule
+    apiModule,
+    fragmentModule,
+    dataSourceModule,
+    repositoryModule,
+    viewModelModule
 )

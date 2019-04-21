@@ -38,4 +38,10 @@
     <string name="agree_with_collecting_personal_info">[필수] 개인정보 수집 및이용 동의</string>
     <string name="agree_with_event_and_marketing">[선택] 이벤트 및 마케팅 활용 동의</string>
     <string name="agree_and_keep_going">동의하고 계속 진행합니다</string>
+
+    <!--menu_bottom_navigation-->
+    <string name="menu_main">메인</string>
+    <string name="menu_search">검색</string>
+    <string name="menu_mart">단골마트</string>
+    <string name="menu_profile">내정보</string>
 </resources>

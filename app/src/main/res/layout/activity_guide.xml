@@ -42,11 +42,14 @@
 
             <TextView
                 android:id="@+id/txtIntro"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                android:lineSpacingExtra="12sp"
                 android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
-                android:textSize="25sp" />
+                android:textColor="#50585d"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,9 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="16dp"
-            tools:text="주소 검색 결과"
             android:text="@{kakaoAddressViewModel.addressResultSample}"
-            app:layout_constraintTop_toBottomOf="@id/btnCurrentPosition" />
+            app:layout_constraintTop_toBottomOf="@id/btnCurrentPosition"
+            tools:text="주소 검색 결과" />
 
         <ProgressBar
             android:id="@+id/pb"
