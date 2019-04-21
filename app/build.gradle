@@ -1,7 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 28
@@ -16,7 +16,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     dataBinding {
@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -36,12 +36,12 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$supportLibraryVersion"
     implementation "com.google.android.material:material:$supportLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha03'
+    implementation "androidx.viewpager2:viewpager2:1.0.0-alpha03"
 
     //google map
     implementation "com.google.android.gms:play-services-maps:16.0.0"
     implementation "com.google.android.gms:play-services-base:16.0.0"
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation "com.google.android.gms:play-services-location:16.0.0"
 
     // koin
     implementation "org.koin:koin-androidx-scope:$koinVersion"
@@ -71,12 +71,15 @@ dependencies {
     implementation "com.orhanobut:hawk:$hawkVersion"
 
     //permission
-    implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
+    implementation "gun0912.ted:tedpermission-rx2:2.2.2"
+
+    //rxbinding
+    implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2"
 
     // test
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation "androidx.appcompat:appcompat:1.0.0-beta01"
+    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "androidx.test:runner:1.1.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0"
 }

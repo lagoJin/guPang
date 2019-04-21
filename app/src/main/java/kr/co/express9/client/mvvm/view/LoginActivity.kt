@@ -22,6 +22,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private val userViewModel: UserViewModel by viewModel()
     private val termsViewModel: TermsViewModel by viewModel()
 
+    private lateinit var alertDialog: AlertDialog
+
     override fun initStartView() {
         // kakao session
         kakaoUserViewModel.setSessionCallback()
@@ -31,9 +33,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 KakaoUserViewModel.Event.LOGIN -> {
                     // 2. 이미 가입한 유저인지 확인(firebase 토큰, 닉네임 갱신)
                     userViewModel.checkIsOldUser(
-                        kakaoUserViewModel.kakaoProfile.value?.id.toString(),
-                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
-                        "향후 추가 예정"
+                            kakaoUserViewModel.kakaoProfile.value?.id.toString(),
+                            kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                            "향후 추가 예정"
                     )
                 }
                 else -> {
@@ -55,11 +57,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             when (event) {
                 TermsViewModel.Event.AGREE -> { // 4. 회원가입(카카오톡id, 닉네임, firebase 토큰)
                     userViewModel.signup(
-                        kakaoUserViewModel.kakaoProfile.value?.id.toString(),
-                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
-                        "임시토큰",
-                        termsViewModel.marketingAgreement.value!!
+                            kakaoUserViewModel.kakaoProfile.value?.id.toString(),
+                            kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                            "임시토큰",
+                            termsViewModel.marketingAgreement.value!!
                     )
+                    alertDialog.dismiss()
                 }
                 TermsViewModel.Event.DISAGREE -> toast(R.string.you_cannot_signup_without_agreement)
                 else -> {
@@ -83,20 +86,21 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
      */
     private fun getAgreeWithTerms() {
         val binding = DataBindingUtil.inflate<AlertAgreeWithTermsBinding>(
-            LayoutInflater.from(this),
-            R.layout.alert_agree_with_terms,
-            null,
-            false
+                LayoutInflater.from(this),
+                R.layout.alert_agree_with_terms,
+                null,
+                false
         )
         binding.termsViewModel = termsViewModel
-        AlertDialog.Builder(this)
-            .setView(binding.root)
-            .show()
+        alertDialog = AlertDialog.Builder(this)
+                .setView(binding.root).create()
+
+        alertDialog.show()
     }
 
     private fun launchActivity() {
         toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
-        launchActivity<GuideActivity>()
+        launchActivity<LocationActivity>()
         finish()
     }
 }

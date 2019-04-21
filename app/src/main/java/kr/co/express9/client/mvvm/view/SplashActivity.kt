@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                     // 우리 DB에 가입된 경우에만 통과로 수정해야함. 임시로 pref 존재시에 로그인 되도록 해둠
                     if (userViewModel.getPref() != null) {
                         toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
-                        launchActivity<GuideActivity>()
+                        launchActivity<LocationActivity>()
                     } else {
                         launchActivity<LoginActivity>()
                         kakaoUserViewModel.removeSessionCallback()

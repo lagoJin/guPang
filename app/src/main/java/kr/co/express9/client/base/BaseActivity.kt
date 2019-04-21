@@ -5,15 +5,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import io.reactivex.disposables.CompositeDisposable
 import kr.co.express9.client.util.Logger
 
-abstract class BaseActivity<T: ViewDataBinding>(private val layoutId: Int): AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : AppCompatActivity() {
 
     companion object {
         private val arrayList = ArrayList<Activity>()
     }
 
-    protected lateinit var dataBinding: T
+
+    internal lateinit var dataBinding: T
+    internal lateinit var disposable: CompositeDisposable
 
     abstract fun initStartView()
 
@@ -24,6 +27,7 @@ abstract class BaseActivity<T: ViewDataBinding>(private val layoutId: Int): AppC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, layoutId)
+        disposable = CompositeDisposable()
         Logger.d("onCreate ${this.javaClass.simpleName}")
         arrayList.add(this)
         initStartView()
@@ -31,6 +35,7 @@ abstract class BaseActivity<T: ViewDataBinding>(private val layoutId: Int): AppC
 
     override fun onDestroy() {
         arrayList.remove(this)
+        disposable.clear()
         Logger.d("onDestroy ${this.javaClass.simpleName}")
         super.onDestroy()
     }

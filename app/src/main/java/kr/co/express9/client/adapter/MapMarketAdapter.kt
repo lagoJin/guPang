@@ -2,32 +2,48 @@ package kr.co.express9.client.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
+import kr.co.express9.client.databinding.ItemMapMarketBinding
 
 class MapMarketAdapter : RecyclerView.Adapter<MapMarketAdapter.ViewHolder>() {
 
     private lateinit var context: Context
+    private val arrayList = ArrayList<MarketDummy>()
+
+    init {
+        initDummyList()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_map_market, parent, false)
-        return ViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding: ItemMapMarketBinding = DataBindingUtil.inflate(inflater, R.layout.item_map_market, parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return 0
-    }
+    override fun getItemCount(): Int = arrayList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        holder.binding.mapMarket = arrayList[position]
     }
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(internal val binding: ItemMapMarketBinding) : RecyclerView.ViewHolder(binding.root)
 
+    data class MarketDummy(
+        var marketTitle: String,
+        var marketAddress: String,
+        var marketTime: String
+    )
+
+    fun initDummyList() {
+        arrayList.add(MarketDummy("인천", "인천 서구 심곡동", "운영시간 9:00 am - 11:30 pm "))
+        arrayList.add(MarketDummy("천안", "충남 천안시 서북구", "운영시간 12:00 am - 21:00 pm "))
+        arrayList.add(MarketDummy("우리집", "인천 서구 심곡동", "운영시간 9:00 am - 11:30 pm "))
     }
+
 
 }

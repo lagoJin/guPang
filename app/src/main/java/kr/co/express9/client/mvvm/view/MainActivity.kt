@@ -14,7 +14,6 @@ import kr.co.express9.client.util.Logger
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val mainViewModel: MainViewModel by viewModel()

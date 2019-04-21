@@ -24,11 +24,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".mvvm.view.LoginActivity" />
+        <activity android:name=".mvvm.view.LocationActivity" />
         <activity android:name=".mvvm.view.GuideActivity" />
         <activity android:name=".mvvm.view.MainActivity" />
-        <activity android:name=".mvvm.view.MapActivity" />
-        <activity android:name=".mvvm.view.LocationActivity" />
         <activity android:name=".mvvm.view.CartActivity" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -36,6 +37,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAs5r3czqp5GNhHuDZ8KwMqdTPO_Ch8Fsc" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
