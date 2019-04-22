@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="sample">2sp</dimen>
+    <dimen name="toolbar_hight">56dp</dimen>
+    <dimen name="tablayout_hight">48dp</dimen>
 </resources>

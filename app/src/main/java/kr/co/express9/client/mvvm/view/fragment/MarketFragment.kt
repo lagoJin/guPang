@@ -2,9 +2,9 @@ package kr.co.express9.client.mvvm.view.fragment
 
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseFragment
-import kr.co.express9.client.databinding.FragmentMartBinding
+import kr.co.express9.client.databinding.FragmentMarketBinding
 
-class MartFragment : BaseFragment<FragmentMartBinding>(R.layout.fragment_mart) {
+class MarketFragment : BaseFragment<FragmentMarketBinding>(R.layout.fragment_market) {
 
     override fun initStartView() {
 

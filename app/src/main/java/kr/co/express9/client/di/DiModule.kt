@@ -10,7 +10,7 @@ import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.MapRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
-import kr.co.express9.client.mvvm.view.fragment.MartFragment
+import kr.co.express9.client.mvvm.view.fragment.MarketFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.*
@@ -28,12 +28,12 @@ val apiModule = module {
     // KakaoAPI
     single {
         Retrofit.Builder()
-                .baseUrl(KAKAO_URL)
-                .client(get())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(KakaoAPI::class.java)
+            .baseUrl(KAKAO_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(KakaoAPI::class.java)
     }
 
     // OkHttpClient
@@ -53,7 +53,7 @@ val apiModule = module {
 var fragmentModule = module {
     factory { HomeFragment() }
     factory { SearchFragment() }
-    factory { MartFragment() }
+    factory { MarketFragment() }
     factory { ProfileFragment() }
 }
 
@@ -79,10 +79,11 @@ var dataSourceModule = module {
     single { MapRemoteDataSource() }
 }
 
+
 var diModule = listOf(
-        apiModule,
-        fragmentModule,
-        dataSourceModule,
-        repositoryModule,
-        viewModelModule
+    apiModule,
+    fragmentModule,
+    dataSourceModule,
+    repositoryModule,
+    viewModelModule
 )

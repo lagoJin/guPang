@@ -6,7 +6,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityMainBinding
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
-import kr.co.express9.client.mvvm.view.fragment.MartFragment
+import kr.co.express9.client.mvvm.view.fragment.MarketFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
@@ -20,7 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val homeFragment: HomeFragment by inject()
     private val searchFragment: SearchFragment by inject()
-    private val martFragment: MartFragment by inject()
+    private val marketFragment: MarketFragment by inject()
     private val profileFragment: ProfileFragment by inject()
 
     private lateinit var selectedFragment: Fragment
@@ -43,7 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         selectedFragment = when (selectedItemId) {
             R.id.home-> homeFragment
             R.id.search -> searchFragment
-            R.id.mart -> martFragment
+            R.id.market -> marketFragment
             R.id.profile -> profileFragment
             else -> homeFragment
         }

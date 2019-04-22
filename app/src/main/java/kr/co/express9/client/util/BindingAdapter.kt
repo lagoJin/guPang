@@ -7,14 +7,18 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import kr.co.express9.client.mvvm.model.data.Address
 
 @BindingAdapter("bind_adapter")
 fun setBindAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-    adapter.let {
-        view.adapter = it
-    }
+    adapter.let { view.adapter = it }
+}
+
+@BindingAdapter("bind_adapter")
+fun setBindAdapter(view: ViewPager2, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
+    adapter.let { view.adapter = it }
 }
 
 @BindingAdapter("bind_array_adapter")
