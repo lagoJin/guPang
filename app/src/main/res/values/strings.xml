@@ -44,7 +44,7 @@
     <string name="cart_description">장바구니 메모</string>
 
     <!--menu_bottom_navigation-->
-    <string name="menu_main">메인</string>
+    <string name="menu_home">홈</string>
     <string name="menu_search">검색</string>
     <string name="menu_mart">단골마트</string>
     <string name="menu_profile">내정보</string>

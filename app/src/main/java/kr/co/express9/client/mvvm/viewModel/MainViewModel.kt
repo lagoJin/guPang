@@ -16,8 +16,7 @@ class MainViewModel : BaseViewModel() {
         get() = _event
 
     private val _selectedItemId = MutableLiveData<Int>().apply {
-        Logger.d("들어온다아아")
-        value = R.id.main
+        value = R.id.home
     }
     val selectedItemId: LiveData<Int>
         get() = _selectedItemId

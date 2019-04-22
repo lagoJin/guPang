@@ -1,6 +1,5 @@
 package kr.co.express9.client.di
 
-import androidx.fragment.app.FragmentManager
 import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.MapRepository
@@ -10,7 +9,7 @@ import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.MapRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
-import kr.co.express9.client.mvvm.view.fragment.MainFragment
+import kr.co.express9.client.mvvm.view.fragment.HomeFragment
 import kr.co.express9.client.mvvm.view.fragment.MartFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
@@ -52,7 +51,7 @@ val apiModule = module {
 }
 
 var fragmentModule = module {
-    factory { MainFragment() }
+    factory { HomeFragment() }
     factory { SearchFragment() }
     factory { MartFragment() }
     factory { ProfileFragment() }
