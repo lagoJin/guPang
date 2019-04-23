@@ -7,6 +7,10 @@
         <variable
             name="categoryAdapter"
             type="kr.co.express9.client.adapter.CategoryAdapter" />
+
+        <variable
+            name="categoryGoodsViewModel"
+            type="kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

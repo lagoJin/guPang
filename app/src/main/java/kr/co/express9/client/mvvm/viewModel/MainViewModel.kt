@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.util.Logger
 
 class MainViewModel : BaseViewModel() {
     enum class Event {

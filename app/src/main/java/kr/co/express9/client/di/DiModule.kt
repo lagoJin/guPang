@@ -1,5 +1,7 @@
 package kr.co.express9.client.di
 
+import kr.co.express9.client.adapter.CategoryAdapter
+import kr.co.express9.client.adapter.GoodsAdapter
 import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.MapRepository
@@ -52,7 +54,7 @@ val apiModule = module {
 
 var fragmentModule = module {
     factory { HomeFragment() }
-    factory { SearchFragment() }
+    factory { SearchFragment(get()) }
     factory { MarketFragment() }
     factory { ProfileFragment() }
 }
@@ -64,6 +66,7 @@ var viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { TermsViewModel() }
     viewModel { UserViewModel() }
+    viewModel { CategoryGoodsViewModel() }
 }
 
 var repositoryModule = module {
@@ -78,7 +81,6 @@ var dataSourceModule = module {
     single { UserPreferenceDataSource() }
     single { MapRemoteDataSource() }
 }
-
 
 var diModule = listOf(
     apiModule,
