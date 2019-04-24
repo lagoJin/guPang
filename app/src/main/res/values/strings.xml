@@ -40,6 +40,9 @@
     <string name="agree_with_event_and_marketing">[선택] 이벤트 및 마케팅 활용 동의</string>
     <string name="agree_and_keep_going">동의하고 계속 진행합니다</string>
 
+    <!--activity_leaflet-->
+    <string name="leaflet_title">전단지 정보</string>
+
     <!--fragment_main-->
     <string name="cart_description">장바구니 메모</string>
 

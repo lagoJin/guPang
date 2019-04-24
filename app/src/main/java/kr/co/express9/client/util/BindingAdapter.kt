@@ -12,13 +12,13 @@ import com.bumptech.glide.Glide
 import kr.co.express9.client.mvvm.model.data.Address
 
 @BindingAdapter("bind_adapter")
-fun setBindAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-    adapter.let { view.adapter = it }
+fun RecyclerView.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
+    adapter.let { this.adapter = it }
 }
 
 @BindingAdapter("bind_adapter")
-fun setBindAdapter(view: ViewPager2, adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-    adapter.let { view.adapter = it }
+fun ViewPager2.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
+    adapter.let { this.adapter = it }
 }
 
 @BindingAdapter("bind_array_adapter")
@@ -30,11 +30,11 @@ fun AutoCompleteTextView.setBindArrayAdapter(dataList: LiveData<ArrayList<String
     }
 }
 
-@BindingAdapter("url")
-fun setImageUrl(view: ImageView, profileUrl: String?) {
+@BindingAdapter("bind_image")
+fun ImageView.setImageUrl(profileUrl: String?) {
     if (!TextUtils.isEmpty(profileUrl)) {
-        Glide.with(view.context)
+        Glide.with(this.context)
             .load(profileUrl)
-            .into(view)
+            .into(this)
     }
 }

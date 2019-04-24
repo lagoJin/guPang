@@ -3,9 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="leaflet"
+            type="kr.co.express9.client.adapter.LeafletAdapter.Leaflet" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/leaflet_title"
@@ -13,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="메로나 슈퍼"
+            android:text="@{leaflet.marketTitle}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:text="서울시 강남구 역삼동 골목길 2"
+            android:text="@{leaflet.marketAddress}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/leaflet_title" />
 
@@ -33,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="운영시간 9:00 am ~ 11:30 pm"
+            android:text="@{leaflet.marketTime}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/leaflet_address" />
 
@@ -50,10 +59,10 @@
 
         <ImageView
             android:id="@+id/leaflet_image"
+            bind_image="@{leaflet.url}"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_marginTop="20dp"
-            android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/leaflet_time" />

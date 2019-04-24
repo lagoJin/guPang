@@ -11,6 +11,9 @@ class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_l
     private val leafletViewModel: LeafletViewModel by viewModel()
 
     override fun initStartView() {
+        setSupportActionBar(dataBinding.toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
 
