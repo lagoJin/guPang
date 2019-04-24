@@ -20,32 +20,29 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="104dp">
-            <com.google.android.material.appbar.CollapsingToolbarLayout
+            <!--<com.google.android.material.appbar.CollapsingToolbarLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/toolbar_hight"-->
+            <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_hight"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="parallax" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:layout_width="match_parent"
-                    android:id="@+id/tl"
-                    android:layout_height="@dimen/tablayout_hight"
-                    app:tabMode="scrollable"
-                    app:tabContentStart="72dp">
-                </com.google.android.material.tabs.TabLayout>
-
-                <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_collapseMode="parallax">
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tablayout_hight"
+                app:tabMode="scrollable" />
+            <!--</com.google.android.material.appbar.CollapsingToolbarLayout>-->
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp"
+            bind_adapter="@{categoryAdapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            bind_adapter="@{categoryAdapter}"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
