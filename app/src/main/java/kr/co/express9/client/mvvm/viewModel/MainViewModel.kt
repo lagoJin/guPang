@@ -15,7 +15,7 @@ class MainViewModel : BaseViewModel() {
         get() = _event
 
     private val _selectedItemId = MutableLiveData<Int>().apply {
-        value = R.id.home
+        value = R.id.bn_home
     }
     val selectedItemId: LiveData<Int>
         get() = _selectedItemId

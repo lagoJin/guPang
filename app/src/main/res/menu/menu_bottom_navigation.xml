@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/bn_home"
         android:title="@string/menu_home"
         android:enabled="true"
         android:icon="@drawable/ic_home_24dp" />
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/bn_search"
         android:title="@string/menu_search"
         android:icon="@drawable/ic_search_24dp" />
 
     <item
-        android:id="@+id/market"
+        android:id="@+id/bn_market"
         android:title="@string/menu_market"
         android:enabled="true"
         android:icon="@drawable/ic_favorite_24dp" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/bn_profile"
         android:title="@string/menu_profile"
         android:enabled="true"
         android:icon="@drawable/ic_person_outline_24dp" />

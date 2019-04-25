@@ -44,9 +44,6 @@ dependencies {
     implementation "androidx.paging:paging-rxjava2:$paging_version"
     implementation "androidx.viewpager2:viewpager2:1.0.0-alpha03"
 
-    // search view
-    implementation "com.github.mancj:MaterialSearchBar:0.8.2"
-
     // google map
     def google_map_version = "16.0.0"
     implementation "com.google.android.gms:play-services-maps:$google_map_version"

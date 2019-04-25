@@ -9,9 +9,5 @@ import kr.co.express9.client.util.extension.launchActivity
 class HomeFragment: BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     override fun initStartView() {
-
-        dataBinding.btnCart.setOnClickListener {
-            activity?.launchActivity<CartActivity>()
-        }
     }
 }
