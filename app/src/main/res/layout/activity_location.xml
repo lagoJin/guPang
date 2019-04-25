@@ -56,11 +56,18 @@
                 android:paddingBottom="12dp"
                 android:text="@string/location_now"
                 android:textAlignment="center" />
+
             <Button
                 android:id="@+id/b_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="go to main(임시)"/>
+
+            <Button
+                android:id="@+id/b_temp2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="logout(임시)"/>
         </LinearLayout>
     </FrameLayout>
 </layout>

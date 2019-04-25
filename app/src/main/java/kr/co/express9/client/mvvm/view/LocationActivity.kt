@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
 
+import android.content.Intent
 import android.text.Editable
 import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -41,6 +42,17 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
             }
         })
 
+        userViewModel.event.observe(this, Observer { event ->
+            when (event) {
+                UserViewModel.Event.LOGOUT -> {
+                    launchActivity<LoginActivity> {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                }
+            }
+        })
+
         dataBinding.tvLocationSetting.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MapFragment())
@@ -59,7 +71,11 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
 
         // 임시 코드
         dataBinding.bTemp.setOnClickListener {
-            launchActivity<MainActivity> {  }
+            launchActivity<MainActivity> { }
+        }
+
+        dataBinding.bTemp2.setOnClickListener {
+            userViewModel.logout()
         }
     }
 

@@ -1,14 +1,16 @@
 package kr.co.express9.client.mvvm.view.fragment
 
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.mancj.materialsearchbar.MaterialSearchBar
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CategoryAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentSearchBinding
 import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
+import kr.co.express9.client.util.extension.toast
+
 
 class SearchFragment(
     private val categoryGoodsViewModel: CategoryGoodsViewModel
@@ -24,14 +26,14 @@ class SearchFragment(
 
         categoryGoodsViewModel.categoryList.observe(this, Observer { it ->
             it.forEach {
-                dataBinding.tl.addTab(dataBinding.tl.newTab().setText(it.name))
+                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText(it.name))
             }
         })
 
-        dataBinding.tl.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+        dataBinding.tablayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 // tab의 상태가 선택되지 않음에서 선택 상태로 변경됨
-                dataBinding.vp.currentItem = tab.position
+                dataBinding.viewpager.currentItem = tab.position
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
@@ -44,11 +46,42 @@ class SearchFragment(
 
         })
 
-        dataBinding.vp.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        dataBinding.viewpager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                dataBinding.tl.getTabAt(position)?.select()
+                dataBinding.tablayout.getTabAt(position)?.select()
             }
         })
+
+
+        //restore last queries from disk
+        val suggestions = ArrayList<String>()
+        suggestions.add("hello")
+        suggestions.add("world")
+
+        //enable searchbar callbacks
+        dataBinding.searchBar.setOnSearchActionListener(object: MaterialSearchBar.OnSearchActionListener {
+            override fun onButtonClicked(buttonCode: Int) {
+                toast("onButtonClicked : $buttonCode")
+            }
+
+            override fun onSearchStateChanged(enabled: Boolean) {
+                toast("onSearchStateChanged : $enabled")
+            }
+
+            override fun onSearchConfirmed(text: CharSequence?) {
+                toast("onSearchConfirmed : $text")
+                suggestions.add(text.toString())
+            }
+
+        })
+        dataBinding.searchBar.setMenuDividerEnabled(false)
+        dataBinding.searchBar.lastSuggestions = suggestions
+        //Inflate menu and setup OnMenuItemClickListener
+        dataBinding.searchBar.inflateMenu(R.menu.menu_search_view)
+        dataBinding.searchBar.menu.setOnMenuItemClickListener {
+            toast("setOnMenuItemClickListener")
+            true
+        }
     }
 }

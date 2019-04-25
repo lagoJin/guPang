@@ -13,36 +13,34 @@
             type="kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
             android:layout_width="match_parent"
-            android:layout_height="104dp">
-            <!--<com.google.android.material.appbar.CollapsingToolbarLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/toolbar_hight"-->
-            <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tablayout_hight"
-                app:tabMode="scrollable" />
-            <!--</com.google.android.material.appbar.CollapsingToolbarLayout>-->
-        </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="@dimen/tablayout_hight"
+            android:layout_marginTop="57dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabMode="scrollable" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp"
+            android:id="@+id/viewpager"
             bind_adapter="@{categoryAdapter}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tablayout" />
+
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:id="@+id/searchBar"
+            style="@style/MaterialSearchBarLight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mt_hint="@string/search_hint"
+            app:mt_maxSuggestionsCount="10"
+            app:mt_speechMode="false" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

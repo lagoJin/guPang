@@ -44,7 +44,10 @@ dependencies {
     implementation "androidx.paging:paging-rxjava2:$paging_version"
     implementation "androidx.viewpager2:viewpager2:1.0.0-alpha03"
 
-    //google map
+    // search view
+    implementation "com.github.mancj:MaterialSearchBar:0.8.2"
+
+    // google map
     def google_map_version = "16.0.0"
     implementation "com.google.android.gms:play-services-maps:$google_map_version"
     implementation "com.google.android.gms:play-services-base:$google_map_version"
@@ -80,13 +83,13 @@ dependencies {
     // preference
     implementation "com.orhanobut:hawk:2.0.1"
 
-    //permission
+    // permission
     implementation "gun0912.ted:tedpermission-rx2:2.2.2"
 
-    //rxbinding
+    // rxbinding
     implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2"
 
-    //map scroll
+    // map scroll
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
     // test

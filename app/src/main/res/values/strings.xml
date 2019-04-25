@@ -46,6 +46,9 @@
     <!--fragment_main-->
     <string name="cart_description">장바구니 메모</string>
 
+    <!--fragment_search-->
+    <string name="search_hint">검색어를 입력해주세요</string>
+
     <!--menu_bottom_navigation-->
     <string name="menu_home">홈</string>
     <string name="menu_search">검색</string>
