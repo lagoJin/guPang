@@ -35,18 +35,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         MENU_IS_CREATED
     }
 
+    private lateinit var searchMenu: MenuItem
+
     override fun initStartView() {
         dataBinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            Logger.d("클릭 : ${item.itemId}")
             if (toolbarState == ToolbarState.MENU_IS_CREATED) {
-                dataBinding.toolbar.menu.clear()
+                if(searchMenu.isVisible) searchMenu.isVisible = false
                 when (item.itemId) {
                     R.id.bn_home -> {
                         dataBinding.tvTitle.text = getString(R.string.magarine)
                     }
                     R.id.bn_search -> {
                         dataBinding.tvTitle.text = getString(R.string.menu_search)
-                        menuInflater.inflate(R.menu.menu_search, toolbarMenu)
+                        searchMenu.isVisible = true
                     }
                     R.id.bn_market -> {
                         dataBinding.tvTitle.text = getString(R.string.menu_market)
@@ -55,20 +56,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         dataBinding.tvTitle.text = getString(R.string.menu_profile)
                     }
                 }
-                menuInflater.inflate(R.menu.menu_cart, toolbarMenu)
             }
             mainViewModel.setSelectedItemId(item.itemId)
             return@setOnNavigationItemSelectedListener true
         }
 
         mainViewModel.selectedItemId.observe(this, Observer { selectedItemId ->
-            Logger.d("관측 : $selectedItemId")
             setFragment(selectedItemId)
         })
 
         setSupportActionBar(dataBinding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -76,8 +74,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             toolbarState = ToolbarState.MENU_IS_CREATED
             toolbarMenu = menu
         }
-//        menuInflater.inflate(R.menu.menu_search, menu)
+        menuInflater.inflate(R.menu.menu_search, toolbarMenu)
         menuInflater.inflate(R.menu.menu_cart, toolbarMenu)
+
+        dataBinding.toolbar.menu.findItem(R.id.search).isVisible = false
+        searchMenu = dataBinding.toolbar.menu.findItem(R.id.search)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -89,7 +90,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun setFragment(selectedItemId: Int) {
-        Logger.d("테스트 : $selectedItemId")
         selectedFragment = when (selectedItemId) {
             R.id.bn_home -> homeFragment
             R.id.bn_search -> searchFragment
@@ -100,10 +100,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, selectedFragment)
             .commitNow()
-    }
-
-    override fun onDestroy() {
-        Logger.d("디스트로이")
-        super.onDestroy()
     }
 }
