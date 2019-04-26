@@ -59,7 +59,7 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
                 .commitNow()
         }
 
-        disposable.add(dataBinding.actvLocationAddress.textChanges()
+        compositeDisposable.add(dataBinding.actvLocationAddress.textChanges()
             .filter { it.isNotEmpty() }
             .debounce(300, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +80,7 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
     }
 
     override fun onStop() {
-        disposable.clear()
+        compositeDisposable.clear()
         super.onStop()
     }
 }
