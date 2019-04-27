@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.KakaoRepository
-import kr.co.express9.client.mvvm.model.data.Address
 import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.AnyTostring
 import org.koin.standalone.inject

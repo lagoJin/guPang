@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.data.User
+import kr.co.express9.client.util.extension.getDeviceToken
 import org.koin.standalone.inject
 
 class UserViewModel : BaseViewModel() {
@@ -33,26 +34,30 @@ class UserViewModel : BaseViewModel() {
      * 이미 가입한 유저인지 확인 (수정필요)
      * - old user인 경우 device token, nickname 갱신
      */
-    fun checkIsOldUser(socialId: String, nickname: String, deviceToken: String) {
-        // 이미 가입한 유저인지 확인 > 서버 요청 (추가예정)
+    fun checkIsOldUser(socialId: String, nickname: String) {
+        getDeviceToken()
+            .subscribe { token ->
+                // 이미 가입한 유저인지 확인 > 서버 요청 (추가예정)
 
-        // 일단 임시로 pref에 있으면 old user로 판단
-        if (getPref() == null) {
-            _event.value = Event.NEW_USER
-        } else {
-            // 이미 가입한 유저인 경우(api로 받은 user preference에 저장)
-            putPref(
-                User(
-                    "1",
-                    socialId,
-                    nickname,
-                    "token",
-                    true
-                )
-            ) {
-                _event.value = Event.OLD_USER
+                // 일단 임시로 pref에 있으면 old user로 판단
+                if (getPref() == null) {
+                    _event.value = Event.NEW_USER
+                } else {
+                    // 이미 가입한 유저인 경우(api로 받은 user preference에 저장)
+                    putPref(
+                        User(
+                            "1",
+                            socialId,
+                            nickname,
+                            token,
+                            true
+                        )
+                    ) {
+                        _event.value = Event.OLD_USER
+                    }
+                }
             }
-        }
+            .apply { addDisposable(this) }
     }
 
     /**

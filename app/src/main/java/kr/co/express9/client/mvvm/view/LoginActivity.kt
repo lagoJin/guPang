@@ -34,8 +34,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     // 2. 이미 가입한 유저인지 확인(firebase 토큰, 닉네임 갱신)
                     userViewModel.checkIsOldUser(
                             kakaoUserViewModel.kakaoProfile.value?.id.toString(),
-                            kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
-                            "향후 추가 예정"
+                            kakaoUserViewModel.kakaoProfile.value?.nickname.toString()
                     )
                 }
                 else -> {

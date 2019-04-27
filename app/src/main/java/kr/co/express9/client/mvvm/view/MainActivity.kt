@@ -114,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         searchView.queryHint = getString(R.string.menu_search_hint)
         searchView.suggestionsAdapter = adapter
 
-        // Set up the query listener that executes the search
+        // 입력 및 검색 listener
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?): Boolean {
@@ -136,6 +136,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .subscribe { adapter.swapCursor(suggestionViewModel.getSuggestionCursor(it)) }
             .apply { addDisposable(this) }
 
+        // 제안된 검색어 선택 listener
         searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
             override fun onSuggestionSelect(i: Int): Boolean {
                 return false

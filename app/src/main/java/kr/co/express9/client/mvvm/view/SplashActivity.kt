@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
+import android.content.Intent
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -20,20 +21,33 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         kakaoUserViewModel.event.observe(this, Observer { event ->
             when (event) {
                 KakaoUserViewModel.Event.LOGIN -> {
-                    // 우리 DB에 가입된 경우에만 통과로 수정해야함. 임시로 pref 존재시에 로그인 되도록 해둠
-                    if (userViewModel.getPref() != null) {
-                        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
-                        launchActivity<LocationActivity>()
-                    } else {
-                        launchActivity<LoginActivity>()
-                        kakaoUserViewModel.removeSessionCallback()
-                    }
+                    userViewModel.checkIsOldUser(
+                        kakaoUserViewModel.kakaoProfile.value?.id.toString(),
+                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString()
+                    )
                 }
-
-                else -> launchActivity<LoginActivity>()
+                else -> launchLoginActivity()
             }
-            finish()
         })
+
+        userViewModel.event.observe(this, Observer { event ->
+            when (event) {
+                UserViewModel.Event.OLD_USER -> {
+                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+                    launchActivity<LocationActivity>()
+                    finish()
+                }
+                UserViewModel.Event.NEW_USER -> launchLoginActivity()
+                else -> {
+                }
+            }
+        })
+    }
+
+    private fun launchLoginActivity() {
+        launchActivity<LoginActivity>()
+        kakaoUserViewModel.removeSessionCallback()
+        finish()
     }
 
     override fun onDestroy() {
