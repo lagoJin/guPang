@@ -7,7 +7,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -47,7 +46,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     enum class ToolbarState {
         MENU_IS_NOT_CREATED,
         MENU_IS_CREATED
-
     }
 
     override fun initStartView() {
