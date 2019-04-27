@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemGoodsBinding
 import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
@@ -29,7 +30,6 @@ class GoodsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as VH
-        holder.b.tvName.text = arrayList[position].name
-        holder.b.tvPrice.text= arrayList[position].price.toString()
+        holder.b.goods = arrayList[position]
     }
 }

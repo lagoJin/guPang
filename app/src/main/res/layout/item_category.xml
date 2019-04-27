@@ -18,6 +18,8 @@
             bind_adapter="@{goodsAdapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager" />
+            android:padding="16dp"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="2" />
     </LinearLayout>
 </layout>

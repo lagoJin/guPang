@@ -4,10 +4,10 @@ import android.app.SearchManager
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -82,6 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             setFragment(selectedItemId)
         })
 
+        // action bar 등록
         setSupportActionBar(dataBinding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }

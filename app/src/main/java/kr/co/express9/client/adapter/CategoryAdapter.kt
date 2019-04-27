@@ -24,7 +24,6 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             false
         )
         binding.goodsAdapter = GoodsAdapter()
-        Logger.d("생성되에엠 어댑터!")
         return VH(binding)
     }
 
@@ -34,6 +33,5 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder as VH
         holder.b.goodsAdapter?.arrayList = goodsOrderByCategory[i]
         holder.b.goodsAdapter?.notifyDataSetChanged()
-        Logger.d("생성되에엠 어댑터! #### $i")
     }
 }
