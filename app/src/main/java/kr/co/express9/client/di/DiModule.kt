@@ -1,6 +1,6 @@
 package kr.co.express9.client.di
 
-import kr.co.express9.client.constant.KAKAO_URL
+import kr.co.express9.client.BuildConfig
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.MapRepository
 import kr.co.express9.client.mvvm.model.SuggestionRepository
@@ -30,7 +30,7 @@ val apiModule = module {
     // KakaoAPI
     single {
         Retrofit.Builder()
-            .baseUrl(KAKAO_URL)
+            .baseUrl(BuildConfig.KAKAO_API_URL)
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
