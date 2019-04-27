@@ -3,6 +3,7 @@ package kr.co.express9.client.mvvm.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
+import java.io.Serializable
 
 class CategoryGoodsViewModel : BaseViewModel() {
 
@@ -20,7 +21,7 @@ class CategoryGoodsViewModel : BaseViewModel() {
         val id: Int,
         val name: String,
         val total: Int
-    )
+    ): Serializable
 
     data class GoodsDummy(
         val id: Int,
@@ -29,7 +30,7 @@ class CategoryGoodsViewModel : BaseViewModel() {
         val price: Int,
         val salePrice: Int,
         val market: String
-    )
+    ): Serializable
 
     private fun getCategoryNGood(): MutableLiveData<ArrayList<CategoryDummy>> {
         val dummyCategoryList = ArrayList<CategoryDummy>()

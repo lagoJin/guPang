@@ -30,7 +30,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, i: Int) {
         holder as VH
-        holder.b.goodsAdapter?.arrayList = goodsOrderByCategory[i]
+        holder.b.goodsAdapter?.goodsList = goodsOrderByCategory[i]
         holder.b.goodsAdapter?.notifyDataSetChanged()
     }
 }

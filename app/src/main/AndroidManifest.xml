@@ -30,6 +30,7 @@
         <activity android:name=".mvvm.view.MainActivity" />
         <activity android:name=".mvvm.view.CartActivity" />
         <activity android:name=".mvvm.view.LeafletActivity" />
+        <activity android:name=".mvvm.view.GoodsActivity" />
 
         <service android:name=".thirdParty.firebase.CloudMessagingService">
             <intent-filter>
