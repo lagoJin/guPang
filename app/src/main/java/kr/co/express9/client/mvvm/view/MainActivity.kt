@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -40,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var selectedFragment: Fragment
     private lateinit var toolbarMenu: Menu
     private lateinit var searchMenu: MenuItem
+    private lateinit var searchView: SearchView
     private var toolbarState = ToolbarState.MENU_IS_NOT_CREATED
 
     enum class ToolbarState {
@@ -50,9 +52,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun initStartView() {
         dataBinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
+
             // BottomNavigation 클릭에 따른 Toolbar UI 변경
             if (toolbarState == ToolbarState.MENU_IS_CREATED) {
                 if (searchMenu.isVisible) searchMenu.isVisible = false
+                if (!searchView.isIconified) searchView.onActionViewCollapsed()
+
                 when (item.itemId) {
                     R.id.bn_home -> {
                         dataBinding.tvTitle.text = getString(R.string.magarine)
@@ -110,7 +115,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             0
         )
 
-        val searchView = searchMenu.actionView as SearchView
+        searchView = searchMenu.actionView as SearchView
         searchView.queryHint = getString(R.string.menu_search_hint)
         searchView.suggestionsAdapter = adapter
 
