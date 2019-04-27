@@ -73,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="14dp"
                 android:textSize="14sp"
+                app:bind_cancel_line="@{true}"
                 app:bind_price="@{goods.price}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_sale_price"
                 app:layout_constraintEnd_toEndOf="parent"

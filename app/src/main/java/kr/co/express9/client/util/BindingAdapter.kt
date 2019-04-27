@@ -1,5 +1,6 @@
 package kr.co.express9.client.util
 
+import android.graphics.Paint
 import android.text.TextUtils
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -44,4 +45,9 @@ fun ImageView.setImageUrl(profileUrl: String?) {
 fun TextView.setPrice(price: Int) {
     val nf = NumberFormat.getInstance()
     this.text = nf.format(price) + "원"
+}
+
+@BindingAdapter("bind_cancel_line")
+fun TextView.setCancelLine(draw: Boolean) {
+    if (draw) this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 }
