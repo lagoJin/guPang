@@ -6,7 +6,7 @@ apply plugin: "kotlin-kapt"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "kr.co.devstory.express9_client"
+        applicationId "kr.co.express9.client"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -43,6 +43,9 @@ dependencies {
     testImplementation "androidx.paging:paging-common:$paging_version"
     implementation "androidx.paging:paging-rxjava2:$paging_version"
     implementation "androidx.viewpager2:viewpager2:1.0.0-alpha03"
+
+    // firebase
+    implementation "com.google.firebase:firebase-core:16.0.8"
 
     // google map
     def google_map_version = "16.0.0"
@@ -87,7 +90,7 @@ dependencies {
     implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2"
 
     // map scroll
-    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
+    implementation "com.yarolegovich:discrete-scrollview:1.4.9"
 
     // test
     implementation "androidx.appcompat:appcompat:1.1.0-alpha04"
@@ -96,3 +99,5 @@ dependencies {
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
 }
+
+apply plugin: "com.google.gms.google-services"

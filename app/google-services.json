@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1003806725954",
+    "firebase_url": "https://express9-magarine.firebaseio.com",
+    "project_id": "express9-magarine",
+    "storage_bucket": "express9-magarine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003806725954:android:7dc4ed7c1b13fdd5",
+        "android_client_info": {
+          "package_name": "kr.co.express9.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003806725954-3evn89e3trov3d6kdsm5kv2okmd22bqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo7JRhDehyjQE4xSnmAHxGPiswv_pMoMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003806725954-3evn89e3trov3d6kdsm5kv2okmd22bqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
