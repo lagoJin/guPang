@@ -32,6 +32,11 @@
     <string name="location_hint">주소를 입력해주세요.</string>
     <string name="location_now">현 위치로 주소 설정</string>
 
+    <!--activity_goods-->
+    <string name="goods_detail">상품 상세</string>
+    <string name="goods_info">상품 정보</string>
+    <string name="add_to_cart_memo">장바구니 메모에 추가</string>
+
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>
     <string name="agree_with_all_terms">모두 동의합니다</string>
