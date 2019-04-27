@@ -5,23 +5,17 @@ import android.database.Cursor
 import android.database.MatrixCursor
 import android.provider.BaseColumns
 import kr.co.express9.client.base.BaseViewModel
+import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.util.Logger
 
-class SuggestionViewModel : BaseViewModel() {
+class SuggestionViewModel(
+    private val suggestionRepository: SuggestionRepository
+) : BaseViewModel() {
 
-    private val suggestionList = ArrayList<String>().apply {
-        add("좋은 계란")
-        add("맛없는 사과")
-        add("맛있는 배")
-        add("물컵")
-        add("컵테스트")
-    }
+    var suggestedList = ArrayList<String>()
 
-    val filteredList = ArrayList<String>()
-
-    // suggestion 목록(content provider 대용)
-    fun getSuggestionCursor(s: String): Cursor {
-        filteredList.clear()
+    fun getSuggestionCursor(search: String): Cursor {
+        suggestedList.clear()
         val cursor = MatrixCursor(
             arrayOf(
                 BaseColumns._ID,
@@ -30,15 +24,22 @@ class SuggestionViewModel : BaseViewModel() {
             )
         )
 
-        suggestionList
+        suggestionRepository.suggestionList
             .forEachIndexed { index, str ->
-                if (str.contains(s, ignoreCase = true)) {
+                if (str.contains(search, ignoreCase = true)) {
                     cursor.addRow(arrayOf(index, str, null))
-                    filteredList.add(str)
+                    suggestedList.add(str)
                 }
             }
-        Logger.d("들어온다2 : $filteredList")
-
+        Logger.d("getSuggestionCursor $search / $suggestedList / ${suggestionRepository.suggestionList}")
         return cursor
+    }
+
+    fun putSuggestion(suggestion: String) {
+        // 이미 존재하는 경우에는 추가하지 않음
+        if (suggestion !in suggestionRepository.suggestionList) {
+            Logger.d("putSuggestion $suggestion")
+            suggestionRepository.putPref(suggestion)
+        }
     }
 }

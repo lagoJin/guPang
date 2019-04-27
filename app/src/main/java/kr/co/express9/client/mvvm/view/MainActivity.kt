@@ -1,7 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.SearchManager
-import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
@@ -21,7 +20,6 @@ import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
@@ -101,7 +99,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         dataBinding.toolbar.menu.findItem(R.id.search).isVisible = false
         searchMenu = dataBinding.toolbar.menu.findItem(R.id.search)
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val columNames = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
         val viewIds = intArrayOf(android.R.id.text1)
         val adapter = SimpleCursorAdapter(
@@ -126,7 +123,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 }
 
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    subscriber.onNext(query!!)
+                    if (query != null) suggestionViewModel.putSuggestion(query)
                     return false
                 }
             })
@@ -145,7 +142,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
 
             override fun onSuggestionClick(index: Int): Boolean {
-                toast(suggestionViewModel.filteredList[index])
+                toast(suggestionViewModel.suggestedList[index])
                 return true
             }
         })

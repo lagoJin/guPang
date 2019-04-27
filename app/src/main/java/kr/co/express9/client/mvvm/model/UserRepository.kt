@@ -8,11 +8,10 @@ import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class UserRepository : KoinComponent {
-
-    private val userRemoteDataSource: UserRemoteDataSource by inject()
-    private val userPreferenceDataSource: UserPreferenceDataSource by inject()
-
+class UserRepository(
+    private val userRemoteDataSource: UserRemoteDataSource,
+    private val userPreferenceDataSource: UserPreferenceDataSource
+) {
 
     fun getPref(): LiveData<User>? {
         return userPreferenceDataSource.get()

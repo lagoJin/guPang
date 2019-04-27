@@ -1,9 +1,7 @@
 package kr.co.express9.client.mvvm.model.remote
 
-import org.koin.standalone.KoinComponent
 
-
-class UserRemoteDataSource: KoinComponent {
+class UserRemoteDataSource {
 
     /**
      * 기존 유저인지 확인

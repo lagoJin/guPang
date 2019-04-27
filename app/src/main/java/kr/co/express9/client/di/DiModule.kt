@@ -1,12 +1,12 @@
 package kr.co.express9.client.di
 
-import kr.co.express9.client.adapter.CategoryAdapter
-import kr.co.express9.client.adapter.GoodsAdapter
 import kr.co.express9.client.constant.KAKAO_URL
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.mvvm.model.MapRepository
+import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
+import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
 import kr.co.express9.client.mvvm.model.remote.MapRemoteDataSource
@@ -68,26 +68,32 @@ var viewModelModule = module {
     viewModel { UserViewModel() }
     viewModel { CategoryGoodsViewModel() }
     viewModel { LeafletViewModel() }
-    viewModel { SuggestionViewModel() }
+    viewModel { SuggestionViewModel(get()) }
 }
 
 var repositoryModule = module {
-    single { KakaoRepository() }
-    single { UserRepository() }
-    single { MapRepository() }
+    single { SuggestionRepository(get()) }
+    single { KakaoRepository(get()) }
+    single { UserRepository(get(), get()) }
+    single { MapRepository(get()) }
 }
 
-var dataSourceModule = module {
-    single { KakaoRemoteDataSource() }
-    single { UserRemoteDataSource() }
-    single { UserPreferenceDataSource() }
+var remoteDataSourceModule = module {
     single { MapRemoteDataSource() }
+    single { UserRemoteDataSource() }
+    single { KakaoRemoteDataSource(get()) }
+}
+
+var preferenceDataSourceModule = module {
+    single { UserPreferenceDataSource() }
+    single { SuggestionPreferenceDataSource() }
 }
 
 var diModule = listOf(
     apiModule,
     fragmentModule,
-    dataSourceModule,
     repositoryModule,
-    viewModelModule
+    viewModelModule,
+    remoteDataSourceModule,
+    preferenceDataSourceModule
 )
