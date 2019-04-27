@@ -26,7 +26,7 @@ class SearchFragment(
         dataBinding.categoryAdapter = categoryAdapter
 
         /**
-         * categoryGoodsViewModel observe
+         * categoryGoodsViewModel
          */
         categoryGoodsViewModel.goodsOrderByCategory.observe(this, Observer {
             categoryAdapter.goodsOrderByCategory = it
@@ -34,7 +34,7 @@ class SearchFragment(
         })
         categoryGoodsViewModel.categoryList.observe(this, Observer { it ->
             it.forEach {
-                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText(it.name))
+                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText("${it.name}(${it.total})"))
             }
         })
 
@@ -107,8 +107,7 @@ class SearchFragment(
     ) {
         try {
             sSetScrollPosition.invoke(
-                dataBinding.tablayout, position, positionOffset, updateSelectedText,
-                updateIndicatorPosition
+                dataBinding.tablayout, position, positionOffset, updateSelectedText, updateIndicatorPosition
             )
         } catch (e: Exception) {
             Logger.d(e.toString())

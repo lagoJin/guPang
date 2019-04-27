@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCategoryBinding
 import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
-import kr.co.express9.client.util.Logger
 
 class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

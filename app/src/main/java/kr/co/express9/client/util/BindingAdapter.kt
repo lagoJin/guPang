@@ -10,7 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import kr.co.express9.client.mvvm.model.data.Address
+import java.text.NumberFormat
 
 @BindingAdapter("bind_adapter")
 fun RecyclerView.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
@@ -38,4 +38,10 @@ fun ImageView.setImageUrl(profileUrl: String?) {
             .load(profileUrl)
             .into(this)
     }
+}
+
+@BindingAdapter("bind_price")
+fun TextView.setPrice(price: Int) {
+    val nf = NumberFormat.getInstance()
+    this.text = nf.format(price) + "원"
 }
