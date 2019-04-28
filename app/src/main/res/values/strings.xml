@@ -35,7 +35,11 @@
     <!--activity_goods-->
     <string name="goods_detail">상품 상세</string>
     <string name="goods_info">상품 정보</string>
-    <string name="add_to_cart_memo">장바구니 메모에 추가</string>
+    <string name="add_to_cart_memo">장보기 메모에 추가</string>
+    <string name="choose_number_of_goods">상품 수량을 선택하세요</string>
+
+    <!--activity_leaflet-->
+    <string name="leaflet_title">전단지 정보</string>
 
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>
@@ -45,11 +49,11 @@
     <string name="agree_with_event_and_marketing">[선택] 이벤트 및 마케팅 활용 동의</string>
     <string name="agree_and_keep_going">동의하고 계속 진행합니다</string>
 
-    <!--activity_leaflet-->
-    <string name="leaflet_title">전단지 정보</string>
+    <!--alert_check_cart-->
+    <string name="check_cart_message">장보기 메모에 추가했어요\n메모를 확인하실래요?</string>
 
     <!--fragment_main-->
-    <string name="cart_description">장바구니 메모</string>
+    <string name="cart_description">장보기 메모</string>
 
     <!--fragment_search-->
     <string name="search_hint">검색어를 입력해주세요</string>
@@ -60,5 +64,5 @@
     <string name="menu_search_hint">검색어를 입력하세요</string>
     <string name="menu_market">단골마트</string>
     <string name="menu_profile">내정보</string>
-    <string name="menu_cart">장바구니 메모</string>
+    <string name="menu_cart">장보기 메모</string>
 </resources>

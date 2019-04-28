@@ -10,17 +10,23 @@ class GoodsViewModel : BaseViewModel() {
     val goods: LiveData<CategoryGoodsViewModel.GoodsDummy>
         get() = _goods
 
-    val itemNum = MutableLiveData<Int>().apply { value = 0 }
+    private val _itemNum = MutableLiveData<Int>().apply { value = 0 }
+    val itemNum:LiveData<Int>
+        get() = _itemNum
 
     fun setGoods(goods: CategoryGoodsViewModel.GoodsDummy) {
         _goods.value = goods
     }
 
     fun plusItem() {
-        itemNum.value = itemNum.value?.plus(1)
+        _itemNum.value = itemNum.value?.plus(1)
     }
 
     fun minusItem() {
-        if (itemNum.value!! > 0) itemNum.value = itemNum.value!!.minus(1)
+        if (_itemNum.value!! > 0) _itemNum.value = _itemNum.value!!.minus(1)
+    }
+
+    fun resetItem() {
+        _itemNum.value = 0
     }
 }
