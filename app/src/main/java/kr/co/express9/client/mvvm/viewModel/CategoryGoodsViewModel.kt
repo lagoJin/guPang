@@ -110,7 +110,7 @@ class CategoryGoodsViewModel : BaseViewModel() {
         dummyGoods.add(
             GoodsDummy(
                 5,
-                "http://res.heraldm.com/phpwas/restmb_idxmake.php?idx=507&simg=/content/image/2017/02/272017022700018_0.jp",
+                "https://dimg.donga.com/egc/CDB/WOMAN/Article/14/65/46/16/1465461617806.jpg",
                 "현미",
                 7000,
                 3000,
@@ -295,7 +295,7 @@ class CategoryGoodsViewModel : BaseViewModel() {
         dummyGoods.add(
             GoodsDummy(
                 5,
-                "http://res.heraldm.com/phpwas/restmb_idxmake.php?idx=507&simg=/content/image/2017/02/272017022700018_0.jp",
+                "https://dimg.donga.com/egc/CDB/WOMAN/Article/14/65/46/16/1465461617806.jpg",
                 "현미",
                 7000,
                 3000,

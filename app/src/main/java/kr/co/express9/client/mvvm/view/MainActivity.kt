@@ -3,6 +3,8 @@ package kr.co.express9.client.mvvm.view
 import android.app.SearchManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
@@ -117,6 +119,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         searchView = searchMenu.actionView as SearchView
         searchView.queryHint = getString(R.string.menu_search_hint)
         searchView.suggestionsAdapter = adapter
+        searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+            .setImageResource(R.drawable.ic_search_24dp)
 
         // 입력 및 검색 listener
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
