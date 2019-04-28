@@ -1,9 +1,13 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
@@ -30,7 +34,10 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
 
         dataBinding.bAddToCart.setOnClickListener {
             if (goodsViewModel.itemNum.value == 0) toast(R.string.choose_number_of_goods)
-            else showCheckCartAlert()
+            else {
+                // 장보기 메모에 상품 추가 예정
+                showCheckCartAlert()
+            }
         }
 
         // action bar 등록
@@ -63,9 +70,8 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
             false
         )
 
-        val dialog = Dialog(this, R.style.CustomDialog)
-        dialog.setContentView(binding.root)
-        dialog.setCanceledOnTouchOutside(true)
+        val dialog = AlertDialog.Builder(this, R.style.CustomDialog).create()
+        dialog.setView(binding.root)
         dialog.show()
 
         binding.bNo.setOnClickListener { dialog.dismiss() }
