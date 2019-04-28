@@ -38,7 +38,6 @@ class SearchFragment(
             }
         })
 
-
         /**
          * tablayout
          */
@@ -69,8 +68,6 @@ class SearchFragment(
          */
         dataBinding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                dataBinding.tablayout.getTabAt(position)?.select()
-                Logger.d("on page selected : $position")
             }
 
             override fun onPageScrollStateChanged(state: Int) {

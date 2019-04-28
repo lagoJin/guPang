@@ -3,8 +3,6 @@ package kr.co.express9.client.mvvm.view
 import android.app.SearchManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
@@ -39,6 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val marketFragment: MarketFragment by inject()
     private val profileFragment: ProfileFragment by inject()
 
+    private var activeFragment: Fragment = homeFragment
     private lateinit var selectedFragment: Fragment
     private lateinit var toolbarMenu: Menu
     private lateinit var searchMenu: MenuItem
@@ -51,9 +50,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun initStartView() {
-        dataBinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
+        // init fragment
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, homeFragment).hide(homeFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, searchFragment).hide(searchFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, marketFragment).hide(marketFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, profileFragment).hide(profileFragment).commit()
 
-            // BottomNavigation 클릭에 따른 Toolbar UI 변경
+        // BottomNavigation 클릭에 따른 Toolbar UI 변경
+        dataBinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             if (toolbarState == ToolbarState.MENU_IS_CREATED) {
                 if (searchMenu.isVisible) searchMenu.isVisible = false
                 if (!searchView.isIconified) searchView.onActionViewCollapsed()
@@ -74,11 +78,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     }
                 }
             }
-            mainViewModel.setSelectedItemId(item.itemId)
+            mainViewModel.setSelectedBottomNavigationItemId(item.itemId)
             return@setOnNavigationItemSelectedListener true
         }
 
-        mainViewModel.selectedItemId.observe(this, Observer { selectedItemId ->
+        mainViewModel.selectedBottomNavigationItemId.observe(this, Observer { selectedItemId ->
             setFragment(selectedItemId)
         })
 
@@ -167,8 +171,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             R.id.bn_profile -> profileFragment
             else -> homeFragment
         }
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout, selectedFragment)
-            .commitNow()
+        supportFragmentManager.beginTransaction().hide(activeFragment).show(selectedFragment).commit()
+        activeFragment = selectedFragment
     }
 }

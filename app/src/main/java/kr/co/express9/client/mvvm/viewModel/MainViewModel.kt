@@ -14,13 +14,16 @@ class MainViewModel : BaseViewModel() {
     val event: LiveData<Event>
         get() = _event
 
-    private val _selectedItemId = MutableLiveData<Int>().apply {
+    /**
+     * BottomNavigation
+     */
+    private val _selectedBottomNavigationItemId = MutableLiveData<Int>().apply {
         value = R.id.bn_home
     }
-    val selectedItemId: LiveData<Int>
-        get() = _selectedItemId
+    val selectedBottomNavigationItemId: LiveData<Int>
+        get() = _selectedBottomNavigationItemId
 
-    fun setSelectedItemId(itemId: Int) {
-        _selectedItemId.value = itemId
+    fun setSelectedBottomNavigationItemId(itemId: Int) {
+        _selectedBottomNavigationItemId.value = itemId
     }
 }
