@@ -69,6 +69,7 @@ var viewModelModule = module {
     viewModel { CategoryGoodsViewModel() }
     viewModel { LeafletViewModel() }
     viewModel { SuggestionViewModel(get()) }
+    viewModel { GoodsViewModel() }
 }
 
 var repositoryModule = module {

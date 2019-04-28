@@ -15,7 +15,6 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : Ap
         private val arrayList = ArrayList<Activity>()
     }
 
-
     internal lateinit var dataBinding: T
     internal lateinit var compositeDisposable: CompositeDisposable
 
