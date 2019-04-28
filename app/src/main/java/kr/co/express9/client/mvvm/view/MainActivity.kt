@@ -105,22 +105,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         dataBinding.toolbar.menu.findItem(R.id.search).isVisible = false
         searchMenu = dataBinding.toolbar.menu.findItem(R.id.search)
 
-        val columNames = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
-        val viewIds = intArrayOf(android.R.id.text1)
         val adapter = SimpleCursorAdapter(
             this,
             android.R.layout.simple_list_item_1,
             null,
-            columNames,
-            viewIds,
+            arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1),
+            intArrayOf(android.R.id.text1),
             0
         )
 
         searchView = searchMenu.actionView as SearchView
         searchView.queryHint = getString(R.string.menu_search_hint)
         searchView.suggestionsAdapter = adapter
-        searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
-            .setImageResource(R.drawable.ic_search_24dp)
+
+        // searchView icon tint (style의 colorControlNormal로 대체)
+        // searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+        //     .setImageResource(R.drawable.ic_search_24dp)
 
         // 입력 및 검색 listener
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
