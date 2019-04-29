@@ -27,5 +27,4 @@ class ItemTransformer : DiscreteScrollItemTransformer {
         return if (pos < min) min else pos
     }
 
-
 }

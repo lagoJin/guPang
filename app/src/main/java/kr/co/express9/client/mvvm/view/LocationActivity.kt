@@ -3,6 +3,7 @@ package kr.co.express9.client.mvvm.view
 
 import android.content.Intent
 import android.text.Editable
+import android.view.View
 import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -57,6 +58,14 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MapFragment())
                 .commitNow()
+        }
+
+        dataBinding.actvLocationAddress.setOnFocusChangeListener { view, b ->
+            if (view.hasFocus()) {
+                dataBinding.tvLocationText.visibility = View.GONE
+            } else {
+                dataBinding.tvLocationText.visibility= View.VISIBLE
+            }
         }
 
         compositeDisposable.add(dataBinding.actvLocationAddress.textChanges()

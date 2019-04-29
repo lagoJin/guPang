@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.tedpark.tedpermission.rx2.TedRx2Permission
+import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.R
@@ -51,6 +52,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         dataBinding.lifecycleOwner = this
 
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
         viewModel.event.observe(this, Observer { event ->
 
         })
@@ -84,22 +86,21 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         initAdapter()
     }
 
+    private val scrollListener =
+        DiscreteScrollView.ScrollListener<MapMarketAdapter.ViewHolder> {
+                scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
+            Logger.d("scrollPostion :$scrollPosition\n currentIndex : $currentIndex\n newIndex : $newIndex")
+        }
+
     private fun initAdapter() {
-        val marketAdapter = MapMarketAdapter()
-        val infiniteScrollAdapter = InfiniteScrollAdapter.wrap(marketAdapter)
-        dataBinding.vpMap.adapter = infiniteScrollAdapter
         dataBinding.vpMap.apply {
             dataBinding.vpMap.setItemTransformer(ItemTransformer())
-            val space = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics)
-            //addItemDecoration(ItemTransformer(space))
+            //adapter = InfiniteScrollAdapter.wrap(MapMarketAdapter())
+            addScrollListener(scrollListener)
+            adapter = MapMarketAdapter()
         }
-        /*dataBinding.vpMap.setPageTransformer { page, position ->
-            when {
-                dataBinding.vpMap.currentItem == 0 -> page.translationX = (-20f)
-                dataBinding.vpMap.currentItem == marketAdapter.itemCount -> page.translationX = 20f
-                else -> page.translationX = 0f
-            }
-        }*/
+
+
     }
 
     override fun onMapReady(map: GoogleMap?) {
