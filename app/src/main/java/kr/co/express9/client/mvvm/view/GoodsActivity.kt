@@ -1,14 +1,15 @@
 package kr.co.express9.client.mvvm.view
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.app.ActionBar
+import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -16,9 +17,11 @@ import kr.co.express9.client.databinding.ActivityGoodsBinding
 import kr.co.express9.client.databinding.AlertCheckCartBinding
 import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
 import kr.co.express9.client.mvvm.viewModel.GoodsViewModel
+import kr.co.express9.client.util.extension.dialog
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods) {
 
@@ -63,22 +66,14 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
      * 장보기 메모담기 확인
      */
     private fun showCheckCartAlert() {
-        val binding = DataBindingUtil.inflate<AlertCheckCartBinding>(
-            LayoutInflater.from(this),
-            R.layout.alert_check_cart,
-            null,
-            false
-        )
-
-        val dialog = AlertDialog.Builder(this, R.style.CustomDialog).create()
-        dialog.setView(binding.root)
-        dialog.show()
-
-        binding.bNo.setOnClickListener { dialog.dismiss() }
-        binding.bYes.setOnClickListener {
-            launchActivity<CartActivity>()
-            goodsViewModel.resetItem()
-            dialog.dismiss()
+        dialog<AlertCheckCartBinding>(R.layout.alert_check_cart) { dialog, binding ->
+            binding.bNo.setOnClickListener { dialog.dismiss() }
+            binding.bYes.setOnClickListener {
+                launchActivity<CartActivity>()
+                goodsViewModel.resetItem()
+                dialog.dismiss()
+            }
+            dialog.show()
         }
     }
 
