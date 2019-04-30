@@ -7,13 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCategoryBinding
 import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
-import kr.co.express9.client.util.Logger
 
 class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var goodsOrderByCategory = ArrayList<ArrayList<CategoryGoodsViewModel.GoodsDummy>>()
 
-    class VH(val b: ItemCategoryBinding) : RecyclerView.ViewHolder(b.root)
+    class VH(val b: ItemCategoryBinding) : RecyclerView.ViewHolder(b.root) {
+        init {
+            // 뷰가 생성되지 않는 버그로 인해 재활용하지 않도록 수정
+            this.setIsRecyclable(false)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val inflater = LayoutInflater.from(parent.context)
