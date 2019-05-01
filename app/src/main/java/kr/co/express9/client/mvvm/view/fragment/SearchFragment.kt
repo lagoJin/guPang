@@ -14,7 +14,7 @@ import java.lang.reflect.Method
 
 
 class SearchFragment(
-    private val categoryGoodsViewModel: CategoryGoodsViewModel
+        private val categoryGoodsViewModel: CategoryGoodsViewModel
 ) : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
     private lateinit var sSetScrollPosition: Method
@@ -42,8 +42,8 @@ class SearchFragment(
          * tablayout
          */
         sSetScrollPosition = TabLayout::class.java.getDeclaredMethod(
-            "setScrollPosition", Int::class.javaPrimitiveType,
-            Float::class.javaPrimitiveType, Boolean::class.javaPrimitiveType, Boolean::class.javaPrimitiveType
+                "setScrollPosition", Int::class.javaPrimitiveType,
+                Float::class.javaPrimitiveType, Boolean::class.javaPrimitiveType, Boolean::class.javaPrimitiveType
         )
         sSetScrollPosition.isAccessible = true
 
@@ -99,12 +99,12 @@ class SearchFragment(
      * synchronize viewpager scroll and tablayout indicator
      */
     private fun setScrollPosition(
-        position: Int, positionOffset: Float, updateSelectedText: Boolean,
-        updateIndicatorPosition: Boolean
+            position: Int, positionOffset: Float, updateSelectedText: Boolean,
+            updateIndicatorPosition: Boolean
     ) {
         try {
             sSetScrollPosition.invoke(
-                dataBinding.tablayout, position, positionOffset, updateSelectedText, updateIndicatorPosition
+                    dataBinding.tablayout, position, positionOffset, updateSelectedText, updateIndicatorPosition
             )
         } catch (e: Exception) {
             Logger.d(e.toString())

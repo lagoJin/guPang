@@ -77,6 +77,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { kakaoAddressViewModel.getAddressList(it as Editable) })
 
+
         dataBinding.ivMapLocation.setOnClickListener {
             if (::map.isInitialized && ::location.isInitialized) {
                 map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
