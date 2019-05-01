@@ -79,7 +79,8 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
 
         // 임시 코드
         dataBinding.bTemp.setOnClickListener {
-            launchActivity<MainActivity> { }
+//            launchActivity<MainActivity> { }
+            toast(dataBinding.tvLocationText.text.toString())
         }
 
         dataBinding.bTemp2.setOnClickListener {
