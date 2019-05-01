@@ -53,7 +53,7 @@ val apiModule = module {
 }
 
 var fragmentModule = module {
-    factory { HomeFragment() }
+    factory { HomeFragment(get()) }
     factory { SearchFragment(get()) }
     factory { MarketFragment() }
     factory { ProfileFragment() }
@@ -64,6 +64,7 @@ var viewModelModule = module {
     viewModel { KakaoUserViewModel() }
     viewModel { MapViewModel() }
     viewModel { MainViewModel() }
+    viewModel { HomeViewModel() }
     viewModel { TermsViewModel() }
     viewModel { UserViewModel() }
     viewModel { CategoryGoodsViewModel() }

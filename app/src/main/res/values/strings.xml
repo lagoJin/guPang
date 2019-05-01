@@ -66,6 +66,9 @@
     <string name="modify_info">내 정보 수정</string>
     <string name="personal_inquiry">1:1 문의</string>
     <string name="notice">공지사항</string>
+    
+    <!--item_goods-->
+    <string name="goods_desc">우리 동네\n인기상품이에요!</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>

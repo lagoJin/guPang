@@ -2,6 +2,7 @@ package kr.co.express9.client.util
 
 import android.graphics.Paint
 import android.text.TextUtils
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
@@ -50,4 +51,9 @@ fun TextView.setPrice(price: Int) {
 @BindingAdapter("bind_cancel_line")
 fun TextView.setCancelLine(draw: Boolean) {
     if (draw) this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+}
+
+@BindingAdapter("android:visibility")
+fun setVisibility(view: View, visibility: Boolean) {
+    view.visibility = if (visibility) View.VISIBLE else View.GONE
 }

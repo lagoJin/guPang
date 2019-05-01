@@ -1,6 +1,7 @@
 package kr.co.express9.client.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ class GoodsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class VH(val b: ItemGoodsBinding) : RecyclerView.ViewHolder(b.root)
 
     var goodsList = ArrayList<CategoryGoodsViewModel.GoodsDummy>()
+    var showTitle = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,6 +33,7 @@ class GoodsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as VH
+        holder.b.title.visibility = if (showTitle && position == 1) View.VISIBLE else View.GONE
         holder.b.goods = goodsList[position]
         holder.b.cvLayout.setOnClickListener {
             it.context.launchActivity<GoodsActivity> {
