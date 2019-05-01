@@ -23,16 +23,29 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_location_text"
-                android:layout_width="243dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="93dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
-                android:textSize="24sp" />
+            <LinearLayout
+                android:id="@+id/ll_location_text"
+                android:layout_width="match_parent"
+                android:layout_height="208dp"
+                android:background="#F24d53"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_location_text"
+                    android:layout_width="243dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="93dp"
+                    android:bufferType="spannable"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingExtra="4sp"
+                    android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
 
             <AutoCompleteTextView
                 android:id="@+id/actv_location_address"
@@ -62,14 +75,14 @@
                 android:id="@+id/b_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="go to main(임시)"/>
+                android:text="go to main(임시)" />
 
             <Button
                 android:id="@+id/b_temp2"
-                android:layout_marginTop="100dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="logout(임시)"/>
+                android:layout_marginTop="100dp"
+                android:text="logout(임시)" />
         </LinearLayout>
     </FrameLayout>
 </layout>

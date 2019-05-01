@@ -57,8 +57,14 @@
     <string name="check_cart_message">선택한 상품을 장보기 메모에\n추가했습니다.</string>
     <string name="go_to_cart">장보기 메모로</string>
 
+    <!--fragment_main-->
+    <string name="cart_description">장보기 메모</string>
+
     <!--fragment_search-->
     <string name="search_hint">검색어를 입력해주세요</string>
+
+    <!--fragment_map-->
+    <string name="check_result">마트 선택 완료</string>
 
     <!--fragment profile-->
     <string name="market_memo">장보기 메모 내역 보기</string>
@@ -66,7 +72,7 @@
     <string name="modify_info">내 정보 수정</string>
     <string name="personal_inquiry">1:1 문의</string>
     <string name="notice">공지사항</string>
-    
+
     <!--item_goods-->
     <string name="goods_desc">우리 동네\n인기상품이에요!</string>
 
@@ -78,4 +84,10 @@
     <string name="menu_profile">마이페이지</string>
     <string name="menu_cart">장보기 메모</string>
     <string name="menu_delete">삭제</string>
+
+    <!--market menu-->
+    <string name="menu_leaflet">1. 전단지 보기</string>
+    <string name="menu_location">2. 마트 위치 보기</string>
+    <string name="menu_deleted">3. 삭제</string>
+
 </resources>

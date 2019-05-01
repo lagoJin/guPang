@@ -2,11 +2,14 @@ package kr.co.express9.client.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMarketBinding
+import kr.co.express9.client.util.extension.toast
 
 class MarketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -29,14 +32,23 @@ class MarketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as ViewHolder
         holder.binding.market = arrayList[position]
+        val popup = PopupMenu(context, holder.binding.btnPopup)
+        popup.menuInflater.inflate(R.menu.menu_market, popup.menu)
+        holder.binding.btnPopup.setOnClickListener {
+            popup.show()
+        }
+        popup.setOnMenuItemClickListener {
+            context.toast("${it.title}을 클릭했습니다.")
+            true
+        }
     }
 
     class ViewHolder(internal val binding: ItemMarketBinding) : RecyclerView.ViewHolder(binding.root)
 
     data class Market(
-        var marketTitle: String,
-        var marketAddress: String,
-        var marketTime: String
+            var marketTitle: String,
+            var marketAddress: String,
+            var marketTime: String
     )
 
     private fun initDummyList() {
