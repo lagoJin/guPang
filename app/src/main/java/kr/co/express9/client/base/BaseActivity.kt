@@ -27,6 +27,7 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : Ap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, layoutId)
+        dataBinding.lifecycleOwner = this
         compositeDisposable = CompositeDisposable()
         Logger.d("onCreate ${this.javaClass.simpleName}")
         arrayList.add(this)

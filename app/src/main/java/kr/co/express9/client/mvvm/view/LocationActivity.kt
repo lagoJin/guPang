@@ -27,7 +27,6 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
     override fun initStartView() {
         dataBinding.kakaoAddressViewModel = kakaoAddressViewModel
         dataBinding.userViewModel = userViewModel
-        dataBinding.lifecycleOwner = this
 
         kakaoAddressViewModel.event.observe(this, Observer { event ->
             when (event) {

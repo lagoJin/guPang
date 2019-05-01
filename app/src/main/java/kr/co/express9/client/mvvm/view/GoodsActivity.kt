@@ -1,15 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
-import android.app.ActionBar
-import android.content.Context
-import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -31,9 +23,6 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
         val goods = intent.getSerializableExtra("goods") as CategoryGoodsViewModel.GoodsDummy
         goodsViewModel.setGoods(goods)
         dataBinding.goodsViewModel = goodsViewModel
-        goodsViewModel.itemNum.observe(this, Observer {
-            dataBinding.tvNumber.text = it.toString()
-        })
 
         dataBinding.bAddToCart.setOnClickListener {
             if (goodsViewModel.itemNum.value == 0) toast(R.string.choose_number_of_goods)

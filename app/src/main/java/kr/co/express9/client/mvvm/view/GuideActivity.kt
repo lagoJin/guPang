@@ -25,7 +25,6 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
     override fun initStartView() {
         dataBinding.kakaoAddressViewModel = kakaoAddressViewModel
         dataBinding.userViewModel = userViewModel
-        dataBinding.lifecycleOwner = this
         kakaoAddressViewModel.event.observe(this, Observer { event ->
             when (event) {
                 KakaoAddressViewModel.Event.WRITE_SEARCH_ADDRESS -> {

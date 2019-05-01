@@ -49,7 +49,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         Logger.d("startView")
         dataBinding.model = viewModel
         dataBinding.kakaoViewModel = kakaoAddressViewModel
-        dataBinding.lifecycleOwner = this
 
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
