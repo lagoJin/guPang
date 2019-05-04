@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface MartAPI {
+interface MarketAPI {
 
     @GET("api/user/info")
     fun userInfo(@Query("userSeq") userSeq: String)

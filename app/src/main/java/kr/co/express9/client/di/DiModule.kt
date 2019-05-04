@@ -6,7 +6,7 @@ import kr.co.express9.client.mvvm.model.MapRepository
 import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
-import kr.co.express9.client.mvvm.model.api.MartAPI
+import kr.co.express9.client.mvvm.model.api.MarketAPI
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val apiModule = module {
-    // MartAPI
+    // MarketAPI
     single {
         Retrofit.Builder()
                 .baseUrl(BuildConfig.MART_API_URL)
@@ -32,7 +32,7 @@ val apiModule = module {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-                .create(MartAPI::class.java)
+                .create(MarketAPI::class.java)
     }
 
     // KakaoAPI
@@ -86,7 +86,7 @@ var viewModelModule = module {
 var repositoryModule = module {
     single { SuggestionRepository(get()) }
     single { KakaoRepository(get()) }
-    single { UserRepository(get()) }
+    single { UserRepository(get(), get()) }
     single { MapRepository() }
 }
 
