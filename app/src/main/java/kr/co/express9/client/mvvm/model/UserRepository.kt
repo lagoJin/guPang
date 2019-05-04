@@ -2,12 +2,12 @@ package kr.co.express9.client.mvvm.model
 
 import androidx.lifecycle.LiveData
 import io.reactivex.Observable
-import kr.co.express9.client.mvvm.model.api.MarketAPI
+import kr.co.express9.client.mvvm.model.api.UserAPI
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 
 class UserRepository(
-    private val marketAPI: MarketAPI,
+    private val userAPI: UserAPI,
     private val userPreferenceDataSource: UserPreferenceDataSource
 ) {
 

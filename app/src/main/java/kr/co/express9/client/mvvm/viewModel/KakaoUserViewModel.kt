@@ -17,6 +17,8 @@ import kr.co.express9.client.util.Logger
 
 class KakaoUserViewModel : BaseViewModel() {
 
+
+
     enum class Event {
         LOGIN,
         LOGOUT,

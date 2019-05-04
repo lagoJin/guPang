@@ -8,6 +8,7 @@ import kr.co.express9.client.mvvm.model.data.GoodsDummy
 
 class CartViewModel : BaseViewModel() {
 
+
     private val _cartGoods = MutableLiveData<ArrayList<CartGoodsDummy>>()
     val cartGoods: LiveData<ArrayList<CartGoodsDummy>>
         get() = _cartGoods

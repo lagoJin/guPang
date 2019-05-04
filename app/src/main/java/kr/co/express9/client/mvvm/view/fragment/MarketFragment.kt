@@ -6,6 +6,7 @@ import kr.co.express9.client.adapter.MarketAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentMarketBinding
 import kr.co.express9.client.mvvm.viewModel.MarketViewModel
+import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MarketFragment : BaseFragment<FragmentMarketBinding>(R.layout.fragment_market) {
@@ -13,7 +14,9 @@ class MarketFragment : BaseFragment<FragmentMarketBinding>(R.layout.fragment_mar
     private val marketViewModel: MarketViewModel by viewModel()
 
     override fun initStartView() {
-        val marketAdapter = MarketAdapter()
+        val marketAdapter = MarketAdapter { i ->
+            marketViewModel.deleteFavoriteMart(i)
+        }
         dataBinding.marketAdapter = marketAdapter
         dataBinding.marketViewModel = marketViewModel
 

@@ -15,16 +15,17 @@ class UserViewModel : BaseViewModel() {
 
     private val userRepository: UserRepository by inject()
 
-    enum class Event {
+    private val _event = MutableLiveData<Event>()
+    val event: LiveData<Event>
+        get() = _event
+
+    enum class Event{
         NETWORK_ERROR,
         OLD_USER,
         NEW_USER,
         SIGNUP_SUCCESS,
         LOGOUT
     }
-
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event> get() = _event
 
     private val _user by lazy { getPref() }
     val user: LiveData<User>

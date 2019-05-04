@@ -1,6 +1,7 @@
 package kr.co.express9.client.base
 
 import android.app.Application
+import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Base64
 import com.kakao.auth.KakaoSDK
@@ -16,9 +17,14 @@ import java.security.MessageDigest
 
 class BaseApplication : Application() {
 
+    companion object {
+
+        internal lateinit var context : Context
+    }
+
     override fun onCreate() {
         super.onCreate()
-
+        context = baseContext
         Logger.init(BuildConfig.DEBUG, getString(kr.co.express9.client.R.string.app_name))
         startKoin(this, diModule)
         KakaoSDK.init(KakaoSDKAdapter(this))
