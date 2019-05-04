@@ -5,10 +5,12 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="black">#000000</color>
-    <color name="gray">#7C7C7C</color>
+    <color name="gray">#f6f6f6</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow">#FFC107</color>
 
-    <color name="fontColor">#50585d</color>
+    <color name="fontBlack">#3c3c3c</color>
+    <color name="fontGrayDark">#979797</color>
+    <color name="fontGray">#b0b0b0</color>
     <color name="viewColor">#50585d33</color>
 </resources>

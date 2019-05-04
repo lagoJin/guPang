@@ -65,6 +65,7 @@ var viewModelModule = module {
     viewModel { MapViewModel() }
     viewModel { MainViewModel() }
     viewModel { HomeViewModel() }
+    viewModel { CartViewModel() }
     viewModel { TermsViewModel() }
     viewModel { UserViewModel() }
     viewModel { CategoryGoodsViewModel() }

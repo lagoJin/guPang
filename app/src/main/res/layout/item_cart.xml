@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cartGoods"
+            type="kr.co.express9.client.mvvm.model.data.CartGoodsDummy" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/v_head"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/gray"
+            android:visibility="@{cartGoods.isHeader}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:lineSpacingExtra="0sp"
+            android:text="@{cartGoods.goods.market}"
+            android:textColor="@color/fontBlack"
+            android:textSize="14sp"
+            android:visibility="@{cartGoods.isHeader}"
+            app:layout_constraintBottom_toBottomOf="@id/v_head"
+            app:layout_constraintEnd_toStartOf="@id/iv_arrow"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/v_head"
+            tools:text="메로나 마트" />
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:rotation="@{cartGoods.isExpanded? 90 : 0}"
+            android:src="@drawable/ic_keyboard_arrow_right_24dp"
+            android:visibility="@{cartGoods.isHeader}"
+            app:layout_constraintBottom_toBottomOf="@id/v_head"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/v_head" />
+
+        <ImageView
+            android:id="@+id/iv_goods"
+            android:layout_width="80dp"
+            android:layout_height="77dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="@{cartGoods.isExpanded}"
+            app:bind_image="@{cartGoods.goods.img}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_head"
+            tools:src="@drawable/ic_shopping_cart_24dp"
+            tools:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="0sp"
+            android:text="@{cartGoods.goods.name}"
+            android:textColor="@color/fontBlack"
+            android:textSize="14sp"
+            android:visibility="@{cartGoods.isExpanded}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/iv_goods"
+            app:layout_constraintTop_toBottomOf="@id/v_head"
+            tools:text="충주 세척사과 3kg" />
+
+        <TextView
+            android:id="@+id/tv_goods_sale_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="0sp"
+            android:textColor="@color/fontBlack"
+            android:textSize="18sp"
+            android:visibility="@{cartGoods.isExpanded}"
+            app:bind_price="@{cartGoods.goods.salePrice}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/iv_goods"
+            app:layout_constraintTop_toBottomOf="@id/tv_goods_name"
+            tools:text="23,200원" />
+
+        <TextView
+            android:id="@+id/tv_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="7dp"
+            android:lineSpacingExtra="0sp"
+            android:textColor="@color/fontGray"
+            android:textSize="14sp"
+            android:visibility="@{cartGoods.isExpanded}"
+            app:bind_cancel_line="@{true}"
+            app:bind_price="@{cartGoods.goods.price}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/iv_goods"
+            app:layout_constraintTop_toBottomOf="@id/tv_goods_sale_price"
+            tools:text="23,200원" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="@{cartGoods.isExpanded}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_head">
+
+            <Button
+                android:id="@+id/b_minus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/shape_round_box"
+                android:text="-"
+                android:textColor="@color/fontGrayDark" />
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/fontBlack"
+                android:textSize="18sp"
+                tools:text="0" />
+
+            <Button
+                android:id="@+id/b_plus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/shape_round_box"
+                android:text="+"
+                android:textColor="@color/fontGrayDark" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e6e6e6"
+            android:visibility="@{cartGoods.isExpanded}"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

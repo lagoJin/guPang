@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCategoryBinding
-import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
+import kr.co.express9.client.mvvm.model.data.GoodsDummy
 
 class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var goodsOrderByCategory = ArrayList<ArrayList<CategoryGoodsViewModel.GoodsDummy>>()
+    var goodsOrderByCategory = ArrayList<ArrayList<GoodsDummy>>()
 
     class VH(val b: ItemCategoryBinding) : RecyclerView.ViewHolder(b.root) {
         init {
@@ -20,9 +20,8 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val inflater = LayoutInflater.from(parent.context)
         val binding: ItemCategoryBinding = DataBindingUtil.inflate(
-            inflater,
+            LayoutInflater.from(parent.context),
             R.layout.item_category,
             parent,
             false

@@ -7,15 +7,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemGoodsBinding
+import kr.co.express9.client.mvvm.model.data.GoodsDummy
 import kr.co.express9.client.mvvm.view.GoodsActivity
-import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
 import kr.co.express9.client.util.extension.launchActivity
 
 class GoodsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class VH(val b: ItemGoodsBinding) : RecyclerView.ViewHolder(b.root)
 
-    var goodsList = ArrayList<CategoryGoodsViewModel.GoodsDummy>()
+    var goodsList = ArrayList<GoodsDummy>()
     var showTitle = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {

@@ -7,7 +7,7 @@
 
         <variable
             name="goods"
-            type="kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel.GoodsDummy" />
+            type="kr.co.express9.client.mvvm.model.data.GoodsDummy" />
     </data>
 
     <LinearLayout
@@ -47,7 +47,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_shopping_cart_24dp" />
+                    tools:src="@drawable/ic_shopping_cart_24dp"
+                    tools:tint="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_market_name"

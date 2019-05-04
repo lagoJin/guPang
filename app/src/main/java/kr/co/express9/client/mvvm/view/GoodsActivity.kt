@@ -2,12 +2,11 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
-import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityGoodsBinding
 import kr.co.express9.client.databinding.AlertCheckCartBinding
-import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
+import kr.co.express9.client.mvvm.model.data.GoodsDummy
 import kr.co.express9.client.mvvm.viewModel.GoodsViewModel
 import kr.co.express9.client.util.extension.dialog
 import kr.co.express9.client.util.extension.launchActivity
@@ -20,7 +19,7 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
     private val goodsViewModel: GoodsViewModel by viewModel()
 
     override fun initStartView() {
-        val goods = intent.getSerializableExtra("goods") as CategoryGoodsViewModel.GoodsDummy
+        val goods = intent.getSerializableExtra("goods") as GoodsDummy
         goodsViewModel.setGoods(goods)
         dataBinding.goodsViewModel = goodsViewModel
 

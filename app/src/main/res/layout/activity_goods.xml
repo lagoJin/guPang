@@ -30,7 +30,8 @@
                     android:layout_height="240dp"
                     app:bind_image="@{goodsViewModel.goods.img}"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_shopping_cart_24dp" />
+                    tools:src="@drawable/ic_shopping_cart_24dp"
+                    tools:tint="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_market_name"
@@ -94,24 +95,26 @@
 
                     <Button
                         android:id="@+id/b_minus"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/shape_round_box"
                         android:onClick="@{_ -> goodsViewModel.minusItem()}"
                         android:text="-" />
 
                     <TextView
                         android:id="@+id/tv_number"
                         android:layout_width="34dp"
-                        android:gravity="center"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="@{String.valueOf(goodsViewModel.itemNum)}"
                         android:textSize="18sp"
                         tools:text="0" />
 
                     <Button
                         android:id="@+id/b_plus"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/shape_round_box"
                         android:onClick="@{_ -> goodsViewModel.plusItem()}"
                         android:text="+" />
                 </LinearLayout>
