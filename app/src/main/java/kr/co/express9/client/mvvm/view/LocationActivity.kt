@@ -1,17 +1,21 @@
 package kr.co.express9.client.mvvm.view
 
 
+import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
 import android.text.style.StyleSpan
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityLocationBinding
 import kr.co.express9.client.mvvm.view.fragment.MapFragment
@@ -22,8 +26,16 @@ import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
+import android.R.attr.button
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.view.animation.Animation
+import android.view.animation.AlphaAnimation
 
-class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity_location) {
+
+
+
+class LocationActivity : BaseActivity<ActivityLocationBinding>(kr.co.express9.client.R.layout.activity_location) {
 
     private val kakaoAddressViewModel: KakaoAddressViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
@@ -41,7 +53,7 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
 
                 }
                 KakaoAddressViewModel.Event.NETWORK_ERROR -> {
-                    toast(R.string.network_error)
+                    toast(kr.co.express9.client.R.string.network_error)
                 }
             }
         })
@@ -59,25 +71,47 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
 
         dataBinding.tvLocationSetting.setOnClickListener {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MapFragment())
-                    .commitNow()
+                .replace(kr.co.express9.client.R.id.container, MapFragment())
+                .commitNow()
         }
 
-        dataBinding.actvLocationAddress.setOnFocusChangeListener { view, b ->
-            if (view.hasFocus()) {
-                dataBinding.llLocationText.visibility = View.GONE
-            } else {
-                dataBinding.llLocationText.visibility = View.VISIBLE
+        dataBinding.actvLocationAddress.apply {
+
+            setOnFocusChangeListener { view, b ->
+                if (view.hasFocus()) {
+                    dataBinding.llLocationText.animate()
+                        .alpha(0.0f)
+                        .setDuration(300).setListener(object:
+                        AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            dataBinding.llLocationText.visibility = View.GONE
+                        }
+                    })
+                } else {
+                    dataBinding.llLocationText.animate()
+                        .alpha(1.0f)
+                        .setDuration(300)
+                        .setListener(object:
+                        AnimatorListenerAdapter(){
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            dataBinding.llLocationText.visibility = View.VISIBLE
+                        }
+                    })
+                }
             }
+
         }
 
         compositeDisposable.add(dataBinding.actvLocationAddress.textChanges()
-                .filter { it.isNotEmpty() }
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ kakaoAddressViewModel.getAddressList(it as Editable) }, { throwable ->
-                    Logger.e(throwable.localizedMessage)
-                })
+            .filter { it.isNotEmpty() }
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ kakaoAddressViewModel.getAddressList(it as Editable) },
+                { throwable ->
+                Logger.e(throwable.localizedMessage)
+            })
         )
 
         // 임시 코드
@@ -88,6 +122,16 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
         dataBinding.bTemp2.setOnClickListener {
             userViewModel.logout()
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        currentFocus?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+            dataBinding.llLocationText.visibility = View.VISIBLE
+            dataBinding.actvLocationAddress.clearFocus()
+        }
+        return true
     }
 
     override fun onResume() {

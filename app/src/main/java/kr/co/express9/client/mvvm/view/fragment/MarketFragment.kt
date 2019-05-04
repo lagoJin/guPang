@@ -16,12 +16,13 @@ class MarketFragment : BaseFragment<FragmentMarketBinding>(R.layout.fragment_mar
     override fun initStartView() {
         val marketAdapter = MarketAdapter { i ->
             marketViewModel.deleteFavoriteMart(i)
-        }
+        }.apply { this.notifyDataSetChanged() }
+
         dataBinding.marketAdapter = marketAdapter
         dataBinding.marketViewModel = marketViewModel
         dataBinding.lifecycleOwner = this
 
-        
+
 
     }
 }

@@ -24,6 +24,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:animateLayoutChanges="true"
                 android:id="@+id/ll_location_text"
                 android:layout_width="match_parent"
                 android:layout_height="208dp"
@@ -56,6 +57,7 @@
                 android:layout_marginTop="56dp"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/location_hint"
+                android:lines="1"
                 android:padding="16dp"
                 android:textSize="16sp" />
 
