@@ -4,12 +4,8 @@ import androidx.lifecycle.LiveData
 import io.reactivex.Observable
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
-import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
 
 class UserRepository(
-    private val userRemoteDataSource: UserRemoteDataSource,
     private val userPreferenceDataSource: UserPreferenceDataSource
 ) {
 

@@ -9,9 +9,6 @@ import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.api.MartAPI
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
-import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
-import kr.co.express9.client.mvvm.model.remote.MapRemoteDataSource
-import kr.co.express9.client.mvvm.model.remote.UserRemoteDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
 import kr.co.express9.client.mvvm.view.fragment.MarketFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
@@ -27,6 +24,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 val apiModule = module {
+    // MartAPI
+    single {
+        Retrofit.Builder()
+                .baseUrl(BuildConfig.MART_API_URL)
+                .client(get())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(MartAPI::class.java)
+    }
 
     // KakaoAPI
     single {
@@ -37,33 +44,6 @@ val apiModule = module {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(KakaoAPI::class.java)
-    }
-
-    // OkHttpClient
-    single {
-        OkHttpClient.Builder().addInterceptor(get() as HttpLoggingInterceptor).build()
-
-    }
-
-    // HttpLoggingInterceptor
-    single {
-        HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-    }
-}
-
-val martApi = module{
-
-    // MartAPI
-    single {
-        Retrofit.Builder()
-                .baseUrl(BuildConfig.MART_API_URL)
-                .client(get())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(MartAPI::class.java)
     }
 
     // OkHttpClient
@@ -106,14 +86,8 @@ var viewModelModule = module {
 var repositoryModule = module {
     single { SuggestionRepository(get()) }
     single { KakaoRepository(get()) }
-    single { UserRepository(get(), get()) }
-    single { MapRepository(get()) }
-}
-
-var remoteDataSourceModule = module {
-    single { MapRemoteDataSource() }
-    single { UserRemoteDataSource() }
-    single { KakaoRemoteDataSource(get()) }
+    single { UserRepository(get()) }
+    single { MapRepository() }
 }
 
 var preferenceDataSourceModule = module {
@@ -126,6 +100,5 @@ var diModule = listOf(
     fragmentModule,
     repositoryModule,
     viewModelModule,
-    remoteDataSourceModule,
     preferenceDataSourceModule
 )

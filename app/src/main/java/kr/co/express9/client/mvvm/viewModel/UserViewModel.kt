@@ -39,6 +39,7 @@ class UserViewModel : BaseViewModel() {
             .subscribe { token ->
                 // 이미 가입한 유저인지 확인 > 서버 요청 (추가예정)
 
+
                 // 일단 임시로 pref에 있으면 old user로 판단
                 if (getPref() == null) {
                     _event.value = Event.NEW_USER
