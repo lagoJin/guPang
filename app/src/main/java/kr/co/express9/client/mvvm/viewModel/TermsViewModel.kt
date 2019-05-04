@@ -4,16 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 
-class TermsViewModel: BaseViewModel() {
+class TermsViewModel: BaseViewModel<TermsViewModel.Event>() {
 
     enum class Event {
         AGREE,
         DISAGREE
     }
-
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event>
-        get() = _event
 
     // two-way binding
     val requiredTermsAgreement = MutableLiveData<Boolean>().apply { value = false }

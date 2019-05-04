@@ -8,9 +8,11 @@ import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.util.Logger
 
-class SuggestionViewModel(
-    private val suggestionRepository: SuggestionRepository
-) : BaseViewModel() {
+class SuggestionViewModel(private val suggestionRepository: SuggestionRepository) : BaseViewModel<SuggestionViewModel.Event>() {
+
+    enum class Event{
+
+    }
 
     var suggestedList = ArrayList<String>()
 

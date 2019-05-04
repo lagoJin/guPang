@@ -19,6 +19,9 @@ class MarketFragment : BaseFragment<FragmentMarketBinding>(R.layout.fragment_mar
         }
         dataBinding.marketAdapter = marketAdapter
         dataBinding.marketViewModel = marketViewModel
+        dataBinding.lifecycleOwner = this
+
+        
 
     }
 }

@@ -6,7 +6,11 @@ import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.CategoryDummy
 import kr.co.express9.client.mvvm.model.data.GoodsDummy
 
-class CategoryGoodsViewModel : BaseViewModel() {
+class CategoryGoodsViewModel : BaseViewModel<CategoryGoodsViewModel.Event>() {
+
+    enum class Event{
+
+    }
 
     private val _categoryList = MutableLiveData<ArrayList<CategoryDummy>>()
     val categoryList: LiveData<ArrayList<CategoryDummy>>

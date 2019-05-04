@@ -11,7 +11,7 @@ import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.AnyTostring
 import org.koin.standalone.inject
 
-class KakaoAddressViewModel : BaseViewModel() {
+class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
 
     private val kakaoRepository: KakaoRepository by inject()
 
@@ -28,10 +28,6 @@ class KakaoAddressViewModel : BaseViewModel() {
     private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
     val progressView: LiveData<Int>
         get() = _progressView
-
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event>
-        get() = _event
 
     enum class Event {
         WRITE_SEARCH_ADDRESS,
