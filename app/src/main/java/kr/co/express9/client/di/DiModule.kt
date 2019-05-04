@@ -6,6 +6,7 @@ import kr.co.express9.client.mvvm.model.MapRepository
 import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
+import kr.co.express9.client.mvvm.model.api.MartAPI
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.model.remote.KakaoRemoteDataSource
@@ -36,6 +37,33 @@ val apiModule = module {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(KakaoAPI::class.java)
+    }
+
+    // OkHttpClient
+    single {
+        OkHttpClient.Builder().addInterceptor(get() as HttpLoggingInterceptor).build()
+
+    }
+
+    // HttpLoggingInterceptor
+    single {
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+}
+
+val martApi = module{
+
+    // MartAPI
+    single {
+        Retrofit.Builder()
+                .baseUrl(BuildConfig.MART_API_URL)
+                .client(get())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(MartAPI::class.java)
     }
 
     // OkHttpClient

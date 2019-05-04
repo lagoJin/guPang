@@ -73,6 +73,7 @@ class UserViewModel : BaseViewModel() {
         // 서버로 회원가입 요청 후 받은 유저 정보 pref에 저장 > 서버 요청 (추가예정)
         val user = User("임시", socialId, nickname, deviceToken, isMarketingAgree)
         putPref(user) {
+
             _event.value = Event.SIGNUP_SUCCESS
         }
     }
