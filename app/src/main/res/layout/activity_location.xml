@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -28,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="208dp"
                 android:animateLayoutChanges="true"
-                android:background="#F24d53"
+                android:background="@drawable/ic_background_location"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
@@ -56,26 +57,44 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="56dp"
                 android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_round_box"
+                android:drawableEnd="@drawable/ic_search_3c3c3c_24dp"
                 android:hint="@string/location_hint"
                 android:imeOptions="actionNext"
+
                 android:inputType="text"
                 android:lines="1"
                 android:padding="16dp"
+                android:textColorHint="#b0b0b0"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_location_setting"
+            <LinearLayout
+                android:id="@+id/ll_location_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/black"
+                android:background="@drawable/shape_round_box_3c3c3c"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:text="@string/location_now"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    app:srcCompat="@drawable/ic_near" />
+
+                <TextView
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/fontBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location_now"
+                    android:textAlignment="center" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/b_temp"
