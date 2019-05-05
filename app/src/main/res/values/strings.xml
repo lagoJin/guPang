@@ -44,6 +44,11 @@
 
     <!--activity_cart-->
     <string name="cart_title">장보기 메모</string>
+    <string name="total_price">총 상품금액</string>
+    <string name="total_sale_price">총 할인금액</string>
+    <string name="total_payment">총 결제예상금액</string>
+    <string name="delete_selected_item">삭제</string>
+    <string name="purchase_complete">구매완료</string>
 
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>

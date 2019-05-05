@@ -8,7 +8,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCartBinding
 import kr.co.express9.client.mvvm.model.data.CartGoodsDummy
 
-class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CartAdapter(val onClick:(Int)-> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class VH(val b: ItemCartBinding) : RecyclerView.ViewHolder(b.root)
 
@@ -42,8 +42,10 @@ class CartAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 notifyItemRangeChanged(i, endIdx + 1, "clickHeader")
             }
-        } else {
+        }
 
+        holder.b.clLayout.setOnClickListener {
+            onClick(i)
         }
     }
 

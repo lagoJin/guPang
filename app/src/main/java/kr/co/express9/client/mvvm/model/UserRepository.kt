@@ -11,6 +11,9 @@ class UserRepository(
     private val userPreferenceDataSource: UserPreferenceDataSource
 ) {
 
+    /**
+     * Preference
+     */
     fun getPref(): LiveData<User>? {
         return userPreferenceDataSource.get()
     }
@@ -22,4 +25,9 @@ class UserRepository(
     fun deletePref(): Observable<Unit> {
         return Observable.fromCallable { userPreferenceDataSource.delete() }
     }
+
+    /**
+     * MarketAPI
+     */
+//    fun postUserLogin
 }

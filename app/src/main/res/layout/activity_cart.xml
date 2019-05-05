@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,12 +17,140 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cart"
+            bind_adapter="@{cartAdapter}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            bind_adapter="@{cartAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/v_calculator"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+        <View
+            android:id="@+id/v_calculator"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@color/gray"
+            app:layout_constraintBottom_toTopOf="@id/cl_calculator" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_calculator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/total_price"
+                android:textColor="#50585d"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_sale_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/total_sale_price"
+                android:textColor="#50585d"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_price" />
+
+            <View
+                android:id="@+id/v_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="13dp"
+                android:background="#50585d"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_sale_price" />
+
+            <TextView
+                android:id="@+id/tv_total_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/total_payment"
+                android:textColor="#50585d"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:lineSpacingExtra="0sp"
+                android:textColor="#50585d"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_total_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_price"
+                tools:text="15,840원" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:lineSpacingExtra="0sp"
+                android:textColor="#50585d"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_total_sale_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_sale_price"
+                tools:text="- 5,160원" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:lineSpacingExtra="0sp"
+                android:textColor="#50585d"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_total_payment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_total_payment"
+                tools:text="10,160원" />
+
+            <Button
+                android:id="@+id/b_purchase_complete"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:background="#90969f"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/purchase_complete"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/b_delete"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/b_delete"
+                android:layout_width="70dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                android:lineSpacingExtra="8sp"
+                android:text="@string/delete_selected_item"
+                android:textColor="#90969f"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_payment" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

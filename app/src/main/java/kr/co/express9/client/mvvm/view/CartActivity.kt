@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CartAdapter
@@ -16,7 +17,10 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
     private val cartViewModel: CartViewModel by viewModel()
 
     override fun initStartView() {
-        val cartAdapter = CartAdapter()
+        val cartAdapter = CartAdapter {
+            toast("$it")
+            dataBinding.clCalculator.visibility = View.VISIBLE
+        }
         dataBinding.cartAdapter = cartAdapter
 
         cartViewModel.cartGoods.observe(this, Observer {
