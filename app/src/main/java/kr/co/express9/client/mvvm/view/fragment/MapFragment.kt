@@ -27,6 +27,7 @@ import kr.co.express9.client.adapter.ItemTransformer
 import kr.co.express9.client.adapter.MapMarketAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentMapBinding
+import kr.co.express9.client.mvvm.model.data.Mart
 import kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel
 import kr.co.express9.client.mvvm.viewModel.MapViewModel
 import kr.co.express9.client.util.Logger
@@ -37,24 +38,35 @@ import java.util.concurrent.TimeUnit
 class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-    private val viewModel: MapViewModel by inject()
+    private val mapViewModel: MapViewModel by inject()
     private val kakaoAddressViewModel: KakaoAddressViewModel by inject()
 
     private lateinit var locationManager: LocationManager
     private lateinit var location: Location
 
+    private val martList = ArrayList<Mart>()
+    private lateinit var adapter : MapMarketAdapter
 
     @SuppressLint("MissingPermission")
     override fun initStartView() {
         Logger.d("startView")
         initLocation()
-        dataBinding.model = viewModel
+        dataBinding.mapViewModel = mapViewModel
         dataBinding.kakaoViewModel = kakaoAddressViewModel
+        dataBinding.lifecycleOwner = this
 
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        viewModel.event.observe(this, Observer { event ->
-
+        mapViewModel.event.observe(this, Observer { event ->
+            when (event) {
+                MapViewModel.Event.MART_LIST -> {
+                    martList.clear()
+                    mapViewModel.marts.value!!.forEach { Mart ->
+                        martList.add(Mart)
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+            }
         })
 
         kakaoAddressViewModel.event.observe(this, Observer { event ->
@@ -93,11 +105,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         }
 
     private fun initAdapter() {
+        adapter = MapMarketAdapter(martList)
         dataBinding.vpMap.apply {
             dataBinding.vpMap.setItemTransformer(ItemTransformer())
-            //adapter = InfiniteScrollAdapter.wrap(MapMarketAdapter())
             addScrollListener(scrollListener)
-            adapter = MapMarketAdapter()
+            this@apply.adapter = this@MapFragment.adapter
         }
     }
 

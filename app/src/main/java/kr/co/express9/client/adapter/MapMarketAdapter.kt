@@ -7,8 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMapMarketBinding
+import kr.co.express9.client.mvvm.model.data.Mart
 
-class MapMarketAdapter : RecyclerView.Adapter<MapMarketAdapter.ViewHolder>() {
+class MapMarketAdapter(private val martList: ArrayList<Mart>) : RecyclerView.Adapter<MapMarketAdapter.ViewHolder>() {
 
     private lateinit var context: Context
     private val arrayList = ArrayList<MarketDummy>()
@@ -24,10 +25,10 @@ class MapMarketAdapter : RecyclerView.Adapter<MapMarketAdapter.ViewHolder>() {
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = arrayList.size
+    override fun getItemCount(): Int = martList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.mapMarket = arrayList[position]
+        holder.binding.mart = martList[position]
     }
 
 

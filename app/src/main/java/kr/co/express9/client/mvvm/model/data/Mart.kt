@@ -11,4 +11,4 @@ data class Mart(
     val longitude: Double,
     val martSeq: Int,
     val name: String
-): Serializable
+) :Any(), Serializable
