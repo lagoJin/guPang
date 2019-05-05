@@ -23,15 +23,16 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
         get() = _marts
 
     fun getMartSearch(northEast: LatLng, southWest: LatLng) {
-        mapRepository.mapMartList(0.0, 0.0, 0.0, 0.0).subscribe(
-            {
-                if (it.status == "SUCCESS") {
-                    _marts.value = it.result
-                    _event.value = Event.MART_LIST
-                }
-            },
-            { throwable -> networkError(throwable) }
-        ).apply { addDisposable(this) }
+        mapRepository.mapMartList(southWest.latitude, northEast.latitude, southWest.longitude, northEast.longitude)
+                .subscribe(
+                        {
+                            if (it.status == "SUCCESS") {
+                                _marts.value = it.result as List<Mart>
+                                _event.value = Event.MART_LIST
+                            }
+                        },
+                        { throwable -> networkError(throwable) }
+                ).apply { addDisposable(this) }
 
     }
 

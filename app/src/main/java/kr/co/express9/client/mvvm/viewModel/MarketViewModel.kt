@@ -10,12 +10,17 @@ class MarketViewModel : BaseViewModel<MarketViewModel.Event>() {
     private val marketRepository: MarketRepository by inject()
 
     enum class Event {
+        MARKET_ADD,
         MARKET_DELETE
     }
 
     fun deleteFavoriteMart(martSeq: Int) {
         marketRepository.deleteFavoriteMarket(martSeq).subscribe(
-            { result ->
+            {
+                if(it.status == "SUCCESS"){
+
+                    _event.value = Event.MARKET_DELETE
+                }
 
             }, { throwable ->
                 networkError(throwable)

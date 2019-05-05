@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
@@ -16,7 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityLocationBinding
@@ -24,7 +22,6 @@ import kr.co.express9.client.mvvm.view.fragment.MapFragment
 import kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.Logger
-import kr.co.express9.client.util.extension.anyTostring
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
