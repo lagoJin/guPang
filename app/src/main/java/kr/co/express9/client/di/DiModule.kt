@@ -25,7 +25,7 @@ val apiModule = module {
     // UserAPI
     single {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.MARKET_API_URL + "api/user/")
+            .baseUrl(BuildConfig.BASE_API_URL + "user/")
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -36,7 +36,7 @@ val apiModule = module {
     // MartAPI
     single {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.MARKET_API_URL + "api/mart/")
+            .baseUrl(BuildConfig.BASE_API_URL + "mart/")
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

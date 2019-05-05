@@ -15,7 +15,7 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', 'MARKET_API_URL', '"http://magarine.mooo.com/"'
+            buildConfigField 'String', 'BASE_API_URL', '"http://magarine.mooo.com/api/"'
             buildConfigField 'String', 'KAKAO_API_URL', '"https://dapi.kakao.com/v2/"'
             buildConfigField 'String', 'KAKAO_APP_KEY', '"KakaoAK 5579f7652dca38fc3fd2d437afc40888"'
             resValue "string", "notification_channel_id", "kr.co.express9.client"
@@ -23,7 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            buildConfigField 'String', 'MARKET_API_URL', '"http://magarine.mooo.com/"'
+            buildConfigField 'String', 'BASE_API_URL', '"http://magarine.mooo.com/api/"'
             buildConfigField 'String', 'KAKAO_API_URL', '"https://dapi.kakao.com/v2/"'
             buildConfigField 'String', 'KAKAO_APP_KEY', '"KakaoAK 5579f7652dca38fc3fd2d437afc40888"'
             resValue "string", "notification_channel_id", "kr.co.express9.client"
