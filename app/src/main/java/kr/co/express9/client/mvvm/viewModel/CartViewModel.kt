@@ -9,21 +9,69 @@ import kr.co.express9.client.util.Logger
 
 class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
-    enum class Event
+    enum class Event {
+        SELECTED,
+        NOT_SELECTED
+    }
 
     private val _cartGoods = MutableLiveData<ArrayList<CartGoodsDummy>>()
     val cartGoods: LiveData<ArrayList<CartGoodsDummy>>
         get() = _cartGoods
 
+    private val _totalPrice = MutableLiveData<Int>().apply { value = 0 }
+    val totalPrice: LiveData<Int>
+        get() = _totalPrice
+
+    private val _totalSalePrice = MutableLiveData<Int>().apply { value = 0 }
+    val totalSalePrice: LiveData<Int>
+        get() = _totalSalePrice
+
+    private val _totalPayment = MutableLiveData<Int>().apply { value = 0 }
+    val totalPayment: LiveData<Int>
+        get() = _totalPayment
+
+    private var _selectedList = MutableLiveData<ArrayList<Int>>().apply { value = ArrayList() }
+    val selectedList: LiveData<ArrayList<Int>>
+        get() = _selectedList
+
     private val marketList = ArrayList<String>()
     private val headerIdx = ArrayList<Int>()
 
+    private fun calculatePrice(isPlus: Boolean, price: Int, salePrice: Int) {
+        if (isPlus) {
+            _totalPrice.value = _totalPrice.value!! + price
+            _totalSalePrice.value = _totalSalePrice.value!! + salePrice
+        } else {
+            _totalPrice.value = _totalPrice.value!! - price
+            _totalSalePrice.value = _totalSalePrice.value!! - salePrice
+        }
+        _totalPayment.value = _totalPrice.value!! - _totalSalePrice.value!!
+    }
+
     fun selectGoods(idx: Int, cb: (index: Int) -> Unit) {
-        _cartGoods.value!![idx].isSelected = !_cartGoods.value!![idx].isSelected
+        // 상태변경
+        val isSelected = !_cartGoods.value!![idx].isSelected
+        _cartGoods.value!![idx].isSelected = isSelected
+
+        // 선택목록에 갱신
+        if (isSelected) _selectedList.value!!.add(idx)
+        else _selectedList.value!!.remove(idx)
+
+        // 이벤트 전달
+        _event.value = if (selectedList.value!!.size > 0) Event.SELECTED
+        else Event.NOT_SELECTED
+        Logger.d("size!! ${selectedList.value!!.size}")
+
+        // 금액변경
+        val cart = _cartGoods.value!![idx]
+        val price = cart.goods.price * cart.total
+        val salePrice = (cart.goods.price - cart.goods.salePrice) * cart.total
+        calculatePrice(isSelected, price, salePrice)
+
         cb(idx)
     }
 
-    fun expandGoods(idx: Int, cb: (startIdx:Int, endIdx:Int) -> Unit) {
+    fun expandGoods(idx: Int, cb: (startIdx: Int, endIdx: Int) -> Unit) {
         _cartGoods.value!![idx].isExpanded
 
         val marketIdx = marketList.indexOf(_cartGoods.value!![idx].goods.market)
@@ -42,6 +90,14 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
             isPlus -> total + 1
             total > 1 -> total - 1
             else -> 1
+        }
+
+        // 해당 상품이 선택되어 있는 경우 금액 변경
+        val cart = _cartGoods.value!![idx]
+        if (cart.isSelected) {
+            val price = cart.goods.price
+            val salePrice = cart.goods.price - cart.goods.salePrice
+            calculatePrice(isPlus, price, salePrice)
         }
         cb(idx)
     }

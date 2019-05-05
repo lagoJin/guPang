@@ -15,7 +15,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     private val userRepository: UserRepository by inject()
 
-    enum class Event{
+    enum class Event {
         NETWORK_ERROR,
         OLD_USER,
         NEW_USER,

@@ -8,7 +8,7 @@ import kr.co.express9.client.mvvm.model.data.GoodsDummy
 
 class CategoryGoodsViewModel : BaseViewModel<CategoryGoodsViewModel.Event>() {
 
-    enum class Event{
+    enum class Event {
 
     }
 

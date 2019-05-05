@@ -2,13 +2,13 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CartAdapter
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityCartBinding
 import kr.co.express9.client.mvvm.viewModel.CartViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,9 +36,16 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         cartAdapter = CartAdapter(onSelect, onExpand, onChangeAmount)
 
         dataBinding.cartAdapter = cartAdapter
+        dataBinding.cartViewModel = cartViewModel
+
+        cartViewModel.event.observe(this, Observer { event ->
+            when (event) {
+                CartViewModel.Event.SELECTED -> dataBinding.clCalculator.visibility = View.VISIBLE
+                CartViewModel.Event.NOT_SELECTED -> dataBinding.clCalculator.visibility = View.GONE
+            }
+        })
 
         cartViewModel.cartGoods.observe(this, Observer {
-            Logger.d("cartGoods Observe $it")
             cartAdapter.goodsList = it
             cartAdapter.notifyDataSetChanged()
         })

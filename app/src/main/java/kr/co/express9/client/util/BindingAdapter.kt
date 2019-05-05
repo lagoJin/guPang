@@ -48,7 +48,13 @@ fun ImageView.setImageUrl(profileUrl: String?) {
 @BindingAdapter("bind_price")
 fun TextView.setPrice(price: Int) {
     val nf = NumberFormat.getInstance()
-    this.text = nf.format(price) + "원"
+    this.text = "${nf.format(price)}원"
+}
+
+@BindingAdapter("bind_minus_price")
+fun TextView.setMinusPrice(price: Int) {
+    val nf = NumberFormat.getInstance()
+    this.text = "-${nf.format(price)}원"
 }
 
 @BindingAdapter("bind_cancel_line")
