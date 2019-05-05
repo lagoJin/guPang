@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
 import android.text.Spanned
@@ -34,7 +35,7 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
     private val kakaoAddressViewModel: KakaoAddressViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         dataBinding.kakaoAddressViewModel = kakaoAddressViewModel
         dataBinding.userViewModel = userViewModel
         dataBinding.lifecycleOwner = this

@@ -18,7 +18,7 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : Ap
     internal lateinit var dataBinding: T
     internal lateinit var compositeDisposable: CompositeDisposable
 
-    abstract fun initStartView()
+    abstract fun initStartView(isRestart: Boolean)
 
     internal fun clearActivity() {
         arrayList.clear()
@@ -26,12 +26,14 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : Ap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Logger.d("onCreate ${this.javaClass.simpleName}")
         dataBinding = DataBindingUtil.setContentView(this, layoutId)
         dataBinding.lifecycleOwner = this
         compositeDisposable = CompositeDisposable()
-        Logger.d("onCreate ${this.javaClass.simpleName}")
         arrayList.add(this)
-        initStartView()
+
+        val isRestart = savedInstanceState == null
+        initStartView(isRestart)
     }
 
     fun addDisposable(disposable: Disposable) {
@@ -39,9 +41,9 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : Ap
     }
 
     override fun onDestroy() {
+        Logger.d("onDestroy ${this.javaClass.simpleName}")
         arrayList.remove(this)
         compositeDisposable.clear()
-        Logger.d("onDestroy ${this.javaClass.simpleName}")
         super.onDestroy()
     }
 }

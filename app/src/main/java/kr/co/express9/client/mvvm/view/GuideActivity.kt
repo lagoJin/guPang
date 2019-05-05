@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.view
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -22,7 +23,7 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
     private val kakaoUserViewModel: KakaoUserViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         dataBinding.kakaoAddressViewModel = kakaoAddressViewModel
         dataBinding.userViewModel = userViewModel
         kakaoAddressViewModel.event.observe(this, Observer { event ->

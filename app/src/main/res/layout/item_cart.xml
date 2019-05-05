@@ -53,10 +53,20 @@
             app:layout_constraintTop_toTopOf="@id/v_head" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_layout"
+            android:id="@+id/cl_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/v_head">
+
+            <View
+                android:id="@+id/v_select"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/yellow"
+                android:visibility="@{cartGoods.isSelected}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_goods"
@@ -140,6 +150,7 @@
                     android:id="@+id/b_minus"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:padding="4dp"
                     android:background="@drawable/shape_round_box"
                     android:text="-"
                     android:textColor="@color/fontGrayDark" />
@@ -149,7 +160,7 @@
                     android:layout_width="34dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="@{String.valueOf(cartGoods.total)}"
                     android:textColor="@color/fontBlack"
                     android:textSize="18sp"
                     tools:text="0" />

@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -15,7 +16,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
     private val kakaoUserViewModel: KakaoUserViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         kakaoUserViewModel.setSessionCallback()
         kakaoUserViewModel.event.observe(this, Observer { event ->
             when (event) {

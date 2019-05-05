@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
+import android.os.Bundle
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityLeafletBinding
@@ -10,7 +11,7 @@ class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_l
 
     private val leafletViewModel: LeafletViewModel by viewModel()
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         setSupportActionBar(dataBinding.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

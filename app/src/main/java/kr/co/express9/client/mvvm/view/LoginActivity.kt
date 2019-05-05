@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -24,7 +25,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private lateinit var alertDialog: AlertDialog
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         // kakao session
         kakaoUserViewModel.setSessionCallback()
         kakaoUserViewModel.event.observe(this, Observer { event ->

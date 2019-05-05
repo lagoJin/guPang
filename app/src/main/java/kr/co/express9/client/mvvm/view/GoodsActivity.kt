@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import kr.co.express9.client.R
@@ -18,7 +19,7 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
 
     private val goodsViewModel: GoodsViewModel by viewModel()
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         val goods = intent.getSerializableExtra("goods") as GoodsDummy
         goodsViewModel.setGoods(goods)
         dataBinding.goodsViewModel = goodsViewModel

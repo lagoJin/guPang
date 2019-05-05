@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.SearchManager
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
@@ -48,7 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         MENU_IS_CREATED
     }
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         // init fragment
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, homeFragment).hide(homeFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, searchFragment).hide(searchFragment).commit()
