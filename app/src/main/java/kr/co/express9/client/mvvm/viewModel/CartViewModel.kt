@@ -60,7 +60,6 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
         // 이벤트 전달
         _event.value = if (selectedList.value!!.size > 0) Event.SELECTED
         else Event.NOT_SELECTED
-        Logger.d("size!! ${selectedList.value!!.size}")
 
         // 금액변경
         val cart = _cartGoods.value!![idx]

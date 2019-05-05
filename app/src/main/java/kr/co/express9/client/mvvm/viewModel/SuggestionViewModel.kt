@@ -40,7 +40,6 @@ class SuggestionViewModel(private val suggestionRepository: SuggestionRepository
     fun putSuggestion(suggestion: String) {
         // 이미 존재하는 경우에는 추가하지 않음
         if (suggestion !in suggestionRepository.suggestionList) {
-            Logger.d("putSuggestion $suggestion")
             suggestionRepository.putPref(suggestion)
         }
     }
