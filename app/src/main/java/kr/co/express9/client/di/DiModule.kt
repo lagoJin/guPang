@@ -95,7 +95,7 @@ var viewModelModule = module {
 var repositoryModule = module {
     single { SuggestionRepository(get()) }
     single { KakaoRepository(get()) }
-    single { UserRepository(get(), get()) }
+    single { UserRepository() }
     single { MapRepository(get()) }
     single { MarketRepository() }
 }

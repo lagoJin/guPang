@@ -4,11 +4,11 @@ import com.orhanobut.hawk.Hawk
 import java.io.Serializable
 
 data class User(
-    val userSeq: String,
-    val socialId: String,
-    val nickname: String,
-    val deviceToken: String,
-    val isMarketingAgree: Boolean
+        val userSeq: Int,
+        val uuid: String,
+        val name: String,
+        val deviceToken: String
+//        val isMarketingAgree: Boolean = true // 서버쪽에 아직 구현이 안됨
 ) : Serializable {
 
     companion object {

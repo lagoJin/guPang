@@ -42,7 +42,7 @@
                     android:bufferType="spannable"
                     android:fontFamily="sans-serif-medium"
                     android:lineSpacingExtra="4sp"
-                    android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
+                    android:text="@{@string/intro_guide(userViewModel.user.name)}"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>

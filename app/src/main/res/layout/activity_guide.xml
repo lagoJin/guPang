@@ -47,7 +47,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="48dp"
                 android:lineSpacingExtra="12sp"
-                android:text="@{@string/intro_guide(userViewModel.user.nickname)}"
+                android:text="@{@string/intro_guide(userViewModel.user.name)}"
                 android:textColor="#50585d"
                 android:textSize="24sp" />
         </LinearLayout>

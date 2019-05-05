@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.MapRepository
 import kr.co.express9.client.mvvm.model.data.Mart
+import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.extension.networkError
 import org.koin.standalone.inject
 
@@ -26,7 +27,7 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
         mapRepository.mapMartList(southWest.latitude, northEast.latitude, southWest.longitude, northEast.longitude)
                 .subscribe(
                         {
-                            if (it.status == "SUCCESS") {
+                            if (it.status == StatusEnum.SUCCESS) {
                                 _marts.value = it.result as List<Mart>
                                 _event.value = Event.MART_LIST
                             }

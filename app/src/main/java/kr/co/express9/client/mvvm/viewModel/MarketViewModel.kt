@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.viewModel
 
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.MarketRepository
+import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.extension.networkError
 import org.koin.standalone.inject
 
@@ -17,7 +18,7 @@ class MarketViewModel : BaseViewModel<MarketViewModel.Event>() {
     fun deleteFavoriteMart(martSeq: Int) {
         marketRepository.deleteFavoriteMarket(martSeq).subscribe(
             {
-                if(it.status == "SUCCESS"){
+                if(it.status == StatusEnum.SUCCESS){
 
                     _event.value = Event.MARKET_DELETE
                 }

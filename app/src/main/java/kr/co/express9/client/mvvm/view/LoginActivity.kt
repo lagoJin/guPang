@@ -59,7 +59,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     userViewModel.signup(
                             kakaoUserViewModel.kakaoProfile.value?.id.toString(),
                             kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
-                            "임시토큰",
                             termsViewModel.marketingAgreement.value!!
                     )
                     alertDialog.dismiss()

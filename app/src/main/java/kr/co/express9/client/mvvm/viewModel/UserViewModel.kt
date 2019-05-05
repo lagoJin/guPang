@@ -1,19 +1,23 @@
 package kr.co.express9.client.mvvm.viewModel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.UserRepository
+import kr.co.express9.client.mvvm.model.api.UserAPI
 import kr.co.express9.client.mvvm.model.data.User
+import kr.co.express9.client.mvvm.model.enumData.StatusEnum
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.getDeviceToken
 import org.koin.standalone.inject
 
 class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     private val userRepository: UserRepository by inject()
+    private val userAPI: UserAPI by inject()
 
     enum class Event {
         NETWORK_ERROR,
@@ -29,51 +33,59 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     /**
      * 이미 가입한 유저인지 확인 (수정필요)
-     * - old user인 경우 device token, nickname 갱신
+     * - old user인 경우 device token, name 갱신
      */
-    fun checkIsOldUser(socialId: String, nickname: String) {
+    fun checkIsOldUser(uuid: String, name: String) {
         getDeviceToken()
-            .subscribe { token ->
-                // 이미 가입한 유저인지 확인 > 서버 요청 (추가예정)
-
-
-                // 일단 임시로 pref에 있으면 old user로 판단
-                if (getPref() == null) {
-                    _event.value = Event.NEW_USER
-                } else {
-                    // 이미 가입한 유저인 경우(api로 받은 user preference에 저장)
-                    putPref(
-                        User(
-                            "1",
-                            socialId,
-                            nickname,
-                            token,
-                            true
-                        )
-                    ) {
-                        _event.value = Event.OLD_USER
+                .flatMap { userRepository.login(uuid, name, it) }
+                .flatMap {
+                    Logger.d("getUser login : $it")
+                    if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result)
+                    else {
+                        _event.value = Event.NEW_USER
+                        Single.error(Throwable("${it.result}"))
                     }
                 }
-            }
-            .apply { addDisposable(this) }
+                .subscribe({
+                    // 이미 가입한 유저인지 확인
+                    Logger.d("getUser getInfo : $it")
+                    if (it.status == StatusEnum.SUCCESS) {
+                        putPref(it.result) {
+                            _event.value = Event.OLD_USER
+                        }
+                    }
+                }, {
+                    Logger.d("getUser throwable : $it")
+                    Logger.d(it.toString())
+                })
+                .apply { addDisposable(this) }
     }
 
     /**
      * 회원가입 요청 (수정필요)
-     * - new user인 경우 device token, nickname 갱신
+     * - new user인 경우 device token, name 갱신
      */
     fun signup(
-        socialId: String,
-        nickname: String,
-        deviceToken: String,
-        isMarketingAgree: Boolean
+            uuid: String,
+            name: String,
+            isMarketingAgree: Boolean
     ) {
-        // 서버로 회원가입 요청 후 받은 유저 정보 pref에 저장 > 서버 요청 (추가예정)
-        val user = User("임시", socialId, nickname, deviceToken, isMarketingAgree)
-        putPref(user) {
-
-            _event.value = Event.SIGNUP_SUCCESS
-        }
+        // 회원가입
+        getDeviceToken()
+                .flatMap { userRepository.join(uuid, name, it) }
+                .flatMap {
+                    if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result)
+                    else Single.error(Throwable("${it.result}"))
+                }
+                .subscribe({
+                    if (it.status == StatusEnum.SUCCESS) {
+                        val user = it.result as User
+                        putPref(user) { _event.value = Event.SIGNUP_SUCCESS }
+                    }
+                }, {
+                    Logger.d(it.toString())
+                })
+                .apply { addDisposable(this) }
     }
 
     /**
@@ -100,9 +112,9 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      */
     fun putPref(user: User, next: () -> Unit) {
         userRepository.putPref(user)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { next() }
-            .apply { addDisposable(this) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { next() }
+                .apply { addDisposable(this) }
     }
 
     /**
@@ -110,9 +122,9 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      */
     fun deletePref(next: () -> Unit) {
         userRepository.deletePref()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { next() }
-            .apply { addDisposable(this) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { next() }
+                .apply { addDisposable(this) }
     }
 
 }
