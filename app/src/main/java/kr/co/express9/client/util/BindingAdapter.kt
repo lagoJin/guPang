@@ -26,6 +26,9 @@ fun ViewPager2.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHol
 
 @BindingAdapter("bind_array_adapter")
 fun AutoCompleteTextView.setBindArrayAdapter(dataList: LiveData<ArrayList<String>>) {
+
+    //TODO 최초 검색 시 리스트 반영 x
+    //출력이 되지 않음.
     dataList.let {
         val adapter = ArrayAdapter<String>(this.context, android.R.layout.simple_dropdown_item_1line, dataList.value!!)
         adapter.notifyDataSetChanged()

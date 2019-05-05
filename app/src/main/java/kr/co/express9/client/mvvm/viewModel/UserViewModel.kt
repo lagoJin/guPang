@@ -11,20 +11,17 @@ import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.extension.getDeviceToken
 import org.koin.standalone.inject
 
-class UserViewModel : BaseViewModel() {
+class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     private val userRepository: UserRepository by inject()
 
-    enum class Event {
+    enum class Event{
         NETWORK_ERROR,
         OLD_USER,
         NEW_USER,
         SIGNUP_SUCCESS,
         LOGOUT
     }
-
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event> get() = _event
 
     private val _user by lazy { getPref() }
     val user: LiveData<User>

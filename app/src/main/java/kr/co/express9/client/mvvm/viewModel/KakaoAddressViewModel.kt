@@ -8,10 +8,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.util.Logger
-import kr.co.express9.client.util.extension.AnyTostring
 import org.koin.standalone.inject
 
-class KakaoAddressViewModel : BaseViewModel() {
+class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
 
     private val kakaoRepository: KakaoRepository by inject()
 
@@ -29,14 +28,11 @@ class KakaoAddressViewModel : BaseViewModel() {
     val progressView: LiveData<Int>
         get() = _progressView
 
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event>
-        get() = _event
-
     enum class Event {
         WRITE_SEARCH_ADDRESS,
         NO_ADDRESS,
-        NETWORK_ERROR
+        NETWORK_ERROR,
+        NETWORK_SUCCESS
     }
 
     init {
@@ -82,8 +78,9 @@ class KakaoAddressViewModel : BaseViewModel() {
                     _addressResult.value = ArrayList()
                     it.documents.forEach { document ->
                         _addressResult.value!!.add(document.address_name)
+                        _event.value = Event.NETWORK_SUCCESS
                     }
-                    Logger.d("데이터 : ${_addressResult.value!!.AnyTostring()}")
+                    Logger.d("호출")
                 }
                 hideProgress()
             }, {

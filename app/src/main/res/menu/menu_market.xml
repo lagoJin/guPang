@@ -11,6 +11,6 @@
 
     <item
         android:id="@+id/market_delete"
-        android:title="@string/menu_delete" />
+        android:title="@string/menu_deleted" />
 
 </menu>

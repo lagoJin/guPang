@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.GoodsDummy
 
-class GoodsViewModel : BaseViewModel() {
+class GoodsViewModel : BaseViewModel<GoodsViewModel.Event>() {
+
+    enum class Event{
+
+    }
 
     private val _goods = MutableLiveData<GoodsDummy>()
     val goods: LiveData<GoodsDummy>

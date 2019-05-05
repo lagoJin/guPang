@@ -5,14 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseViewModel
 
-class MainViewModel : BaseViewModel() {
+class MainViewModel : BaseViewModel<MainViewModel.Event>() {
     enum class Event {
         SESSION_CLOSED
     }
-
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event>
-        get() = _event
 
     /**
      * BottomNavigation

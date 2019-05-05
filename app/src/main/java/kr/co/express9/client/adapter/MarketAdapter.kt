@@ -11,13 +11,14 @@ import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMarketBinding
 import kr.co.express9.client.util.extension.toast
 
-class MarketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MarketAdapter(var cb: (Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var context: Context
     private val arrayList = ArrayList<Market>()
 
     init {
         initDummyList()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,7 +39,7 @@ class MarketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             popup.show()
         }
         popup.setOnMenuItemClickListener {
-            context.toast("${it.title}을 클릭했습니다.")
+            cb(it.itemId)
             true
         }
     }

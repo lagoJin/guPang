@@ -15,7 +15,7 @@ import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.util.Logger
 
 
-class KakaoUserViewModel : BaseViewModel() {
+class KakaoUserViewModel : BaseViewModel<KakaoUserViewModel.Event>() {
 
     enum class Event {
         LOGIN,
@@ -23,10 +23,6 @@ class KakaoUserViewModel : BaseViewModel() {
         SESSION_OPEN_FAILED,
         SESSION_CLOSED
     }
-
-    private val _event = MutableLiveData<Event>()
-    val event: LiveData<Event>
-        get() = _event
 
     private val _kakaoProfile = MutableLiveData<MeV2Response>()
     val kakaoProfile: LiveData<MeV2Response>

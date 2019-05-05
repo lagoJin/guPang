@@ -1,12 +1,10 @@
 package kr.co.express9.client.di
 
 import kr.co.express9.client.BuildConfig
-import kr.co.express9.client.mvvm.model.KakaoRepository
-import kr.co.express9.client.mvvm.model.MapRepository
-import kr.co.express9.client.mvvm.model.SuggestionRepository
-import kr.co.express9.client.mvvm.model.UserRepository
+import kr.co.express9.client.mvvm.model.*
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
-import kr.co.express9.client.mvvm.model.api.MarketAPI
+import kr.co.express9.client.mvvm.model.api.MartAPI
+import kr.co.express9.client.mvvm.model.api.UserAPI
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
@@ -22,17 +20,28 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 val apiModule = module {
-    // MarketAPI
+
+    // UserAPI
     single {
         Retrofit.Builder()
-                .baseUrl(BuildConfig.MART_API_URL)
-                .client(get())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(MarketAPI::class.java)
+            .baseUrl(BuildConfig.MARKET_API_URL + "api/user/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(UserAPI::class.java)
+    }
+
+    // MartAPI
+    single {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.MARKET_API_URL + "api/mart/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(MartAPI::class.java)
     }
 
     // KakaoAPI
@@ -87,7 +96,8 @@ var repositoryModule = module {
     single { SuggestionRepository(get()) }
     single { KakaoRepository(get()) }
     single { UserRepository(get(), get()) }
-    single { MapRepository() }
+    single { MapRepository(get()) }
+    single { MarketRepository() }
 }
 
 var preferenceDataSourceModule = module {

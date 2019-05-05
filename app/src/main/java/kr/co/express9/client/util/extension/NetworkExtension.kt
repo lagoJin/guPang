@@ -8,3 +8,7 @@ fun <T> Single<T>.networkCommunication(): Single<T> {
     return subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }
+
+fun <T> Single<T>.netWorkSubscribe(): Single<T>{
+    return subscribeOn(Schedulers.io())
+}
