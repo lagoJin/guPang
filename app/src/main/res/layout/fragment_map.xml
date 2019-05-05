@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="model"
+            name="MapViewModel"
             type="kr.co.express9.client.mvvm.viewModel.MapViewModel" />
 
         <variable
