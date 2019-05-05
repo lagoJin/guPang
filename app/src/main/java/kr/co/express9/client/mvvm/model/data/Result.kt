@@ -1,6 +1,9 @@
 package kr.co.express9.client.mvvm.model.data
 
+import com.google.gson.annotations.Expose
+
 data class Result(
-    val result: List<Mart>,
+    @Expose
+    val result: List<Any>,
     val status: String
 )

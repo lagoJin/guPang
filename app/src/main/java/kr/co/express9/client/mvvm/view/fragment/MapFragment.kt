@@ -45,7 +45,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private lateinit var location: Location
 
     private val martList = ArrayList<Mart>()
-    private lateinit var adapter : MapMarketAdapter
+    private lateinit var adapter: MapMarketAdapter
 
     @SuppressLint("MissingPermission")
     override fun initStartView() {
@@ -61,8 +61,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             when (event) {
                 MapViewModel.Event.MART_LIST -> {
                     martList.clear()
+                    map.clear()
                     mapViewModel.marts.value!!.forEach { Mart ->
                         martList.add(Mart)
+                        map.addMarker(MarkerOptions().position(LatLng(Mart.latitude, Mart.longitude)))
                     }
                     adapter.notifyDataSetChanged()
                 }
@@ -84,25 +86,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         })
 
         disposable.add(dataBinding.actvMapSearch.textChanges()
-            .filter { it.isNotEmpty() }
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { kakaoAddressViewModel.getAddressList(it as Editable) })
+                .filter { it.isNotEmpty() }
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { kakaoAddressViewModel.getAddressList(it as Editable) })
 
         dataBinding.ivMapLocation.setOnClickListener {
             if (::map.isInitialized && ::location.isInitialized) {
                 map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
-                map.animateCamera(CameraUpdateFactory.zoomTo(17f))
+                map.animateCamera(CameraUpdateFactory.zoomTo(16f))
             }
         }
-
         initAdapter()
     }
 
     private val scrollListener =
-        DiscreteScrollView.ScrollListener<MapMarketAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
-            Logger.d("scrollPosition :$scrollPosition\n currentIndex : $currentIndex\n newIndex : $newIndex")
-        }
+            DiscreteScrollView.ScrollListener<MapMarketAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
+                martList[newIndex].apply {
+                    map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude, longitude)))
+                    map.animateCamera(CameraUpdateFactory.zoomTo(16f))
+                }
+            }
 
     private fun initAdapter() {
         adapter = MapMarketAdapter(martList)
@@ -117,15 +121,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         map?.let {
             this.map = it
             this.map.setOnCameraIdleListener {
-                val northeast = it.projection.visibleRegion.latLngBounds.northeast
-                val southwest = it.projection.visibleRegion.latLngBounds.southwest
-
+                it.projection.visibleRegion.latLngBounds.apply {
+                    mapViewModel.getMartSearch(northeast, southwest)
+                }
             }
         }
-    }
-
-    fun addMarker(map: GoogleMap) {
-        map.addMarker(MarkerOptions().position(LatLng(0.0, 0.0))).apply { this.tag = "" }
     }
 
     @SuppressLint("CheckResult")
@@ -135,38 +135,38 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         mapFragment.getMapAsync(this)
 
         if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
+                        activity!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                )
         ) {
             TedRx2Permission.with(activity!!)
-                .setRationaleTitle(R.string.permission_title)
-                .setRationaleMessage(R.string.permission_content) // "we need permission for read contact and find your location"
-                .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
-                .request()
-                .subscribe({ tedPermissionResult ->
-                    if (tedPermissionResult.isGranted) {
-                        locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            3000,
-                            10f,
-                            locationListener
-                        )
-                        locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER,
-                            3000,
-                            10f,
-                            locationListener
-                        )
-                        activity!!.toast("Permission Granted")
-                    } else {
-                        activity!!.toast("Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString())
-                    }
-                }, { throwable -> })
+                    .setRationaleTitle(R.string.permission_title)
+                    .setRationaleMessage(R.string.permission_content) // "we need permission for read contact and find your location"
+                    .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                    .request()
+                    .subscribe({ tedPermissionResult ->
+                        if (tedPermissionResult.isGranted) {
+                            locationManager.requestLocationUpdates(
+                                    LocationManager.NETWORK_PROVIDER,
+                                    3000,
+                                    10f,
+                                    locationListener
+                            )
+                            locationManager.requestLocationUpdates(
+                                    LocationManager.GPS_PROVIDER,
+                                    3000,
+                                    10f,
+                                    locationListener
+                            )
+                            activity!!.toast("Permission Granted")
+                        } else {
+                            activity!!.toast("Permission Denied\n" + tedPermissionResult.getDeniedPermissions().toString())
+                        }
+                    }, { throwable -> })
             return
         }
     }

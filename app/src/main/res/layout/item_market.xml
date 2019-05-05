@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="market"
-            type="kr.co.express9.client.adapter.MarketAdapter.Market" />
+            name="mart"
+            type="kr.co.express9.client.mvvm.model.data.Mart" />
 
     </data>
 
@@ -23,7 +23,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:fontFamily="sans-serif"
-            android:text="@{market.marketTitle}"
+
             android:textColor="@color/fontBlack"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -38,7 +38,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="12dp"
             android:fontFamily="sans-serif"
-            android:text="@{market.marketAddress}"
+
             android:textColor="@color/fontBlack"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:fontFamily="sans-serif"
-            android:text="@{market.marketTime}"
+
             android:textColor="@color/fontBlack"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/bottom_view"
