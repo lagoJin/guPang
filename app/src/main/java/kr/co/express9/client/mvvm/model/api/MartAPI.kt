@@ -2,16 +2,32 @@ package kr.co.express9.client.mvvm.model.api
 
 import io.reactivex.Single
 import kr.co.express9.client.mvvm.model.data.Mart
+import kr.co.express9.client.mvvm.model.data.Response
 import kr.co.express9.client.mvvm.model.data.ResultNeedModify
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MartAPI {
 
-    @GET("")
-    fun getMart(@Query("martSeq") martSeq: String): Single<Mart>
+    @GET("info")
+    fun getMart(@Query("martSeq") martSeq: String): Single<Response<Mart>>
 
     @GET("search")
-    fun getMarts(@Query("xx") xx: Double, @Query("xy") xy: Double, @Query("yx") yx: Double, @Query("yy") yy: Double): Single<ResultNeedModify>
+    fun getMarts(@Query("xx") xx: Double,
+                 @Query("xy") xy: Double,
+                 @Query("yx") yx: Double,
+                 @Query("yy") yy: Double): Single<ResultNeedModify>
+
+    @GET("favorite")
+    fun getFavoriteMarts(@Query("userSeq") userSeq: String): Single<Response<ArrayList<Mart>>>
+
+    @FormUrlEncoded
+    @POST("favorite")
+    fun addFavoriteMart(@Query("userSeq") userSeq: String,
+                        @Query("martSeq") martSeq: String): Single<Response<Unit>>
+
+    @DELETE("favorite")
+    fun deleteFavoriteMart(@Query("userSeq") userSeq: String,
+                           @Query("martSeq") martSeq: String): Single<Response<Unit>>
+
 
 }
