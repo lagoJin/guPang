@@ -1,7 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.SearchManager
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
@@ -15,14 +14,12 @@ import io.reactivex.schedulers.Schedulers
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityMainBinding
-import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
 import kr.co.express9.client.mvvm.view.fragment.MarketFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
@@ -59,28 +56,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, profileFragment).hide(profileFragment).commit()
 
         // BottomNavigation 클릭에 따른 Toolbar UI 변경
-        dataBinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            if (toolbarState == ToolbarState.MENU_IS_CREATED) {
-                if (searchMenu.isVisible) searchMenu.isVisible = false
-                if (!searchView.isIconified) searchView.onActionViewCollapsed()
-
-                when (item.itemId) {
-                    R.id.bn_home -> {
-                        dataBinding.tvTitle.text = getString(R.string.magarine)
-                    }
-                    R.id.bn_search -> {
-                        dataBinding.tvTitle.text = getString(R.string.menu_search)
-                        searchMenu.isVisible = true
-                    }
-                    R.id.bn_market -> {
-                        dataBinding.tvTitle.text = getString(R.string.menu_market)
-                    }
-                    R.id.bn_profile -> {
-                        dataBinding.tvTitle.text = getString(R.string.menu_profile)
-                    }
-                }
-            }
-            mainViewModel.setSelectedBottomNavigationItemId(item.itemId)
+        dataBinding.bottomNavigation.setOnNavigationItemSelectedListener {
+            setFragment(it.itemId)
             return@setOnNavigationItemSelectedListener true
         }
 
@@ -165,15 +142,43 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * 다른 Fragment에서 화면 이동시 사용
+     */
+    fun setBottomNavigation(selectedItemId: Int) {
+        dataBinding.bottomNavigation.selectedItemId = selectedItemId
+    }
+
+    /**
+     * 화면 변경
+     */
     private fun setFragment(selectedItemId: Int) {
-        selectedFragment = when (selectedItemId) {
-            R.id.bn_home -> homeFragment
-            R.id.bn_search -> searchFragment
-            R.id.bn_market -> marketFragment
-            R.id.bn_profile -> profileFragment
-            else -> homeFragment
+        if (toolbarState == ToolbarState.MENU_IS_CREATED) {
+            if (searchMenu.isVisible) searchMenu.isVisible = false
+            if (!searchView.isIconified) searchView.onActionViewCollapsed()
+
+            selectedFragment = when (selectedItemId) {
+                R.id.bn_home -> {
+                    dataBinding.tvTitle.text = getString(R.string.magarine)
+                    homeFragment
+                }
+                R.id.bn_search -> {
+                    dataBinding.tvTitle.text = getString(R.string.menu_search)
+                    searchMenu.isVisible = true
+                    searchFragment
+                }
+                R.id.bn_market -> {
+                    dataBinding.tvTitle.text = getString(R.string.menu_market)
+                    marketFragment
+                }
+                else -> {
+                    dataBinding.tvTitle.text = getString(R.string.menu_profile)
+                    profileFragment
+                }
+            }
+            supportFragmentManager.beginTransaction().hide(activeFragment).show(selectedFragment).commit()
+            activeFragment = selectedFragment
+            mainViewModel.setSelectedBottomNavigationItemId(selectedItemId)
         }
-        supportFragmentManager.beginTransaction().hide(activeFragment).show(selectedFragment).commit()
-        activeFragment = selectedFragment
     }
 }

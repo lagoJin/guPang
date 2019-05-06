@@ -20,6 +20,6 @@ class MainViewModel : BaseViewModel<MainViewModel.Event>() {
         get() = _selectedBottomNavigationItemId
 
     fun setSelectedBottomNavigationItemId(itemId: Int) {
-        _selectedBottomNavigationItemId.value = itemId
+        if(_selectedBottomNavigationItemId.value != itemId) _selectedBottomNavigationItemId.value = itemId
     }
 }

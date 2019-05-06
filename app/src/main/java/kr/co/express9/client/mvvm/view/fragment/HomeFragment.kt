@@ -4,14 +4,14 @@ import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.GoodsAdapter
 import kr.co.express9.client.base.BaseFragment
-import kr.co.express9.client.databinding.FragmentMainBinding
+import kr.co.express9.client.databinding.FragmentHomeBinding
 import kr.co.express9.client.mvvm.model.data.User
+import kr.co.express9.client.mvvm.view.MainActivity
 import kr.co.express9.client.mvvm.viewModel.HomeViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 
-class HomeFragment: BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
+class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by inject()
 
     override fun initStartView(isRestart: Boolean) {
@@ -19,11 +19,8 @@ class HomeFragment: BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         goodsAdapter.showTitle = true
 
         User.getFavoriteMarts().observe(this, Observer { marts ->
-            Logger.d("User Observing :: Marts = $marts / Marts size = ${marts.size}")
-            if(marts.size > 0) homeViewModel.getProducts()
-            else {
-
-            }
+            dataBinding.isMarts = marts.size > 0
+            if(dataBinding.isMarts!!) homeViewModel.getProducts()
         })
 
         homeViewModel.event.observe(this, Observer { event ->
@@ -39,6 +36,10 @@ class HomeFragment: BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         })
 
         dataBinding.goodsAdapter = goodsAdapter
-//        if(!isRestart) homeViewModel.getProducts()
+
+        dataBinding.llOopsLayout.setOnClickListener {
+            val mainActivity = activity as MainActivity
+            mainActivity.setBottomNavigation(R.id.bn_market)
+        }
     }
 }
