@@ -24,24 +24,28 @@ fun ViewPager2.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHol
     this.adapter = adapter
 }
 
-@BindingAdapter("bind_array_adapter")
-fun AutoCompleteTextView.setBindArrayAdapter(dataList: LiveData<ArrayList<String>>) {
+@BindingAdapter("bind_auto_complete_text")
+fun AutoCompleteTextView.setBindArrayAdapter(adapter: ArrayAdapter<String>) {
+    adapter.let { this.setAdapter(it)}
+}
 
-    //TODO 최초 검색 시 리스트 반영 x
+@BindingAdapter("bind_array_adapter_list")
+fun AutoCompleteTextView.setBindArray(dataList: ArrayList<String>) {
     //출력이 되지 않음.
     dataList.let {
-        val adapter = ArrayAdapter<String>(this.context, android.R.layout.simple_dropdown_item_1line, dataList.value!!)
-        adapter.notifyDataSetChanged()
+        val adapter = ArrayAdapter<String>(this.context, android.R.layout.simple_dropdown_item_1line, dataList)
         this.setAdapter(adapter)
+        adapter.notifyDataSetChanged()
     }
 }
+
 
 @BindingAdapter("bind_image")
 fun ImageView.setImageUrl(profileUrl: String?) {
     if (!TextUtils.isEmpty(profileUrl)) {
         Glide.with(this.context)
-            .load(profileUrl)
-            .into(this)
+                .load(profileUrl)
+                .into(this)
     }
 }
 

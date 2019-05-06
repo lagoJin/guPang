@@ -12,6 +12,7 @@ import android.text.style.StyleSpan
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,8 +34,10 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
     private val userViewModel: UserViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
+        val adapter = ArrayAdapter(baseContext, android.R.layout.simple_dropdown_item_1line, kakaoAddressViewModel.addressResult.value!!)
         dataBinding.kakaoAddressViewModel = kakaoAddressViewModel
         dataBinding.userViewModel = userViewModel
+        dataBinding.actvLocationAddress.setAdapter(adapter)
         dataBinding.lifecycleOwner = this
 
         kakaoAddressViewModel.event.observe(this, Observer { event ->
@@ -42,13 +45,19 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
                 KakaoAddressViewModel.Event.WRITE_SEARCH_ADDRESS -> {
 
                 }
+                KakaoAddressViewModel.Event.SEARCH_SUCCESS -> {
+                    adapter.clear()
+                    Logger.d("데이터 ${kakaoAddressViewModel.addressResult.value!!}")
+                    adapter.addAll(kakaoAddressViewModel.addressResult.value!!)
+                    adapter.notifyDataSetChanged()
+                }
                 KakaoAddressViewModel.Event.NO_ADDRESS -> {
 
                 }
                 KakaoAddressViewModel.Event.NETWORK_ERROR -> {
                     toast(kr.co.express9.client.R.string.network_error)
                 }
-                KakaoAddressViewModel.Event.NETWORK_SUCCESS ->{
+                KakaoAddressViewModel.Event.NETWORK_SUCCESS -> {
 
                 }
             }
@@ -67,8 +76,8 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
 
         dataBinding.llLocationSetting.setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MapFragment())
-                .commitNow()
+                    .replace(R.id.container, MapFragment())
+                    .commitNow()
         }
 
         dataBinding.actvLocationAddress.apply {
@@ -76,38 +85,37 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
             setOnFocusChangeListener { view, b ->
                 if (view.hasFocus()) {
                     dataBinding.llLocationText.animate()
-                        .alpha(0.0f)
-                        .setDuration(300).setListener(object :
-                            AnimatorListenerAdapter() {
-                            override fun onAnimationEnd(animation: Animator?) {
-                                super.onAnimationEnd(animation)
-                                dataBinding.llLocationText.visibility = View.GONE
-                            }
-                        })
+                            .alpha(0.0f)
+                            .setDuration(300).setListener(object :
+                                    AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator?) {
+                                    super.onAnimationEnd(animation)
+                                    dataBinding.llLocationText.visibility = View.GONE
+                                }
+                            })
                 } else {
                     dataBinding.llLocationText.animate()
-                        .alpha(1.0f)
-                        .setDuration(300)
-                        .setListener(object :
-                            AnimatorListenerAdapter() {
-                            override fun onAnimationEnd(animation: Animator?) {
-                                super.onAnimationEnd(animation)
-                                dataBinding.llLocationText.visibility = View.VISIBLE
-                            }
-                        })
+                            .alpha(1.0f)
+                            .setDuration(300)
+                            .setListener(object :
+                                    AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator?) {
+                                    super.onAnimationEnd(animation)
+                                    dataBinding.llLocationText.visibility = View.VISIBLE
+                                }
+                            })
                 }
             }
 
         }
 
         dataBinding.actvLocationAddress.textChanges()
-            .filter { it.isNotEmpty() }
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ kakaoAddressViewModel.getAddressList(it as Editable) },
-                { throwable ->
-                    Logger.e(throwable.localizedMessage)
-                }).apply { compositeDisposable.add(this) }
+                .filter { it.isNotEmpty() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ kakaoAddressViewModel.getAddressList(it as Editable) },
+                        { throwable ->
+                            Logger.e(throwable.localizedMessage)
+                        }).apply { compositeDisposable.add(this) }
 
         // 임시 코드
         dataBinding.bTemp.setOnClickListener {
@@ -129,9 +137,21 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
         return true
     }
 
+    override fun onBackPressed() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        currentFocus?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+            dataBinding.llLocationText.visibility = View.VISIBLE
+            dataBinding.actvLocationAddress.clearFocus()
+        }
+        super.onBackPressed()
+    }
+
     override fun onResume() {
         val span = dataBinding.tvLocationText.text as Spannable
         span.setSpan(StyleSpan(Typeface.BOLD), 11, 24, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         super.onResume()
     }
+
+
 }

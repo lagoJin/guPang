@@ -46,6 +46,10 @@ class MartRepository : KoinComponent {
         return martAPI.getMart(martSeq).networkCommunication()
     }
 
+    fun getMarts(xx: Double, xy: Double, yx: Double, yy: Double): Single<Response<List<Mart>>> {
+        return martAPI.getMarts(xx, xy, yx, yy).networkCommunication()
+    }
+
     fun getFavoriteMarts(userSeq: Int): Single<Response<ArrayList<Mart>>> {
         return martAPI.getFavoriteMarts(userSeq).networkCommunication()
     }

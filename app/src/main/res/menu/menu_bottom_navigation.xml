@@ -16,7 +16,7 @@
         android:id="@+id/bn_market"
         android:title="@string/menu_market"
         android:enabled="true"
-        android:icon="@drawable/ic_favorite_24dp" />
+        android:icon="@drawable/ic_favorite_click" />
     <item
         android:id="@+id/bn_profile"
         android:title="@string/menu_profile"
