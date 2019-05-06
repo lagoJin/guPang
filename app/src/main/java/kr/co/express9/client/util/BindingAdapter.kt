@@ -16,12 +16,12 @@ import java.text.NumberFormat
 
 @BindingAdapter("bind_adapter")
 fun RecyclerView.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-    adapter.let { this.adapter = it }
+    this.adapter = adapter
 }
 
 @BindingAdapter("bind_adapter")
 fun ViewPager2.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-    adapter.let { this.adapter = it }
+    this.adapter = adapter
 }
 
 @BindingAdapter("bind_array_adapter")

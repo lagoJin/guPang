@@ -25,13 +25,13 @@ interface UserAPI {
              @Field("deviceToken") deviceToken: String): Single<Response<String>>
 
     @GET("favoriteMart")
-    fun getFavoriteMart(@Query("userSeq") userSeq: Int = User.getUser().value!!.userSeq): Single<ResultNeedModify>
+    fun getFavoriteMart(@Query("userSeq") userSeq: Int = User.getUser().userSeq): Single<ResultNeedModify>
 
     @POST("favoriteMart")
-    fun addFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().value!!.userSeq,
+    fun addFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().userSeq,
                         @Field("martSeq") martSeq: String): Single<ResultNeedModify>
 
     @DELETE("favoriteMart")
-    fun deleteFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().value!!.userSeq,
+    fun deleteFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().userSeq,
                            @Field("martSeq") martSeq: Int): Single<ResultNeedModify>
 }

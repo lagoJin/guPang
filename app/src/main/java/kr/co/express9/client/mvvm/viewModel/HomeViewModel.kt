@@ -2,10 +2,10 @@ package kr.co.express9.client.mvvm.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Single
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.ProductRepository
 import kr.co.express9.client.mvvm.model.data.Product
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
@@ -20,9 +20,16 @@ class HomeViewModel : BaseViewModel<HomeViewModel.Event>() {
 
     private val _products = MutableLiveData<ArrayList<Product>>()
     val products: LiveData<ArrayList<Product>>
-        get() = _products
+        get() =_products
+
+    private val _isMarts = MutableLiveData<Boolean>()
+    val isMarts: LiveData<Boolean>
+        get() = _isMarts
 
     fun getProducts() {
+        _isMarts.value = User.getFavoriteMarts().size > 0
+        if (!_isMarts.value!!) return
+
         productRepository.getProducts()
             .subscribe({
                 if(it.status == StatusEnum.SUCCESS) {

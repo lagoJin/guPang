@@ -15,7 +15,7 @@ import org.koin.standalone.inject
 
 class MartRepository : KoinComponent {
 
-    private val userApi: UserAPI by inject()
+    private val userAPI: UserAPI by inject()
     private val martAPI: MartAPI by inject()
     private val martPreferenceDataSource: MartPreferenceDataSource by inject()
 
@@ -39,7 +39,7 @@ class MartRepository : KoinComponent {
      * Remote
      */
     fun deleteFavoriteMarket(martSeq: Int) : Single<ResultNeedModify> {
-        return userApi.deleteFavoriteMart(martSeq = martSeq).netWorkSubscribe()
+        return userAPI.deleteFavoriteMart(martSeq = martSeq).netWorkSubscribe()
     }
 
     fun getMart(martSeq: Int): Single<Response<Mart>> {

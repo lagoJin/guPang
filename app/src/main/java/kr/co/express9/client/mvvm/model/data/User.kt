@@ -1,7 +1,5 @@
 package kr.co.express9.client.mvvm.model.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.orhanobut.hawk.Hawk
 import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
@@ -16,16 +14,18 @@ data class User(
 ) : Serializable {
 
     companion object {
-        fun getUser(): LiveData<User> {
-            return MutableLiveData<User>().apply {
-                Hawk.get(UserPreferenceDataSource.UserPref.USER.name)
-            }
+        fun getUser(): User {
+            return Hawk.get(UserPreferenceDataSource.UserPref.USER.name)
         }
 
-        fun getFavoriteMarts(): LiveData<ArrayList<Mart>> {
-            return MutableLiveData<ArrayList<Mart>>().apply {
-                Hawk.get(MartPreferenceDataSource.MartPref.FAVORITE_MARTS.name)
-            }
+        fun getFavoriteMarts(): ArrayList<Mart> {
+            return Hawk.get(MartPreferenceDataSource.MartPref.FAVORITE_MARTS.name)
+        }
+
+        fun getFavoriteMartsSeqList():String {
+            val martSeqList = ArrayList<Int>()
+            getFavoriteMarts().forEach { martSeqList.add(it.martSeq) }
+            return martSeqList.joinToString()
         }
     }
 

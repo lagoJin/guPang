@@ -11,7 +11,7 @@ interface ProductAPI {
 
     @GET("list")
     fun getProducts(
-        @Query("martSeqList") martSeqList: String = User.getFavoriteMarts().value!!.joinToString()
+        @Query("martSeqList") martSeqList: String = User.getFavoriteMartsSeqList()
     ): Single<Response<ArrayList<Product>>>
 
     @GET("info")
@@ -21,7 +21,7 @@ interface ProductAPI {
     fun searchProducts(
         @Query("category") category: String,
         @Query("name") name: String,
-        @Query("martSeqList") martSeqList: String = User.getFavoriteMarts().value!!.joinToString()
+        @Query("martSeqList") martSeqList: String = User.getFavoriteMartsSeqList()
     ): Single<Response<ArrayList<Product>>>
 
 }

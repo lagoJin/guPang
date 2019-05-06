@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="goodsAdapter"
-            type="kr.co.express9.client.adapter.GoodsAdapter" />
+            name="productAdapter"
+            type="kr.co.express9.client.adapter.ProductAdapter" />
     </data>
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            bind_adapter="@{goodsAdapter}"
+            bind_adapter="@{productAdapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"

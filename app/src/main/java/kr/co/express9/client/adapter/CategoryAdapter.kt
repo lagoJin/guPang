@@ -26,7 +26,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             parent,
             false
         )
-        binding.goodsAdapter = GoodsAdapter()
+        binding.productAdapter = ProductAdapter()
         return VH(binding)
     }
 
@@ -34,7 +34,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, i: Int) {
         holder as VH
-        holder.b.goodsAdapter?.productList = goodsOrderByCategory[i]
-        holder.b.goodsAdapter?.notifyDataSetChanged()
+        holder.b.productAdapter?.productList = goodsOrderByCategory[i]
+        holder.b.productAdapter?.notifyDataSetChanged()
     }
 }

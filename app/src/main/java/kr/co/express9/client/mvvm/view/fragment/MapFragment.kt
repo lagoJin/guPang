@@ -85,7 +85,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             }
         })
 
-        disposable.add(dataBinding.actvMapSearch.textChanges()
+        compositeDisposable.add(dataBinding.actvMapSearch.textChanges()
                 .filter { it.isNotEmpty() }
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

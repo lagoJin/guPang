@@ -9,14 +9,14 @@ import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemGoodsBinding
 import kr.co.express9.client.mvvm.model.data.Product
 import kr.co.express9.client.mvvm.view.GoodsActivity
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 
-class GoodsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductAdapter(var showTitle: Boolean = false) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class VH(val b: ItemGoodsBinding) : RecyclerView.ViewHolder(b.root)
 
     var productList = ArrayList<Product>()
-    var showTitle = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val inflater = LayoutInflater.from(parent.context)

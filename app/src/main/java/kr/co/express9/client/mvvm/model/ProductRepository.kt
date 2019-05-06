@@ -4,6 +4,7 @@ import io.reactivex.Single
 import kr.co.express9.client.mvvm.model.api.ProductAPI
 import kr.co.express9.client.mvvm.model.data.Product
 import kr.co.express9.client.mvvm.model.data.Response
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.extension.networkCommunication
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject

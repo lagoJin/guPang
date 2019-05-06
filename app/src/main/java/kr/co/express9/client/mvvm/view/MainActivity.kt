@@ -20,6 +20,7 @@ import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
@@ -58,11 +59,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // BottomNavigation 클릭에 따른 Toolbar UI 변경
         dataBinding.bottomNavigation.setOnNavigationItemSelectedListener {
             setFragment(it.itemId)
+            Logger.d("setFragment!! 9")
             return@setOnNavigationItemSelectedListener true
         }
 
         mainViewModel.selectedBottomNavigationItemId.observe(this, Observer { selectedItemId ->
             setFragment(selectedItemId)
+            Logger.d("setFragment!! 8")
         })
 
         // action bar 등록
@@ -153,11 +156,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
      * 화면 변경
      */
     private fun setFragment(selectedItemId: Int) {
-        if (toolbarState == ToolbarState.MENU_IS_CREATED) {
+        selectedFragment = if (toolbarState == ToolbarState.MENU_IS_CREATED) {
             if (searchMenu.isVisible) searchMenu.isVisible = false
             if (!searchView.isIconified) searchView.onActionViewCollapsed()
 
-            selectedFragment = when (selectedItemId) {
+            val fragment = when (selectedItemId) {
                 R.id.bn_home -> {
                     dataBinding.tvTitle.text = getString(R.string.magarine)
                     homeFragment
@@ -176,9 +179,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     profileFragment
                 }
             }
-            supportFragmentManager.beginTransaction().hide(activeFragment).show(selectedFragment).commit()
-            activeFragment = selectedFragment
-            mainViewModel.setSelectedBottomNavigationItemId(selectedItemId)
-        }
+
+            fragment
+        } else homeFragment
+
+        supportFragmentManager.beginTransaction().hide(activeFragment).show(selectedFragment).commit()
+        activeFragment = selectedFragment
+        mainViewModel.setSelectedBottomNavigationItemId(selectedItemId)
     }
 }
