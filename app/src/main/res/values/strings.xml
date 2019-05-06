@@ -84,6 +84,9 @@
     <!--item_product-->
     <string name="product_desc">우리 동네\n인기상품이에요!</string>
 
+    <!--item_category-->
+    <string name="no_mart_or_product">찾는 상품/마트가 없습니다</string>
+
     <!--menu-->
     <string name="menu_home">홈</string>
     <string name="menu_search">검색</string>

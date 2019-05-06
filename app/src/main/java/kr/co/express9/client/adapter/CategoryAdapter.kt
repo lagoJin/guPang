@@ -35,6 +35,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, i: Int) {
         holder as VH
+        holder.b.isProduct = categoryList[i].products.size > 0
         holder.b.productAdapter?.productList = categoryList[i].products
         holder.b.productAdapter?.notifyDataSetChanged()
     }
