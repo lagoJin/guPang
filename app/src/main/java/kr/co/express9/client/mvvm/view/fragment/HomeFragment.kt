@@ -16,7 +16,7 @@ class HomeFragment(
         goodsAdapter.showTitle = true
         homeViewModel.getGoods()
         homeViewModel.goods.observe(this, Observer {
-            goodsAdapter.goodsList = it
+            goodsAdapter.productList = it
             goodsAdapter.notifyDataSetChanged()
         })
 

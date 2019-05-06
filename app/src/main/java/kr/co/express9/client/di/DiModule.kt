@@ -4,6 +4,7 @@ import kr.co.express9.client.BuildConfig
 import kr.co.express9.client.mvvm.model.*
 import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.api.MartAPI
+import kr.co.express9.client.mvvm.model.api.ProductAPI
 import kr.co.express9.client.mvvm.model.api.UserAPI
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
@@ -42,6 +43,17 @@ val apiModule = module {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(MartAPI::class.java)
+    }
+
+    // ProductAPI
+    single {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_API_URL + "product/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(ProductAPI::class.java)
     }
 
     // KakaoAPI
@@ -88,7 +100,7 @@ var viewModelModule = module {
     viewModel { CategoryGoodsViewModel() }
     viewModel { LeafletViewModel() }
     viewModel { SuggestionViewModel(get()) }
-    viewModel { GoodsViewModel() }
+    viewModel { ProductViewModel() }
     viewModel { MarketViewModel() }
 }
 

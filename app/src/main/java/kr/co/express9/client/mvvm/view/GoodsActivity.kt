@@ -1,14 +1,13 @@
 package kr.co.express9.client.mvvm.view
 
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityGoodsBinding
 import kr.co.express9.client.databinding.AlertCheckCartBinding
-import kr.co.express9.client.mvvm.model.data.GoodsDummy
-import kr.co.express9.client.mvvm.viewModel.GoodsViewModel
+import kr.co.express9.client.mvvm.model.data.Product
+import kr.co.express9.client.mvvm.viewModel.ProductViewModel
 import kr.co.express9.client.util.extension.dialog
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
@@ -17,15 +16,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods) {
 
-    private val goodsViewModel: GoodsViewModel by viewModel()
+    private val productViewModel: ProductViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
-        val goods = intent.getSerializableExtra("goods") as GoodsDummy
-        goodsViewModel.setGoods(goods)
-        dataBinding.goodsViewModel = goodsViewModel
+        val goods = intent.getSerializableExtra("product") as Product
+        productViewModel.setGoods(goods)
+        dataBinding.productViewModel = productViewModel
 
         dataBinding.bAddToCart.setOnClickListener {
-            if (goodsViewModel.itemNum.value == 0) toast(R.string.choose_number_of_goods)
+            if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_goods)
             else {
                 // 장보기 메모에 상품 추가 예정
                 showCheckCartAlert()
@@ -59,7 +58,7 @@ class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods
             binding.bNo.setOnClickListener { dialog.dismiss() }
             binding.bYes.setOnClickListener {
                 launchActivity<CartActivity>()
-                goodsViewModel.resetItem()
+                productViewModel.resetItem()
                 dialog.dismiss()
             }
             dialog.show()

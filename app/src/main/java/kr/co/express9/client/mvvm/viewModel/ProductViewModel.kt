@@ -3,24 +3,24 @@ package kr.co.express9.client.mvvm.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.mvvm.model.data.GoodsDummy
+import kr.co.express9.client.mvvm.model.data.Product
 
-class GoodsViewModel : BaseViewModel<GoodsViewModel.Event>() {
+class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
     enum class Event{
 
     }
 
-    private val _goods = MutableLiveData<GoodsDummy>()
-    val goods: LiveData<GoodsDummy>
-        get() = _goods
+    private val _product = MutableLiveData<Product>()
+    val product: LiveData<Product>
+        get() = _product
 
     private val _itemNum = MutableLiveData<Int>().apply { value = 0 }
     val itemNum:LiveData<Int>
         get() = _itemNum
 
-    fun setGoods(goods: GoodsDummy) {
-        _goods.value = goods
+    fun setGoods(product: Product) {
+        _product.value = product
     }
 
     fun plusItem() {

@@ -123,7 +123,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         searchView.suggestionsAdapter = adapter
 
         // searchView icon tint (style의 colorControlNormal로 대체)
-        // searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+        // searchView.findViewById<ImageView>(androidx.appcompat.R.productSeq.search_button)
         //     .setImageResource(R.drawable.ic_search_24dp)
 
         // 입력 및 검색 listener

@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCategoryBinding
-import kr.co.express9.client.mvvm.model.data.GoodsDummy
+import kr.co.express9.client.mvvm.model.data.Product
 
 class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var goodsOrderByCategory = ArrayList<ArrayList<GoodsDummy>>()
+    var goodsOrderByCategory = ArrayList<ArrayList<Product>>()
 
     class VH(val b: ItemCategoryBinding) : RecyclerView.ViewHolder(b.root) {
         init {
@@ -34,7 +34,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, i: Int) {
         holder as VH
-        holder.b.goodsAdapter?.goodsList = goodsOrderByCategory[i]
+        holder.b.goodsAdapter?.productList = goodsOrderByCategory[i]
         holder.b.goodsAdapter?.notifyDataSetChanged()
     }
 }
