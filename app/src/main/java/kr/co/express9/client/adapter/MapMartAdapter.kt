@@ -9,7 +9,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMapMarketBinding
 import kr.co.express9.client.mvvm.model.data.Mart
 
-class MapMartAdapter(private val martList: ArrayList<Mart>) : RecyclerView.Adapter<MapMartAdapter.ViewHolder>() {
+class MapMartAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit) : RecyclerView.Adapter<MapMartAdapter.ViewHolder>() {
 
     private lateinit var context: Context
     private val arrayList = ArrayList<MarketDummy>()
@@ -29,15 +29,16 @@ class MapMartAdapter(private val martList: ArrayList<Mart>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.mart = martList[position]
+        cb(martList[position].martSeq)
     }
 
 
     class ViewHolder(internal val binding: ItemMapMarketBinding) : RecyclerView.ViewHolder(binding.root)
 
     data class MarketDummy(
-        var marketTitle: String,
-        var marketAddress: String,
-        var marketTime: String
+            var marketTitle: String,
+            var marketAddress: String,
+            var marketTime: String
     )
 
     private fun initDummyList() {
