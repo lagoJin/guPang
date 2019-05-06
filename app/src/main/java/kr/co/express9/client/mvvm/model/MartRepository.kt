@@ -38,8 +38,8 @@ class MartRepository : KoinComponent {
     /**
      * Remote
      */
-    fun deleteFavoriteMarket(martSeq: Int) : Single<ResultNeedModify> {
-        return userAPI.deleteFavoriteMart(martSeq = martSeq).netWorkSubscribe()
+    fun deleteFavoriteMart(martSeq: Int) : Single<ResultNeedModify> {
+        return userAPI.deleteFavoriteMart(martSeq).netWorkSubscribe()
     }
 
     fun getMart(martSeq: Int): Single<Response<Mart>> {

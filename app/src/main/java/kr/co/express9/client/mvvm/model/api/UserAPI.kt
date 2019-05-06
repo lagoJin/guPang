@@ -32,6 +32,6 @@ interface UserAPI {
                         @Field("martSeq") martSeq: String): Single<ResultNeedModify>
 
     @DELETE("favoriteMart")
-    fun deleteFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().userSeq,
-                           @Field("martSeq") martSeq: Int): Single<ResultNeedModify>
+    fun deleteFavoriteMart(@Field("martSeq") martSeq: Int,
+                           @Field("userSeq") userSeq: Int = User.getUser().userSeq): Single<ResultNeedModify>
 }

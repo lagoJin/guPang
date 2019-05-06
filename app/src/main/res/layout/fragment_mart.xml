@@ -5,12 +5,12 @@
     <data>
 
         <variable
-            name="marketAdapter"
-            type="kr.co.express9.client.adapter.MarketAdapter" />
+            name="martAdapter"
+            type="kr.co.express9.client.adapter.MartAdapter" />
 
         <variable
-            name="marketViewModel"
-            type="kr.co.express9.client.mvvm.viewModel.MarketViewModel" />
+            name="martViewModel"
+            type="kr.co.express9.client.mvvm.viewModel.MartViewModel" />
     </data>
 
     <FrameLayout
@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            bind_adapter="@{marketAdapter}"
+            bind_adapter="@{martAdapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

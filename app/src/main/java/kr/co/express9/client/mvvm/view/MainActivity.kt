@@ -15,7 +15,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityMainBinding
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
-import kr.co.express9.client.mvvm.view.fragment.MarketFragment
+import kr.co.express9.client.mvvm.view.fragment.MartFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val homeFragment: HomeFragment by inject()
     private val searchFragment: SearchFragment by inject()
-    private val marketFragment: MarketFragment by inject()
+    private val martFragment: MartFragment by inject()
     private val profileFragment: ProfileFragment by inject()
 
     private var activeFragment: Fragment = homeFragment
@@ -53,19 +53,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // init fragment
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, homeFragment).hide(homeFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, searchFragment).hide(searchFragment).commit()
-        supportFragmentManager.beginTransaction().add(R.id.frameLayout, marketFragment).hide(marketFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, martFragment).hide(martFragment).commit()
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, profileFragment).hide(profileFragment).commit()
 
         // BottomNavigation 클릭에 따른 Toolbar UI 변경
         dataBinding.bottomNavigation.setOnNavigationItemSelectedListener {
             setFragment(it.itemId)
-            Logger.d("setFragment!! 9")
             return@setOnNavigationItemSelectedListener true
         }
 
         mainViewModel.selectedBottomNavigationItemId.observe(this, Observer { selectedItemId ->
             setFragment(selectedItemId)
-            Logger.d("setFragment!! 8")
         })
 
         // action bar 등록
@@ -171,8 +169,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     searchFragment
                 }
                 R.id.bn_market -> {
-                    dataBinding.tvTitle.text = getString(R.string.menu_market)
-                    marketFragment
+                    dataBinding.tvTitle.text = getString(R.string.menu_mart)
+                    martFragment
                 }
                 else -> {
                     dataBinding.tvTitle.text = getString(R.string.menu_profile)

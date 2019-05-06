@@ -39,7 +39,7 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="22dp"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/market_memo"
+            android:text="@string/mart_memo"
             android:textSize="16sp" />
 
         <View

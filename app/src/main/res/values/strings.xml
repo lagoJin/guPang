@@ -13,7 +13,7 @@
     <string name="logout_toast">로그아웃 되었습니다</string>
 
     <!--activity_login-->
-    <string name="find_market_info_around_you">내 주변 마트 정보를 찾아보세요</string>
+    <string name="find_mart_info_around_you">내 주변 마트 정보를 찾아보세요</string>
     <string name="you_cannot_signup_without_agreement">약관에 동의하셔야 가입 가능합니다.</string>
     <string name="login_success">%s님 반갑습니다.</string>
 
@@ -75,7 +75,7 @@
     <string name="check_result">마트 선택 완료</string>
 
     <!--fragment profile-->
-    <string name="market_memo">장보기 메모 내역 보기</string>
+    <string name="mart_memo">장보기 메모 내역 보기</string>
     <string name="discount_alert">할인 알림 설정</string>
     <string name="modify_info">내 정보 수정</string>
     <string name="personal_inquiry">1:1 문의</string>
@@ -88,12 +88,12 @@
     <string name="menu_home">홈</string>
     <string name="menu_search">검색</string>
     <string name="menu_search_hint">검색어를 입력하세요</string>
-    <string name="menu_market">내 단골마트</string>
+    <string name="menu_mart">내 단골마트</string>
     <string name="menu_profile">마이페이지</string>
     <string name="menu_cart">장보기 메모</string>
     <string name="menu_delete">삭제</string>
 
-    <!--market menu-->
+    <!--mart menu-->
     <string name="menu_leaflet">1. 전단지 보기</string>
     <string name="menu_location">2. 마트 위치 보기</string>
     <string name="menu_deleted">3. 삭제</string>

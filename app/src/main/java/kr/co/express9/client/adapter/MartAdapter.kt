@@ -10,7 +10,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMarketBinding
 import kr.co.express9.client.mvvm.model.data.Mart
 
-class MarketAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit) :
+class MartAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var context: Context
@@ -33,7 +33,7 @@ class MarketAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit
         holder as ViewHolder
         holder.binding.mart = martList[position]
         val popup = PopupMenu(context, holder.binding.btnPopup)
-        popup.menuInflater.inflate(R.menu.menu_market, popup.menu)
+        popup.menuInflater.inflate(R.menu.menu_mart, popup.menu)
         holder.binding.btnPopup.setOnClickListener {
             popup.show()
         }
@@ -45,12 +45,6 @@ class MarketAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit
     }
 
     class ViewHolder(internal val binding: ItemMarketBinding) : RecyclerView.ViewHolder(binding.root)
-
-    data class Market(
-        var marketTitle: String,
-        var marketAddress: String,
-        var marketTime: String
-    )
 
     private fun initDummyList() {
 //        arrayList.add(Market("메로나 슈퍼", "인천 서구 심곡동", "운영시간 9:00 am - 11:30 pm "))

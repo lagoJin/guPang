@@ -26,7 +26,7 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.ItemTransformer
-import kr.co.express9.client.adapter.MapMarketAdapter
+import kr.co.express9.client.adapter.MapMartAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentMapBinding
 import kr.co.express9.client.mvvm.model.data.Mart
@@ -48,7 +48,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private lateinit var location: Location
 
     private val martList = ArrayList<Mart>()
-    private lateinit var adapter: MapMarketAdapter
+    private lateinit var adapter: MapMartAdapter
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
@@ -136,7 +136,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     }
 
     private val scrollListener =
-            DiscreteScrollView.ScrollListener<MapMarketAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
+            DiscreteScrollView.ScrollListener<MapMartAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
                 martList[newIndex].apply {
                     map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude, longitude)))
                     map.animateCamera(CameraUpdateFactory.zoomTo(16f))
@@ -144,7 +144,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             }
 
     private fun initAdapter() {
-        adapter = MapMarketAdapter(martList)
+        adapter = MapMartAdapter(martList)
         dataBinding.vpMap.apply {
             dataBinding.vpMap.setItemTransformer(ItemTransformer())
             addScrollListener(scrollListener)

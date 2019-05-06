@@ -6,21 +6,21 @@ import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.extension.networkError
 import org.koin.standalone.inject
 
-class MarketViewModel : BaseViewModel<MarketViewModel.Event>() {
+class MartViewModel : BaseViewModel<MartViewModel.Event>() {
 
     private val martRepository: MartRepository by inject()
 
     enum class Event {
-        MARKET_ADD,
-        MARKET_DELETE
+        MART_ADD,
+        MART_DELETE
     }
 
     fun deleteFavoriteMart(martSeq: Int) {
-        martRepository.deleteFavoriteMarket(martSeq).subscribe(
+        martRepository.deleteFavoriteMart(martSeq).subscribe(
             {
                 if(it.status == StatusEnum.SUCCESS){
 
-                    _event.value = Event.MARKET_DELETE
+                    _event.value = Event.MART_DELETE
                 }
 
             }, { throwable ->

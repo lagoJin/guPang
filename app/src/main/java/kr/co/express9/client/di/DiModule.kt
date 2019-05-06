@@ -10,7 +10,7 @@ import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
-import kr.co.express9.client.mvvm.view.fragment.MarketFragment
+import kr.co.express9.client.mvvm.view.fragment.MartFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.*
@@ -85,7 +85,7 @@ val apiModule = module {
 var fragmentModule = module {
     factory { HomeFragment() }
     factory { SearchFragment(get()) }
-    factory { MarketFragment() }
+    factory { MartFragment() }
     factory { ProfileFragment() }
 }
 
@@ -102,7 +102,7 @@ var viewModelModule = module {
     viewModel { LeafletViewModel() }
     viewModel { SuggestionViewModel(get()) }
     viewModel { ProductViewModel() }
-    viewModel { MarketViewModel() }
+    viewModel { MartViewModel() }
 }
 
 var repositoryModule = module {
