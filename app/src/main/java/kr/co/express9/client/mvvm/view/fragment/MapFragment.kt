@@ -11,15 +11,14 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.jakewharton.rxbinding3.widget.textChanges
+import com.kakao.util.helper.log.Logger
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.R
@@ -31,7 +30,9 @@ import kr.co.express9.client.mvvm.model.data.Mart
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel
 import kr.co.express9.client.mvvm.viewModel.MapViewModel
+import kr.co.express9.client.util.extension.anyTostring
 import org.koin.android.ext.android.inject
+import java.util.Collections.addAll
 import java.util.concurrent.TimeUnit
 
 class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnMapReadyCallback {
@@ -42,9 +43,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
     private lateinit var locationManager: LocationManager
     private lateinit var location: Location
-
-    private val martList = ArrayList<Mart>()
-    private lateinit var adapter: MapMartAdapter
+    private lateinit var marker: Marker
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
@@ -58,30 +57,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         mapViewModel.event.observe(this, Observer { event ->
             when (event) {
                 MapViewModel.Event.MART_LIST -> {
-                    martList.clear()
                     map.clear()
-                    martList.addAll(mapViewModel.marts.value!!)
-                    martList.forEach { Mart ->
+
+                    mapViewModel.marts.value!!.forEach { Mart ->
                         var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
                         if (User.getFavoriteMarts().contains(Mart)) {
                             bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
                         }
-                        map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        val marker = map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        marker.tag = Mart.martSeq
                     }
-                    adapter.notifyDataSetChanged()
                 }
                 MapViewModel.Event.FAVORITE_REFRESH -> {
-                    martList.clear()
                     map.clear()
-                    martList.addAll(mapViewModel.marts.value!!)
-                    martList.forEach { Mart ->
+                    mapViewModel.marts.value!!.forEach { Mart ->
                         var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
                         if (User.getFavoriteMarts().contains(Mart)) {
                             bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
                         }
-                        map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        val marker = map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        marker.tag = Mart.martSeq
                     }
-                    adapter.notifyDataSetChanged()
                 }
             }
         })
@@ -116,7 +112,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 map.animateCamera(CameraUpdateFactory.zoomTo(16f))
             }
         }
-        initAdapter()
+
     }
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
@@ -128,21 +124,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-    private fun initAdapter() {
-        adapter = MapMartAdapter(martList) { i, boolean ->
-            if (boolean) {
-                mapViewModel.addFavoriteMart(User.getUser().userSeq, i)
-            } else {
-                mapViewModel.deleteFavoriteMart(User.getUser().userSeq, i)
-            }
-        }
-
-        dataBinding.vpMap.apply {
-            dataBinding.vpMap.setItemTransformer(ItemTransformer())
-            this@apply.adapter = this@MapFragment.adapter
-        }
-    }
-
+    @SuppressLint("ResourceAsColor")
     override fun onMapReady(map: GoogleMap?) {
         map?.let {
             this.map = it
@@ -150,6 +132,24 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 it.projection.visibleRegion.latLngBounds.apply {
                     mapViewModel.getMarts(northeast, southwest)
                 }
+            }
+            this.map.setOnMarkerClickListener {
+                dataBinding.clMarketInfo.visibility = View.VISIBLE
+                mapViewModel.marts.value!!.forEach { Mart ->
+                    if (it.tag == Mart.martSeq) {
+                        Logger.d("추가 마트 리스트 태그 ${it.tag}")
+                        dataBinding.mart = Mart
+                        dataBinding.ivMarketFavorite.isChecked = User.getFavoriteMarts().contains(Mart)
+                        dataBinding.ivMarketFavorite.setOnCheckedChangeListener { buttonView, isChecked ->
+                            if (isChecked) {
+                                mapViewModel.addFavoriteMart(User.getUser().userSeq, Mart)
+                            } else {
+                                mapViewModel.deleteFavoriteMart(User.getUser().userSeq, Mart)
+                            }
+                        }
+                    }
+                }
+                true
             }
         }
     }
@@ -193,12 +193,5 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
         override fun onProviderDisabled(provider: String?) {
         }
-    }
-
-    enum class TYPE {
-        NON_FAVORITE,
-        FAVORITE,
-        NON_FAVORITE_BIG,
-        FAVORITE_BIG
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -10,6 +10,8 @@
         <variable
                 name="kakaoViewModel"
                 type="kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel"/>
+
+        <variable name="mart" type="kr.co.express9.client.mvvm.model.data.Mart"/>
 
     </data>
 
@@ -65,18 +67,75 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-            <com.yarolegovich.discretescrollview.DiscreteScrollView
-                    android:id="@+id/vp_map"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="gone"
+                    android:id="@+id/cl_market_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:dsv_orientation="horizontal"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/round_background"
+                    android:paddingStart="16dp">
+
+                <TextView
+                        android:text="@{mart.name}"
+                        android:id="@+id/tv_market_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#3c3c3c"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="메로나슈퍼"/>
+
+                <TextView
+                        android:text="@{mart.address}"
+                        android:id="@+id/tv_market_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#3c3c3c"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_market_title"
+                        tools:text="우리동네 마트라네!"/>
+
+                <TextView
+                        android:text="@{mart.detail}"
+                        android:id="@+id/tv_market_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#3c3c3c"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_market_address"
+                        tools:text="내가 하고싶은 시간에 열어서 닫고싶을때 닫는다!"/>
+
+                <CheckBox
+                        android:id="@+id/iv_market_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="26dp"
+                        android:checked="false"
+                        android:button="@drawable/selector_favorite"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
         <TextView
+                android:clickable="false"
                 android:id="@+id/tv_map_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="2sp"
                 android:padding="16dp"

@@ -10,6 +10,7 @@ import kr.co.express9.client.mvvm.model.data.Mart
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.networkError
 import org.koin.standalone.inject
 
@@ -46,6 +47,7 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
                     val list = User.getFavoriteMarts()
                     list.add(mart)
                     User.putFavoriteMarts(list)
+                    Logger.d("추가 마트 리스트 ${User.getFavoriteMarts()}")
                     _event.value = Event.FAVORITE_REFRESH
                 },
                 { throwable -> networkError(throwable) }
