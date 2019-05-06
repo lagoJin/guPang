@@ -65,9 +65,9 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
             }
         })
 
-        dataBinding.tvLocationSetting.setOnClickListener {
+        dataBinding.llLocationSetting.setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(kr.co.express9.client.R.id.container, MapFragment())
+                .replace(R.id.container, MapFragment())
                 .commitNow()
         }
 

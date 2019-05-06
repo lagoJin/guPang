@@ -39,7 +39,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
         getDeviceToken()
                 .flatMap { userRepository.login(uuid, name, it) }
                 .flatMap {
-                    Logger.d("getUser login : $it")
+                    Logger.d("login : $it")
                     if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result)
                     else {
                         _event.value = Event.NEW_USER
@@ -48,14 +48,13 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 }
                 .subscribe({
                     // 이미 가입한 유저인지 확인
-                    Logger.d("getUser getInfo : $it")
+                    Logger.d("getInfo : $it")
                     if (it.status == StatusEnum.SUCCESS) {
                         putPref(it.result) {
                             _event.value = Event.OLD_USER
                         }
                     }
                 }, {
-                    Logger.d("getUser throwable : $it")
                     Logger.d(it.toString())
                 })
                 .apply { addDisposable(this) }
@@ -79,8 +78,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
-                        val user = it.result as User
-                        putPref(user) { _event.value = Event.SIGNUP_SUCCESS }
+                        putPref(it.result) { _event.value = Event.SIGNUP_SUCCESS }
                     }
                 }, {
                     Logger.d(it.toString())
@@ -105,12 +103,12 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
     /**
      * preference에서 저장된 유저 불러오기
      */
-    fun getPref() = userRepository.getPref()
+    private fun getPref() = userRepository.getPref()
 
     /**
      * preference에 유저 저장
      */
-    fun putPref(user: User, next: () -> Unit) {
+    private fun putPref(user: User, next: () -> Unit) {
         userRepository.putPref(user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { next() }
