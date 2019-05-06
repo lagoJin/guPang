@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.util.Logger
+import kr.co.express9.client.util.extension.anyTostring
 import org.koin.standalone.inject
 
 class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
@@ -32,7 +33,8 @@ class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
         WRITE_SEARCH_ADDRESS,
         NO_ADDRESS,
         NETWORK_ERROR,
-        NETWORK_SUCCESS
+        NETWORK_SUCCESS,
+        SEARCH_SUCCESS
     }
 
     init {
@@ -49,17 +51,17 @@ class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
         }
 
         kakaoRepository.getAddress(searchAddress.value!!)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showProgress() }
-            .subscribe({
-                if (it.meta.total_count == 0) _event.value = Event.NO_ADDRESS
-                else _addressResultSample.value = it.documents.toString()
-                hideProgress()
-            }, {
-                Logger.e(it.message!!)
-                _event.value = Event.NETWORK_ERROR
-                hideProgress()
-            }).apply { addDisposable(this) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    if (it.meta.total_count == 0) _event.value = Event.NO_ADDRESS
+                    else _addressResultSample.value = it.documents.toString()
+                    hideProgress()
+                }, {
+                    Logger.e(it.message!!)
+                    _event.value = Event.NETWORK_ERROR
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     fun getAddressList(editable: Editable) {
@@ -69,25 +71,24 @@ class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
         }
 
         kakaoRepository.getAddress(editable.toString())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showProgress() }
-            .subscribe({
-                if (it.meta.total_count == 0) {
-                    _event.value = Event.NO_ADDRESS
-                } else {
-                    _addressResult.value = ArrayList()
-                    it.documents.forEach { document ->
-                        _addressResult.value!!.add(document.address_name)
-                        _event.value = Event.NETWORK_SUCCESS
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    if (it.meta.total_count == 0) {
+                        _event.value = Event.NO_ADDRESS
+                    } else {
+                        _addressResult.value!!.clear()
+                        it.documents.forEach { document ->
+                            _addressResult.value!!.add(document.address_name)
+                        }
+                        _event.value = Event.SEARCH_SUCCESS
                     }
-                    Logger.d("호출")
-                }
-                hideProgress()
-            }, {
-                Logger.e(it.message!!)
-                _event.value = Event.NETWORK_ERROR
-                hideProgress()
-            }).apply { addDisposable(this) }
+                    hideProgress()
+                }, {
+                    Logger.e(it.message!!)
+                    _event.value = Event.NETWORK_ERROR
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     private fun showProgress() {

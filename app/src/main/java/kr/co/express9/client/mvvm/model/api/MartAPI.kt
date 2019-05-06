@@ -15,7 +15,7 @@ interface MartAPI {
     fun getMarts(@Query("xx") xx: Double,
                  @Query("xy") xy: Double,
                  @Query("yx") yx: Double,
-                 @Query("yy") yy: Double): Single<ResultNeedModify>
+                 @Query("yy") yy: Double): Single<Response<List<Mart>>>
 
     @GET("favorite")
     fun getFavoriteMarts(@Query("userSeq") userSeq: Int): Single<Response<ArrayList<Mart>>>
