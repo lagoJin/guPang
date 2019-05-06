@@ -47,7 +47,6 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
                 }
                 KakaoAddressViewModel.Event.SEARCH_SUCCESS -> {
                     adapter.clear()
-                    Logger.d("데이터 ${kakaoAddressViewModel.addressResult.value!!}")
                     adapter.addAll(kakaoAddressViewModel.addressResult.value!!)
                     adapter.notifyDataSetChanged()
                 }

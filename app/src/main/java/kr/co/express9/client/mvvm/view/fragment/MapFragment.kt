@@ -4,6 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -52,7 +54,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
-        Logger.d("startView")
         initLocation()
         dataBinding.mapViewModel = mapViewModel
         dataBinding.kakaoViewModel = kakaoAddressViewModel
@@ -60,7 +61,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        var bitmapDescription: BitmapDescriptor? = null
+        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
         mapViewModel.event.observe(this, Observer { event ->
             when (event) {
                 MapViewModel.Event.MART_LIST -> {
@@ -68,17 +69,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                     map.clear()
                     mapViewModel.marts.value!!.forEach { Mart ->
                         martList.add(Mart)
+                        Logger.d("좋아요 마트 ${User.getFavoriteMarts().anyTostring()}")
                         User.getFavoriteMarts().forEach { myMart ->
-                            Logger.d("즐겨찾기한 마트 ${myMart.anyTostring()}")
-//                            bitmapDescription = if (Mart.martSeq == myMart.martSeq) {
-//                                BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
-//                            } else {
-//                                BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
-//                            }
+                            if (Mart.martSeq == myMart.martSeq) {
+                                bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
+                            }
+                            Logger.d("좋아요 마트 ${myMart.martSeq}")
                         }
-                        Logger.d("마커호출")
                         map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
                     }
+                    Logger.d("마트리스트 ${martList.anyTostring()}")
                     adapter.notifyDataSetChanged()
                 }
             }
@@ -108,6 +108,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 .subscribe { kakaoAddressViewModel.getAddressList(it as Editable) })
 
         dataBinding.ivMapLocation.setOnClickListener {
+            initLocation()
             if (::map.isInitialized && ::location.isInitialized) {
                 map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
                 map.animateCamera(CameraUpdateFactory.zoomTo(16f))
@@ -116,14 +117,23 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         initAdapter()
     }
 
-    fun addMarker(latlng: LatLng, type: Int) {
+    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+        vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.minimumHeight)
+        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    private fun addMarker(latlng: LatLng, type: Int) {
         var bitmapDescription: BitmapDescriptor? = null
         when (type) {
             TYPE.FAVORITE.ordinal -> {
-//                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
+                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
             }
             TYPE.NON_FAVORITE.ordinal -> {
-//                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
+                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
             }
             TYPE.FAVORITE_BIG.ordinal -> {
                 bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite_big)
@@ -135,16 +145,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         map.addMarker(MarkerOptions().icon(bitmapDescription).position(latlng))
     }
 
-    private val scrollListener =
-            DiscreteScrollView.ScrollListener<MapMartAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
-                martList[newIndex].apply {
-                    map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude, longitude)))
-                    map.animateCamera(CameraUpdateFactory.zoomTo(16f))
-                }
-            }
+    private val scrollListener = DiscreteScrollView.ScrollListener<MapMartAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
+        martList[newIndex].apply {
+            map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude, longitude)))
+            map.animateCamera(CameraUpdateFactory.zoomTo(16f))
+        }
+    }
 
     private fun initAdapter() {
         adapter = MapMartAdapter(martList)
+
         dataBinding.vpMap.apply {
             dataBinding.vpMap.setItemTransformer(ItemTransformer())
             addScrollListener(scrollListener)
@@ -160,6 +170,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                     mapViewModel.getMartSearch(northeast, southwest)
                 }
             }
+            this.map.setOnMarkerClickListener {
+
+                true
+            }
         }
     }
 
@@ -170,8 +184,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         mapFragment.getMapAsync(this)
 
         if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
-                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)
-        ) {
+                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             TedRx2Permission.with(activity!!)
                     .setRationaleTitle(R.string.permission_title)
                     .setRationaleMessage(R.string.permission_content) // "we need permission for read contact and find your location"
@@ -179,18 +192,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                     .request()
                     .subscribe({ tedPermissionResult ->
                         if (tedPermissionResult.isGranted) {
-                            locationManager.requestLocationUpdates(
-                                    LocationManager.NETWORK_PROVIDER,
-                                    3000,
-                                    10f,
-                                    locationListener
-                            )
-                            locationManager.requestLocationUpdates(
-                                    LocationManager.GPS_PROVIDER,
-                                    3000,
-                                    10f,
-                                    locationListener
-                            )
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 10f, locationListener)
+                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10f, locationListener)
                         }
                     }, { throwable -> })
             return
@@ -221,5 +224,4 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         NON_FAVORITE_BIG,
         FAVORITE_BIG
     }
-
 }
