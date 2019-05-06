@@ -153,7 +153,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     }
 
     private fun initAdapter() {
-        adapter = MapMartAdapter(martList)
+        adapter = MapMartAdapter(martList) { i ->
+
+        }
 
         dataBinding.vpMap.apply {
             dataBinding.vpMap.setItemTransformer(ItemTransformer())
