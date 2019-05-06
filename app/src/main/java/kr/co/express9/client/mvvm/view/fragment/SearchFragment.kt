@@ -9,6 +9,7 @@ import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CategoryAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentSearchBinding
+import kr.co.express9.client.mvvm.view.MainActivity
 import kr.co.express9.client.mvvm.viewModel.SearchViewModel
 import kr.co.express9.client.util.Logger
 import org.koin.android.ext.android.inject
@@ -26,6 +27,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     override fun initStartView(isRestart: Boolean) {
         val categoryAdapter = CategoryAdapter()
         dataBinding.categoryAdapter = categoryAdapter
+        dataBinding.searchViewModel = searchViewModel
+        dataBinding.cvNoMarts.setOnClickListener {
+            val mainActivity = activity as MainActivity
+            mainActivity.setBottomNavigation(R.id.bn_market)
+        }
 
         /**
          * searchViewModel
@@ -54,7 +60,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     TabLayout.Tab::class.java,
                     Boolean::class.javaPrimitiveType)
             sSelectTab.isAccessible = true
-        } catch (e: NoSuchMethodException) {
+        } catch (e: Throwable) {
             throw IllegalStateException("Can't reflect into method TabLayout" +
                     ".setScrollPosition(int, float, boolean, boolean)")
         }

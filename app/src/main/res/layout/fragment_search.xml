@@ -21,6 +21,7 @@
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tablayout_hight"
+            android:visibility="@{searchViewModel.isMarts}"
             app:layout_constraintTop_toTopOf="parent"
             app:tabContentStart="52dp"
             app:tabMode="scrollable" />
@@ -30,7 +31,69 @@
             bind_adapter="@{categoryAdapter}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="@{searchViewModel.isMarts}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tablayout" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="200dp"
+            android:id="@+id/cv_no_marts"
+            android:layout_height="wrap_content"
+            android:visibility="@{!searchViewModel.isMarts}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f6f6f6"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="69dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_horizontal"
+                    android:text="@string/oops"
+                    android:textColor="#b0b0b0"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="4sp"
+                    android:text="@string/no_marts"
+                    android:textColor="#b0b0b0"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_invalid_name_26dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/go_to_add_mart"
+                    android:textColor="#b0b0b0"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,6 +6,7 @@ import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.ProductRepository
 import kr.co.express9.client.mvvm.model.data.Category
 import kr.co.express9.client.mvvm.model.data.Product
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.enumData.CategoryEnum
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
@@ -23,16 +24,23 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
     val categoryList: LiveData<ArrayList<Category>>
         get() = _categoryList
 
-    private fun initCategory() {
-        CategoryEnum.values().forEach {
-            if (_categoryList.value == null) _categoryList.value = ArrayList()
-            Logger.d("why? ${it.name}")
-            _categoryList.value!!.add(Category(it.key, 0, ArrayList()))
+    private val _isMarts = MutableLiveData<Boolean>()
+    val isMarts: LiveData<Boolean>
+        get() = _isMarts
+
+    private fun initCategory(): Boolean {
+        _isMarts.value = User.getFavoriteMarts().size > 0
+        if (_isMarts.value!!) {
+            CategoryEnum.values().forEach {
+                if (_categoryList.value == null) _categoryList.value = ArrayList()
+                _categoryList.value!!.add(Category(it.key, 0, ArrayList()))
+            }
         }
+        return _isMarts.value!!
     }
 
     fun searchProducts(category: String?, name: String?) {
-        initCategory()
+        if (!initCategory()) return
         productRepository.searchProducts(category, name)
                 .subscribe({
                     Logger.d("searchProducts $it")
