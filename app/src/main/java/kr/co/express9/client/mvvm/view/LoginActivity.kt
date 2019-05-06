@@ -45,9 +45,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         userViewModel.event.observe(this, Observer { event ->
             when (event) {
-                UserViewModel.Event.OLD_USER -> launchActivity() // 2.1 이미 가입한 유저인 경우 유저키, 닉네임 preference에 저장
                 UserViewModel.Event.NEW_USER -> getAgreeWithTerms() // 3. 약관 동의
-                UserViewModel.Event.SIGNUP_SUCCESS -> launchActivity() // 5. 회원가입 완료 및 메인으로
+                UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> launchActivity()
                 else -> {
                 }
             }

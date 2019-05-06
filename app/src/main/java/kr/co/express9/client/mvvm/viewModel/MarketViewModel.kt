@@ -1,14 +1,14 @@
 package kr.co.express9.client.mvvm.viewModel
 
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.mvvm.model.MarketRepository
+import kr.co.express9.client.mvvm.model.MartRepository
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.extension.networkError
 import org.koin.standalone.inject
 
 class MarketViewModel : BaseViewModel<MarketViewModel.Event>() {
 
-    private val marketRepository: MarketRepository by inject()
+    private val martRepository: MartRepository by inject()
 
     enum class Event {
         MARKET_ADD,
@@ -16,7 +16,7 @@ class MarketViewModel : BaseViewModel<MarketViewModel.Event>() {
     }
 
     fun deleteFavoriteMart(martSeq: Int) {
-        marketRepository.deleteFavoriteMarket(martSeq).subscribe(
+        martRepository.deleteFavoriteMarket(martSeq).subscribe(
             {
                 if(it.status == StatusEnum.SUCCESS){
 

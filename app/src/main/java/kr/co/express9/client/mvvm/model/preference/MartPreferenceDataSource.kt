@@ -6,7 +6,7 @@ import kr.co.express9.client.mvvm.model.data.Mart
 
 class MartPreferenceDataSource {
 
-    private enum class MartPref(key: String) {
+    enum class MartPref(key: String) {
         FAVORITE_MARTS("FAVORITE_MARTS")
     }
 

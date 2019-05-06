@@ -6,9 +6,8 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
-import kr.co.express9.client.mvvm.model.MarketRepository
+import kr.co.express9.client.mvvm.model.MartRepository
 import kr.co.express9.client.mvvm.model.UserRepository
-import kr.co.express9.client.mvvm.model.api.UserAPI
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
@@ -18,15 +17,14 @@ import org.koin.standalone.inject
 class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     private val userRepository: UserRepository by inject()
-    private val marketRepository: MarketRepository by inject()
+    private val martRepository: MartRepository by inject()
 
     enum class Event {
         NETWORK_ERROR,
-        OLD_USER,
         NEW_USER,
-        SIGNUP_SUCCESS,
         LOGOUT,
-        LOAD_FAVORITE_SUCCESS
+        FAVORITE_MARTS_LOADED_SUCCESS,
+        FAVORITE_MARTS_LOADED_FAIL
     }
 
     private val _user by lazy { getPref() }
@@ -52,9 +50,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                     // 이미 가입한 유저인지 확인
                     Logger.d("getInfo : $it")
                     if (it.status == StatusEnum.SUCCESS) {
-                        putPref(it.result) {
-                            _event.value = Event.OLD_USER
-                        }
+                        putPref(it.result) { loadFavoriteMarts(it.result.userSeq) }
                     }
                 }, {
                     Logger.d(it.toString())
@@ -80,7 +76,9 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
-                        putPref(it.result) { _event.value = Event.SIGNUP_SUCCESS }
+                        putPref(it.result) {
+                            loadFavoriteMarts(it.result.userSeq)
+                        }
                     }
                 }, {
                     Logger.d(it.toString())
@@ -88,16 +86,22 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 .apply { addDisposable(this) }
     }
 
-    // 작업중
+    /**
+     * 단골마트 불러오기
+     * - preference 저장
+     */
     fun loadFavoriteMarts(userSeq: Int) {
-        marketRepository.getFavoriteMarts(userSeq)
+        martRepository.getFavoriteMarts(userSeq)
             .subscribe({
-                if (it.status == StatusEnum.SUCCESS) {
-
-                }
+                _event.value = if (it.status == StatusEnum.SUCCESS) {
+                    // preference에 저장
+                    martRepository.putFavoriteMartsPref(it.result)
+                    Event.FAVORITE_MARTS_LOADED_SUCCESS
+                } else Event.FAVORITE_MARTS_LOADED_FAIL
             }, {
-
+                Logger.d(it.toString())
             })
+            .apply { addDisposable(this) }
     }
 
     /**

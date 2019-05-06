@@ -32,7 +32,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
         userViewModel.event.observe(this, Observer { event ->
             when (event) {
-                UserViewModel.Event.OLD_USER -> {
+                UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
                     toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<LocationActivity>()
                     finish()

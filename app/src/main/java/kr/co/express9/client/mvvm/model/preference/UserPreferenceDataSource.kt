@@ -6,7 +6,7 @@ import kr.co.express9.client.mvvm.model.data.User
 
 class UserPreferenceDataSource {
 
-    private enum class UserPref(key: String) {
+    enum class UserPref(key: String) {
         USER("USER")
     }
 

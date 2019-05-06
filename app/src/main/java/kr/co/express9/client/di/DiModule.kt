@@ -6,6 +6,7 @@ import kr.co.express9.client.mvvm.model.api.KakaoAPI
 import kr.co.express9.client.mvvm.model.api.MartAPI
 import kr.co.express9.client.mvvm.model.api.ProductAPI
 import kr.co.express9.client.mvvm.model.api.UserAPI
+import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
@@ -110,11 +111,12 @@ var repositoryModule = module {
     single { UserRepository() }
     single { MapRepository(get()) }
     single { ProductRepository() }
-    single { MarketRepository() }
+    single { MartRepository() }
 }
 
 var preferenceDataSourceModule = module {
     single { UserPreferenceDataSource() }
+    single { MartPreferenceDataSource() }
     single { SuggestionPreferenceDataSource() }
 }
 

@@ -1,6 +1,8 @@
 package kr.co.express9.client.mvvm.model.data
 
 import com.orhanobut.hawk.Hawk
+import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
+import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import java.io.Serializable
 
 data class User(
@@ -13,7 +15,11 @@ data class User(
 
     companion object {
         fun getUser(): User {
-            return Hawk.get("USER") as User
+            return Hawk.get(UserPreferenceDataSource.UserPref.USER.name)
+        }
+
+        fun getFavoriteMarts(): ArrayList<Mart> {
+            return Hawk.get(MartPreferenceDataSource.MartPref.FAVORITE_MARTS.name)
         }
     }
 

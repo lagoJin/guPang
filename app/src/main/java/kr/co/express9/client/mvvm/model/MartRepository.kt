@@ -13,7 +13,7 @@ import kr.co.express9.client.util.extension.networkCommunication
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class MarketRepository : KoinComponent {
+class MartRepository : KoinComponent {
 
     private val userApi: UserAPI by inject()
     private val martAPI: MartAPI by inject()
@@ -22,15 +22,15 @@ class MarketRepository : KoinComponent {
     /**
      * Preference
      */
-    fun getFavoriteMarts(): LiveData<ArrayList<Mart>>? {
+    fun getFavoriteMartsPref(): LiveData<ArrayList<Mart>>? {
         return martPreferenceDataSource.getFavoriteMarts()
     }
 
-    fun putFavoriteMarts(favoriteMartList: ArrayList<Mart>) {
+    fun putFavoriteMartsPref(favoriteMartList: ArrayList<Mart>) {
         martPreferenceDataSource.putFavoriteMarts(favoriteMartList)
     }
 
-    fun deleteFavoriteMarts() {
+    fun deleteFavoriteMartsPref() {
         martPreferenceDataSource.deleteFavoriteMarts()
     }
 
