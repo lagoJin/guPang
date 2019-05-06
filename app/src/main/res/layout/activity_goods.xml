@@ -39,8 +39,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="11dp"
-                    android:text="@{String.valueOf(productViewModel.product.martSeq)}"
                     android:textSize="12sp"
+                    app:bind_mart_name="@{productViewModel.product.martSeq}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_goods"
                     tools:text="메로나 마트" />

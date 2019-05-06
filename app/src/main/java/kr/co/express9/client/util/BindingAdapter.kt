@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import kr.co.express9.client.mvvm.model.data.User
 import java.text.NumberFormat
 
 @BindingAdapter("bind_adapter")
@@ -38,7 +39,6 @@ fun AutoCompleteTextView.setBindArray(dataList: ArrayList<String>) {
         adapter.notifyDataSetChanged()
     }
 }
-
 
 @BindingAdapter("bind_image")
 fun ImageView.setImageUrl(profileUrl: String?) {
@@ -69,4 +69,14 @@ fun TextView.setCancelLine(draw: Boolean) {
 @BindingAdapter("android:visibility")
 fun setVisibility(view: View, visibility: Boolean) {
     view.visibility = if (visibility) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind_mart_name")
+fun martSeq2Name(view: TextView, martSeq: Int) {
+    User.getFavoriteMarts().forEach {
+        if(it.martSeq == martSeq) {
+            view.text = it.name
+            return@forEach
+        }
+    }
 }

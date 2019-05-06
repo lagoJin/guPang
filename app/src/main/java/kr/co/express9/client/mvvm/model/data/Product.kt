@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class Product(
     val productSeq: Int,
-    val martSeq: String, //임시로 string으로 해 둠
+    val martSeq: Int, //임시로 string으로 해 둠
     val category: CategoryEnum,
     val name: String,
     val price: Int, // 임시값. 현재 api에서 안보냄
