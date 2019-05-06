@@ -42,11 +42,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         /**
          * tablayout
          */
-//        sSetScrollPosition = TabLayout::class.java.getDeclaredMethod(
-//                "setScrollPosition", Int::class.javaPrimitiveType,
-//                Float::class.javaPrimitiveType, Boolean::class.javaPrimitiveType,
-//                Boolean::class.javaPrimitiveType)
-//        sSetScrollPosition.isAccessible = true
         try {
             sSetScrollPosition = TabLayout::class.java.getDeclaredMethod("setScrollPosition",
                     Int::class.javaPrimitiveType,

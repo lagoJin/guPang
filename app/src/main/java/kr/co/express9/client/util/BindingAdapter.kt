@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import kr.co.express9.client.R
 import kr.co.express9.client.mvvm.model.data.User
 import java.text.NumberFormat
 
@@ -45,6 +46,7 @@ fun ImageView.setImageUrl(profileUrl: String?) {
     if (!TextUtils.isEmpty(profileUrl)) {
         Glide.with(this.context)
                 .load(profileUrl)
+                .error(R.drawable.ic_error_24dp)
                 .into(this)
     }
 }
