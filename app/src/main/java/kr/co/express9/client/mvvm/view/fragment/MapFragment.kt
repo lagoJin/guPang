@@ -14,17 +14,13 @@ import android.text.Editable
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.tedpark.tedpermission.rx2.TedRx2Permission
-import com.yarolegovich.discretescrollview.DiscreteScrollView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.ItemTransformer
@@ -35,8 +31,6 @@ import kr.co.express9.client.mvvm.model.data.Mart
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel
 import kr.co.express9.client.mvvm.viewModel.MapViewModel
-import kr.co.express9.client.util.Logger
-import kr.co.express9.client.util.extension.anyTostring
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
@@ -61,24 +55,32 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
         mapViewModel.event.observe(this, Observer { event ->
             when (event) {
                 MapViewModel.Event.MART_LIST -> {
                     martList.clear()
                     map.clear()
-                    mapViewModel.marts.value!!.forEach { Mart ->
-                        martList.add(Mart)
-                        Logger.d("좋아요 마트 ${User.getFavoriteMarts().anyTostring()}")
-                        User.getFavoriteMarts().forEach { myMart ->
-                            if (Mart.martSeq == myMart.martSeq) {
-                                bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
-                            }
-                            Logger.d("좋아요 마트 ${myMart.martSeq}")
+                    martList.addAll(mapViewModel.marts.value!!)
+                    martList.forEach { Mart ->
+                        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
+                        if (User.getFavoriteMarts().contains(Mart)) {
+                            bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
                         }
                         map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
                     }
-                    Logger.d("마트리스트 ${martList.anyTostring()}")
+                    adapter.notifyDataSetChanged()
+                }
+                MapViewModel.Event.FAVORITE_REFRESH -> {
+                    martList.clear()
+                    map.clear()
+                    martList.addAll(mapViewModel.marts.value!!)
+                    martList.forEach { Mart ->
+                        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
+                        if (User.getFavoriteMarts().contains(Mart)) {
+                            bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
+                        }
+                        map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                    }
                     adapter.notifyDataSetChanged()
                 }
             }
@@ -126,40 +128,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-    private fun addMarker(latlng: LatLng, type: Int) {
-        var bitmapDescription: BitmapDescriptor? = null
-        when (type) {
-            TYPE.FAVORITE.ordinal -> {
-                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
-            }
-            TYPE.NON_FAVORITE.ordinal -> {
-                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
-            }
-            TYPE.FAVORITE_BIG.ordinal -> {
-                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite_big)
-            }
-            TYPE.NON_FAVORITE_BIG.ordinal -> {
-                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite_big)
-            }
-        }
-        map.addMarker(MarkerOptions().icon(bitmapDescription).position(latlng))
-    }
-
-    private val scrollListener = DiscreteScrollView.ScrollListener<MapMartAdapter.ViewHolder> { scrollPosition, currentIndex, newIndex, currentHolder, newCurrentHolder ->
-        martList[newIndex].apply {
-            map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(latitude, longitude)))
-            map.animateCamera(CameraUpdateFactory.zoomTo(16f))
-        }
-    }
-
     private fun initAdapter() {
-        adapter = MapMartAdapter(martList) { i ->
-
+        adapter = MapMartAdapter(martList) { i, boolean ->
+            if (boolean) {
+                mapViewModel.addFavoriteMart(User.getUser().userSeq, i)
+            } else {
+                mapViewModel.deleteFavoriteMart(User.getUser().userSeq, i)
+            }
         }
 
         dataBinding.vpMap.apply {
             dataBinding.vpMap.setItemTransformer(ItemTransformer())
-            addScrollListener(scrollListener)
             this@apply.adapter = this@MapFragment.adapter
         }
     }
@@ -169,12 +148,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             this.map = it
             this.map.setOnCameraIdleListener {
                 it.projection.visibleRegion.latLngBounds.apply {
-                    mapViewModel.getMartSearch(northeast, southwest)
+                    mapViewModel.getMarts(northeast, southwest)
                 }
-            }
-            this.map.setOnMarkerClickListener {
-
-                true
             }
         }
     }

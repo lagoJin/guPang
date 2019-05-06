@@ -32,10 +32,11 @@
                 tools:text="메로나슈퍼"/>
 
         <TextView
+                android:text="@{mart.address}"
                 android:id="@+id/tv_market_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
                 android:textColor="#3c3c3c"
                 android:textSize="12sp"
@@ -44,6 +45,7 @@
                 tools:text="우리동네 마트라네!"/>
 
         <TextView
+                android:text="@{mart.detail}"
                 android:id="@+id/tv_market_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
