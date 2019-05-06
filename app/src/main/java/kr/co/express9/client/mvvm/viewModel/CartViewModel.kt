@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.CartGoodsDummy
-import kr.co.express9.client.mvvm.model.data.Product
 
 class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
@@ -62,8 +61,8 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
         // 금액변경
         val cart = _cartGoods.value!![idx]
-        val price = cart.product.price * cart.total
-        val salePrice = (cart.product.price - cart.product.unitPrice) * cart.total
+        val price = cart.product.saleUnitPrice * cart.total
+        val salePrice = (cart.product.saleUnitPrice - cart.product.originalUnitPrice) * cart.total
         calculatePrice(isSelected, price, salePrice)
 
         cb(idx)
@@ -93,8 +92,8 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
         // 해당 상품이 선택되어 있는 경우 금액 변경
         val cart = _cartGoods.value!![idx]
         if (cart.isSelected) {
-            val price = cart.product.price
-            val salePrice = cart.product.price - cart.product.unitPrice
+            val price = cart.product.saleUnitPrice
+            val salePrice = cart.product.saleUnitPrice - cart.product.originalUnitPrice
             calculatePrice(isPlus, price, salePrice)
         }
         cb(idx)
