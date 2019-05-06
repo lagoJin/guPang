@@ -1,12 +1,11 @@
 package kr.co.express9.client.mvvm.model.data
 
-import kr.co.express9.client.mvvm.model.enumData.CategoryEnum
 import java.io.Serializable
 
 data class Product(
     val productSeq: Int,
     val martSeq: Int,
-    val category: CategoryEnum,
+    val category: String,
     val name: String,
     val price: Int, // 임시값. 현재 api에서 안보냄
     val unitPrice: Int,

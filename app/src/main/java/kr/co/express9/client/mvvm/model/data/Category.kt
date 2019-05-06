@@ -2,8 +2,8 @@ package kr.co.express9.client.mvvm.model.data
 
 import java.io.Serializable
 
-data class CategoryDummy(
-    val id: Int,
+data class Category(
     val name: String,
-    val total: Int
+    var total: Int = 0,
+    val products: ArrayList<Product>
 ) : Serializable

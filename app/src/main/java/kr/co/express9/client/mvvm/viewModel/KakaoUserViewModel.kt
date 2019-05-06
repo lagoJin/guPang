@@ -43,7 +43,7 @@ class KakaoUserViewModel : BaseViewModel<KakaoUserViewModel.Event>() {
     }
 
     /**
-     * 카카오톡 productSeq, name 요청
+     * 카카오톡 productSeq, id 요청
      */
     private fun requestMe() {
         UserManagement.getInstance().me(object : MeV2ResponseCallback() {

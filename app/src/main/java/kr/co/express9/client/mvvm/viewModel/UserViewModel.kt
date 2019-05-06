@@ -35,7 +35,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     /**
      * 이미 가입한 유저인지 확인 (수정필요)
-     * - old user인 경우 device token, name 갱신
+     * - old user인 경우 device token, id 갱신
      */
     fun checkIsOldUser(uuid: String, name: String) {
         getDeviceToken()
@@ -65,7 +65,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     /**
      * 회원가입 요청 (수정필요)
-     * - new user인 경우 device token, name 갱신
+     * - new user인 경우 device token, id 갱신
      */
     fun signup(
         uuid: String,

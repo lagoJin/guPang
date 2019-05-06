@@ -6,11 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCategoryBinding
+import kr.co.express9.client.mvvm.model.data.Category
 import kr.co.express9.client.mvvm.model.data.Product
 
 class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var goodsOrderByCategory = ArrayList<ArrayList<Product>>()
+    var categoryList = ArrayList<Category>()
 
     class VH(val b: ItemCategoryBinding) : RecyclerView.ViewHolder(b.root) {
         init {
@@ -30,11 +31,11 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return VH(binding)
     }
 
-    override fun getItemCount(): Int = goodsOrderByCategory.size
+    override fun getItemCount(): Int = categoryList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, i: Int) {
         holder as VH
-        holder.b.productAdapter?.productList = goodsOrderByCategory[i]
+        holder.b.productAdapter?.productList = categoryList[i].products
         holder.b.productAdapter?.notifyDataSetChanged()
     }
 }

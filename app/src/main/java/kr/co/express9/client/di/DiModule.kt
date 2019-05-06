@@ -84,7 +84,7 @@ val apiModule = module {
 
 var fragmentModule = module {
     factory { HomeFragment() }
-    factory { SearchFragment(get()) }
+    factory { SearchFragment() }
     factory { MartFragment() }
     factory { ProfileFragment() }
 }
@@ -98,7 +98,7 @@ var viewModelModule = module {
     viewModel { CartViewModel() }
     viewModel { TermsViewModel() }
     viewModel { UserViewModel() }
-    viewModel { CategoryGoodsViewModel() }
+    viewModel { SearchViewModel() }
     viewModel { LeafletViewModel() }
     viewModel { SuggestionViewModel(get()) }
     viewModel { ProductViewModel() }

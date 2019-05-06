@@ -24,7 +24,7 @@ class ProductRepository : KoinComponent {
         return productAPI.getProduct(productSeq).networkCommunication()
     }
 
-    fun searchProducts(category: String, name: String): Single<Response<ArrayList<Product>>> {
+    fun searchProducts(category: String?, name: String?): Single<Response<ArrayList<Product>>> {
         return productAPI.searchProducts(category, name).networkCommunication()
     }
 

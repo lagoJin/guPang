@@ -8,14 +8,14 @@ import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CategoryAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentSearchBinding
-import kr.co.express9.client.mvvm.viewModel.CategoryGoodsViewModel
+import kr.co.express9.client.mvvm.viewModel.SearchViewModel
 import kr.co.express9.client.util.Logger
+import org.koin.android.ext.android.inject
 import java.lang.reflect.Method
 
 
-class SearchFragment(
-        private val categoryGoodsViewModel: CategoryGoodsViewModel
-) : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+    private val searchViewModel: SearchViewModel by inject()
 
     private lateinit var sSetScrollPosition: Method
     private var mPreviousScrollState: Int = 0
@@ -26,15 +26,14 @@ class SearchFragment(
         dataBinding.categoryAdapter = categoryAdapter
 
         /**
-         * categoryGoodsViewModel
+         * searchViewModel
          */
-        categoryGoodsViewModel.goodsOrderByCategory.observe(this, Observer {
-            categoryAdapter.goodsOrderByCategory = it
+        searchViewModel.categoryList.observe(this, Observer { categoryList ->
+            categoryAdapter.categoryList = categoryList
             categoryAdapter.notifyDataSetChanged()
-        })
-        categoryGoodsViewModel.categoryList.observe(this, Observer { it ->
-            it.forEach {
-                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText("${it.name}(${it.total})"))
+            categoryList.forEach {
+                // 수량이 안올라감 확인 필요
+                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText(it.name))
             }
         })
 
@@ -92,6 +91,8 @@ class SearchFragment(
                 setScrollPosition(position, positionOffset, updateText, updateIndicator)
             }
         })
+
+        if (!isRestart) searchViewModel.searchProducts(null, null)
     }
 
 
