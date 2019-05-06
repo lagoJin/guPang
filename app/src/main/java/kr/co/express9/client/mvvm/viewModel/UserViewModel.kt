@@ -101,6 +101,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 .subscribe({
                     _event.value = if (it.status == StatusEnum.SUCCESS) {
                         // preference에 저장
+                        Logger.d("내가 좋아요 마트 ${it.result.anyTostring()}")
                         martRepository.putFavoriteMartsPref(it.result)
                         Event.FAVORITE_MARTS_LOADED_SUCCESS
                     } else Event.FAVORITE_MARTS_LOADED_FAIL

@@ -20,7 +20,6 @@ interface MartAPI {
     @GET("favorite")
     fun getFavoriteMarts(@Query("userSeq") userSeq: Int): Single<Response<ArrayList<Mart>>>
 
-    @FormUrlEncoded
     @POST("favorite")
     fun addFavoriteMart(@Query("userSeq") userSeq: Int,
                         @Query("martSeq") martSeq: Int): Single<Response<Unit>>
@@ -28,6 +27,4 @@ interface MartAPI {
     @DELETE("favorite")
     fun deleteFavoriteMart(@Query("userSeq") userSeq: Int,
                            @Query("martSeq") martSeq: Int): Single<Response<Unit>>
-
-
 }
