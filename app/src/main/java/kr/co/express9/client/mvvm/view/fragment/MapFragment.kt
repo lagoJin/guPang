@@ -70,11 +70,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                         martList.add(Mart)
                         User.getFavoriteMarts().forEach { myMart ->
                             Logger.d("즐겨찾기한 마트 ${myMart.anyTostring()}")
-                            bitmapDescription = if (Mart.martSeq == myMart.martSeq) {
-                                BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
-                            } else {
-                                BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
-                            }
+//                            bitmapDescription = if (Mart.martSeq == myMart.martSeq) {
+//                                BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
+//                            } else {
+//                                BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
+//                            }
                         }
                         Logger.d("마커호출")
                         map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
@@ -120,10 +120,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         var bitmapDescription: BitmapDescriptor? = null
         when (type) {
             TYPE.FAVORITE.ordinal -> {
-                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
+//                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite)
             }
             TYPE.NON_FAVORITE.ordinal -> {
-                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
+//                bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_non_favorite)
             }
             TYPE.FAVORITE_BIG.ordinal -> {
                 bitmapDescription = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_favorite_big)
