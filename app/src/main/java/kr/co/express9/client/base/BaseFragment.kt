@@ -15,15 +15,16 @@ abstract class BaseFragment<T : ViewDataBinding>(private val layoutId: Int) : Fr
     internal lateinit var dataBinding: T
     internal lateinit var disposable: CompositeDisposable
 
+    abstract fun initStartView(isRestart: Boolean)
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Logger.d("onViewCreate ${this.javaClass.simpleName}")
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), layoutId, null, false)
         disposable = CompositeDisposable()
-        Logger.d("onViewCreate ${this.javaClass.simpleName}")
-        initStartView()
+        val isRestart = savedInstanceState != null
+        initStartView(isRestart)
         return dataBinding.root
     }
-
-    abstract fun initStartView()
 
     override fun onDestroy() {
         disposable.clear()

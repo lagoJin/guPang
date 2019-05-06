@@ -21,7 +21,7 @@ class SearchFragment(
     private var mPreviousScrollState: Int = 0
     private var mScrollState: Int = 0
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         val categoryAdapter = CategoryAdapter()
         dataBinding.categoryAdapter = categoryAdapter
 

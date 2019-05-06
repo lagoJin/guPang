@@ -37,14 +37,14 @@ class UserRepository: KoinComponent {
      */
     fun login(uuid: String,
               name: String,
-              deviceToken: String): Single<Response<Int>> {
+              deviceToken: String): Single<Response<String>> {
         // deviceToken 임시로 설정함(DB 사이즈 변경 필요)
         return userApi.login(uuid, name, "dummy").networkCommunication()
     }
 
     fun join(uuid: String,
              name: String,
-             deviceToken: String): Single<Response<Int>> {
+             deviceToken: String): Single<Response<String>> {
         // deviceToken 임시로 설정함(DB 사이즈 변경 필요)
         return userApi.join(uuid, name, "dummy").networkCommunication()
     }

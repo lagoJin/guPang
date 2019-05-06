@@ -16,7 +16,7 @@ class MarketFragment : BaseFragment<FragmentMarketBinding>(R.layout.fragment_mar
     private val martList = ArrayList<Mart>()
     private lateinit var marketAdapter: MarketAdapter
 
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         marketAdapter = MarketAdapter(martList) { i ->
             marketViewModel.deleteFavoriteMart(i)
             marketAdapter.notifyDataSetChanged()

@@ -56,7 +56,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        if (isRestart) cartViewModel.getGoods()
+        if (!isRestart) cartViewModel.getGoods()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

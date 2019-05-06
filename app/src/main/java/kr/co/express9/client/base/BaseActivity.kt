@@ -32,7 +32,7 @@ abstract class BaseActivity<T : ViewDataBinding>(private val layoutId: Int) : Ap
         compositeDisposable = CompositeDisposable()
         arrayList.add(this)
 
-        val isRestart = savedInstanceState == null
+        val isRestart = savedInstanceState != null
         initStartView(isRestart)
     }
 

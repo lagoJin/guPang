@@ -48,7 +48,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private lateinit var adapter: MapMarketAdapter
 
     @SuppressLint("MissingPermission")
-    override fun initStartView() {
+    override fun initStartView(isRestart: Boolean) {
         Logger.d("startView")
         initLocation()
         dataBinding.mapViewModel = mapViewModel

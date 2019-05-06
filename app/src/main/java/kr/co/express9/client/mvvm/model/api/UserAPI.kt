@@ -16,22 +16,22 @@ interface UserAPI {
     @POST("login")
     fun login(@Field("uuid") uuid: String,
               @Field("name") name: String,
-              @Field("deviceToken") deviceToken: String): Single<Response<Int>>
+              @Field("deviceToken") deviceToken: String): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("join")
     fun join(@Field("uuid") uuid: String,
              @Field("name") name: String,
-             @Field("deviceToken") deviceToken: String): Single<Response<Int>>
+             @Field("deviceToken") deviceToken: String): Single<Response<String>>
 
     @GET("favoriteMart")
-    fun getFavoriteMart(@Query("userSeq") userSeq: Int = User.getUser().userSeq): Single<ResultNeedModify>
+    fun getFavoriteMart(@Query("userSeq") userSeq: Int = User.getUser().value!!.userSeq): Single<ResultNeedModify>
 
     @POST("favoriteMart")
-    fun addFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().userSeq,
+    fun addFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().value!!.userSeq,
                         @Field("martSeq") martSeq: String): Single<ResultNeedModify>
 
     @DELETE("favoriteMart")
-    fun deleteFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().userSeq,
+    fun deleteFavoriteMart(@Field("userSeq") userSeq: Int = User.getUser().value!!.userSeq,
                            @Field("martSeq") martSeq: Int): Single<ResultNeedModify>
 }

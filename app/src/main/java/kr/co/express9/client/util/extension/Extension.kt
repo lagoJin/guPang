@@ -5,3 +5,7 @@ import com.google.gson.Gson
 fun Any.anyTostring(): String {
     return Gson().toJson(this)
 }
+
+fun String.toInteger(): Int {
+    return this.toDouble().toInt()
+}

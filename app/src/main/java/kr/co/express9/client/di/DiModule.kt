@@ -83,7 +83,7 @@ val apiModule = module {
 }
 
 var fragmentModule = module {
-    factory { HomeFragment(get()) }
+    factory { HomeFragment() }
     factory { SearchFragment(get()) }
     factory { MarketFragment() }
     factory { ProfileFragment() }

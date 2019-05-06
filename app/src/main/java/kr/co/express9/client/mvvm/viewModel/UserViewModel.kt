@@ -8,10 +8,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.MartRepository
 import kr.co.express9.client.mvvm.model.UserRepository
+import kr.co.express9.client.mvvm.model.data.Response
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.getDeviceToken
+import kr.co.express9.client.util.extension.toInteger
 import org.koin.standalone.inject
 
 class UserViewModel : BaseViewModel<UserViewModel.Event>() {
@@ -37,25 +39,28 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      */
     fun checkIsOldUser(uuid: String, name: String) {
         getDeviceToken()
-                .flatMap { userRepository.login(uuid, name, it) }
-                .flatMap {
-                    Logger.d("login : $it")
-                    if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result)
-                    else {
-                        _event.value = Event.NEW_USER
-                        Single.error(Throwable("${it.result}"))
-                    }
+            .flatMap {
+                userRepository.login(uuid, name, it)
+            }
+            .flatMap {
+                Logger.d("login : $it")
+
+                if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result.toInteger())
+                else {
+                    _event.value = Event.NEW_USER
+                    Single.error(Throwable("${it.result}"))
                 }
-                .subscribe({
-                    // 이미 가입한 유저인지 확인
-                    Logger.d("getInfo : $it")
-                    if (it.status == StatusEnum.SUCCESS) {
-                        putPref(it.result) { loadFavoriteMarts(it.result.userSeq) }
-                    }
-                }, {
-                    Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+            }
+            .subscribe({
+                // 이미 가입한 유저인지 확인
+                Logger.d("getInfo : $it")
+                if (it.status == StatusEnum.SUCCESS) {
+                    putPref(it.result) { loadFavoriteMarts(it.result.userSeq) }
+                }
+            }, {
+                Logger.d(it.toString())
+            })
+            .apply { addDisposable(this) }
     }
 
     /**
@@ -63,27 +68,27 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      * - new user인 경우 device token, name 갱신
      */
     fun signup(
-            uuid: String,
-            name: String,
-            isMarketingAgree: Boolean
+        uuid: String,
+        name: String,
+        isMarketingAgree: Boolean
     ) {
         // 회원가입
         getDeviceToken()
-                .flatMap { userRepository.join(uuid, name, it) }
-                .flatMap {
-                    if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result)
-                    else Single.error(Throwable("${it.result}"))
-                }
-                .subscribe({
-                    if (it.status == StatusEnum.SUCCESS) {
-                        putPref(it.result) {
-                            loadFavoriteMarts(it.result.userSeq)
-                        }
+            .flatMap { userRepository.join(uuid, name, it) }
+            .flatMap {
+                if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result.toInteger())
+                else Single.error(Throwable("${it.result}"))
+            }
+            .subscribe({
+                if (it.status == StatusEnum.SUCCESS) {
+                    putPref(it.result) {
+                        loadFavoriteMarts(it.result.userSeq)
                     }
-                }, {
-                    Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+                }
+            }, {
+                Logger.d(it.toString())
+            })
+            .apply { addDisposable(this) }
     }
 
     /**
@@ -128,9 +133,9 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      */
     private fun putPref(user: User, next: () -> Unit) {
         userRepository.putPref(user)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { next() }
-                .apply { addDisposable(this) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { next() }
+            .apply { addDisposable(this) }
     }
 
     /**
@@ -138,9 +143,9 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      */
     fun deletePref(next: () -> Unit) {
         userRepository.deletePref()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { next() }
-                .apply { addDisposable(this) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { next() }
+            .apply { addDisposable(this) }
     }
 
 }

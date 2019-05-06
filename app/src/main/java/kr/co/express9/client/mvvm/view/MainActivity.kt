@@ -15,12 +15,14 @@ import io.reactivex.schedulers.Schedulers
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityMainBinding
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
 import kr.co.express9.client.mvvm.view.fragment.MarketFragment
 import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
