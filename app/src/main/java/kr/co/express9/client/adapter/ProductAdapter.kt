@@ -6,23 +6,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
-import kr.co.express9.client.databinding.ItemGoodsBinding
+import kr.co.express9.client.databinding.ItemProductBinding
 import kr.co.express9.client.mvvm.model.data.Product
-import kr.co.express9.client.mvvm.view.GoodsActivity
-import kr.co.express9.client.util.Logger
+import kr.co.express9.client.mvvm.view.ProductActivity
 import kr.co.express9.client.util.extension.launchActivity
 
 class ProductAdapter(var showTitle: Boolean = false) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class VH(val b: ItemGoodsBinding) : RecyclerView.ViewHolder(b.root)
+    class VH(val b: ItemProductBinding) : RecyclerView.ViewHolder(b.root)
 
     var productList = ArrayList<Product>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val inflater = LayoutInflater.from(parent.context)
-        val binding: ItemGoodsBinding = DataBindingUtil.inflate(
+        val binding: ItemProductBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.item_goods,
+            R.layout.item_product,
             parent,
             false
         )
@@ -36,7 +35,7 @@ class ProductAdapter(var showTitle: Boolean = false) : RecyclerView.Adapter<Recy
         holder.b.title.visibility = if (showTitle && position == 1) View.VISIBLE else View.GONE
         holder.b.product = productList[position]
         holder.b.cvLayout.setOnClickListener {
-            it.context.launchActivity<GoodsActivity> {
+            it.context.launchActivity<ProductActivity> {
                 putExtra("product", productList[position])
             }
         }

@@ -4,7 +4,7 @@ import android.view.Menu
 import android.view.MenuItem
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
-import kr.co.express9.client.databinding.ActivityGoodsBinding
+import kr.co.express9.client.databinding.ActivityProductBinding
 import kr.co.express9.client.databinding.AlertCheckCartBinding
 import kr.co.express9.client.mvvm.model.data.Product
 import kr.co.express9.client.mvvm.viewModel.ProductViewModel
@@ -13,17 +13,17 @@ import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class GoodsActivity : BaseActivity<ActivityGoodsBinding>(R.layout.activity_goods) {
+class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_product) {
 
     private val productViewModel: ProductViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
-        val goods = intent.getSerializableExtra("product") as Product
-        productViewModel.setGoods(goods)
+        val product = intent.getSerializableExtra("product") as Product
+        productViewModel.setProduct(product)
         dataBinding.productViewModel = productViewModel
 
         dataBinding.bAddToCart.setOnClickListener {
-            if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_goods)
+            if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_product)
             else {
                 // 장보기 메모에 상품 추가 예정
                 showCheckCartAlert()

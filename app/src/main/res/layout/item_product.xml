@@ -22,7 +22,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginBottom="35dp"
                 android:lineSpacingExtra="8sp"
-                android:text="@string/goods_desc"
+                android:text="@string/product_desc"
                 android:textColor="#50585d"
                 android:textSize="20sp"
                 android:visibility="gone"
@@ -40,7 +40,7 @@
                     android:layout_height="233dp">
 
                 <ImageView
-                        android:id="@+id/iv_goods"
+                        android:id="@+id/iv_product"
                         android:layout_width="160dp"
                         android:layout_height="140dp"
                         app:bind_image="@{product.imageUrl}"
@@ -59,7 +59,7 @@
                         android:textSize="12sp"
                         app:bind_mart_name="@{product.martSeq}"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_goods"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_product"
                         tools:text="메로나 마트"/>
 
                 <TextView

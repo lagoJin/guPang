@@ -19,7 +19,7 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
     val itemNum:LiveData<Int>
         get() = _itemNum
 
-    fun setGoods(product: Product) {
+    fun setProduct(product: Product) {
         _product.value = product
     }
 

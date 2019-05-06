@@ -98,7 +98,7 @@
                 android:layout_weight="1"
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="8sp"
-                android:text="@string/goods_desc"
+                android:text="@string/product_desc"
                 android:textColor="#3c3c3c"
                 android:textSize="20sp"
                 android:textStyle="normal" />

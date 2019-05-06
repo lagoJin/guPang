@@ -33,11 +33,11 @@
     <string name="location_hint">주소를 입력해주세요.</string>
     <string name="location_now">현 위치로 주소 설정</string>
 
-    <!--activity_goods-->
-    <string name="goods_detail">상품 상세</string>
-    <string name="goods_info">상품 정보</string>
+    <!--activity_product-->
+    <string name="product_detail">상품 상세</string>
+    <string name="product_info">상품 정보</string>
     <string name="add_to_cart_memo">장보기 메모에 추가</string>
-    <string name="choose_number_of_goods">상품 수량을 선택하세요</string>
+    <string name="choose_number_of_product">상품 수량을 선택하세요</string>
 
     <!--activity_leaflet-->
     <string name="leaflet_title">전단지 정보</string>
@@ -81,8 +81,8 @@
     <string name="personal_inquiry">1:1 문의</string>
     <string name="notice">공지사항</string>
 
-    <!--item_goods-->
-    <string name="goods_desc">우리 동네\n인기상품이에요!</string>
+    <!--item_product-->
+    <string name="product_desc">우리 동네\n인기상품이에요!</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/iv_goods"
+                    android:id="@+id/iv_product"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     app:bind_image="@{productViewModel.product.imageUrl}"
@@ -42,7 +42,7 @@
                     android:textSize="12sp"
                     app:bind_mart_name="@{productViewModel.product.martSeq}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_goods"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_product"
                     tools:text="메로나 마트" />
 
                 <TextView
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
-                    android:text="@string/goods_info"
+                    android:text="@string/product_info"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view_middle" />
 
@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/goods_detail"
+                android:text="@string/product_detail"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.Toolbar>
