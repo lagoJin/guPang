@@ -109,6 +109,7 @@ var repositoryModule = module {
     single { KakaoRepository(get()) }
     single { UserRepository() }
     single { MapRepository(get()) }
+    single { ProductRepository() }
     single { MarketRepository() }
 }
 

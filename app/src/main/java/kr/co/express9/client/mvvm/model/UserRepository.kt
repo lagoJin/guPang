@@ -31,8 +31,9 @@ class UserRepository: KoinComponent {
         return Observable.fromCallable { userPreferenceDataSource.delete() }
     }
 
+
     /**
-     * MarketAPI
+     * Remote
      */
     fun login(uuid: String,
               name: String,

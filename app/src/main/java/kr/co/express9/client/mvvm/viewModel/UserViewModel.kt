@@ -6,6 +6,7 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
+import kr.co.express9.client.mvvm.model.MarketRepository
 import kr.co.express9.client.mvvm.model.UserRepository
 import kr.co.express9.client.mvvm.model.api.UserAPI
 import kr.co.express9.client.mvvm.model.data.User
@@ -17,14 +18,15 @@ import org.koin.standalone.inject
 class UserViewModel : BaseViewModel<UserViewModel.Event>() {
 
     private val userRepository: UserRepository by inject()
-    private val userAPI: UserAPI by inject()
+    private val marketRepository: MarketRepository by inject()
 
     enum class Event {
         NETWORK_ERROR,
         OLD_USER,
         NEW_USER,
         SIGNUP_SUCCESS,
-        LOGOUT
+        LOGOUT,
+        LOAD_FAVORITE_SUCCESS
     }
 
     private val _user by lazy { getPref() }
@@ -84,6 +86,18 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                     Logger.d(it.toString())
                 })
                 .apply { addDisposable(this) }
+    }
+
+    // 작업중
+    fun loadFavoriteMarts(userSeq: Int) {
+        marketRepository.getFavoriteMarts(userSeq)
+            .subscribe({
+                if (it.status == StatusEnum.SUCCESS) {
+
+                }
+            }, {
+
+            })
     }
 
     /**

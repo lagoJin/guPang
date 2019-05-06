@@ -9,7 +9,7 @@ import retrofit2.http.*
 interface MartAPI {
 
     @GET("info")
-    fun getMart(@Query("martSeq") martSeq: String): Single<Response<Mart>>
+    fun getMart(@Query("martSeq") martSeq: Int): Single<Response<Mart>>
 
     @GET("search")
     fun getMarts(@Query("xx") xx: Double,
@@ -18,16 +18,16 @@ interface MartAPI {
                  @Query("yy") yy: Double): Single<ResultNeedModify>
 
     @GET("favorite")
-    fun getFavoriteMarts(@Query("userSeq") userSeq: String): Single<Response<ArrayList<Mart>>>
+    fun getFavoriteMarts(@Query("userSeq") userSeq: Int): Single<Response<ArrayList<Mart>>>
 
     @FormUrlEncoded
     @POST("favorite")
-    fun addFavoriteMart(@Query("userSeq") userSeq: String,
-                        @Query("martSeq") martSeq: String): Single<Response<Unit>>
+    fun addFavoriteMart(@Query("userSeq") userSeq: Int,
+                        @Query("martSeq") martSeq: Int): Single<Response<Unit>>
 
     @DELETE("favorite")
-    fun deleteFavoriteMart(@Query("userSeq") userSeq: String,
-                           @Query("martSeq") martSeq: String): Single<Response<Unit>>
+    fun deleteFavoriteMart(@Query("userSeq") userSeq: Int,
+                           @Query("martSeq") martSeq: Int): Single<Response<Unit>>
 
 
 }

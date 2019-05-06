@@ -3,9 +3,13 @@ package kr.co.express9.client.mvvm.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
+import kr.co.express9.client.mvvm.model.ProductRepository
 import kr.co.express9.client.mvvm.model.data.Product
+import org.koin.standalone.inject
 
 class HomeViewModel : BaseViewModel<HomeViewModel.Event>() {
+
+    private val productRepository: ProductRepository by inject()
 
     enum class Event{
 
