@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.ProductRepository
+import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.mvvm.model.data.Category
 import kr.co.express9.client.mvvm.model.data.Product
 import kr.co.express9.client.mvvm.model.data.User
@@ -15,6 +16,7 @@ import org.koin.standalone.inject
 class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
 
     private val productRepository: ProductRepository by inject()
+    private val suggestionRepository: SuggestionRepository by inject()
 
     enum class Event {
 
@@ -54,6 +56,7 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
     private fun setCategory(products: ArrayList<Product>) {
         products.forEach { product ->
             var isETC = true
+            suggestionRepository.putPref(product.name)
             _categoryList.value!!.forEachIndexed { i, category ->
                 when (category.name) {
                     CategoryEnum.TOTAL.key -> {

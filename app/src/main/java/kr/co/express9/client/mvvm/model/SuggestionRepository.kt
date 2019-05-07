@@ -1,10 +1,11 @@
 package kr.co.express9.client.mvvm.model
 
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class SuggestionRepository(
-    private val searchPreferenceDataSource: SuggestionPreferenceDataSource
-) {
+class SuggestionRepository: KoinComponent {
+    private val searchPreferenceDataSource: SuggestionPreferenceDataSource by inject()
 
     var suggestionList: ArrayList<String> = getPref()
 
@@ -13,7 +14,7 @@ class SuggestionRepository(
     }
 
     fun putPref(suggestion: String) {
-        suggestionList.add(suggestion)
+        if (suggestion !in suggestionList) suggestionList.add(suggestion)
         searchPreferenceDataSource.put(suggestionList)
     }
 

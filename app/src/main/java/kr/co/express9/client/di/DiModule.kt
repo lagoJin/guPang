@@ -100,13 +100,13 @@ var viewModelModule = module {
     viewModel { UserViewModel() }
     viewModel { SearchViewModel() }
     viewModel { LeafletViewModel() }
-    viewModel { SuggestionViewModel(get()) }
+    viewModel { SuggestionViewModel() }
     viewModel { ProductViewModel() }
     viewModel { MartViewModel() }
 }
 
 var repositoryModule = module {
-    single { SuggestionRepository(get()) }
+    single { SuggestionRepository() }
     single { KakaoRepository(get()) }
     single { UserRepository() }
     single { MapRepository(get()) }

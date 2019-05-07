@@ -39,9 +39,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         searchViewModel.categoryList.observe(this, Observer { categoryList ->
             categoryAdapter.categoryList = categoryList
             categoryAdapter.notifyDataSetChanged()
-            categoryList.forEach {
+            dataBinding.tablayout.removeAllTabs()
+            categoryList.forEachIndexed { _, category ->
                 // 수량이 안올라감 확인 필요
-                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText(it.name))
+//                val tabName = "${category.name} (${category.total})"
+                val tabName = category.name
+                dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText(tabName))
             }
         })
 
