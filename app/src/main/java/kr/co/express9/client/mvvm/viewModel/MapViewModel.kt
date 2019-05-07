@@ -50,7 +50,7 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
                     Logger.d("추가 마트 리스트 ${User.getFavoriteMarts()}")
                     _event.value = Event.FAVORITE_REFRESH
                 },
-                { throwable -> networkError(throwable) }
+                { throwable -> }
         ).apply { addDisposable(this) }
     }
 
@@ -62,7 +62,7 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
                     User.putFavoriteMarts(list)
                     _event.value = Event.FAVORITE_REFRESH
                 },
-                { throwable -> networkError(throwable) }
+                { throwable -> }
         ).apply { addDisposable(this) }
     }
 

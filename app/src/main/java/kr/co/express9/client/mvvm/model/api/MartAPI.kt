@@ -20,11 +20,12 @@ interface MartAPI {
     @GET("favorite")
     fun getFavoriteMarts(@Query("userSeq") userSeq: Int): Single<Response<ArrayList<Mart>>>
 
+    @FormUrlEncoded
     @POST("favorite")
     fun addFavoriteMart(@Field("userSeq") userSeq: Int,
                         @Field("martSeq") martSeq: Int): Single<Response<Unit>>
 
     @DELETE("favorite")
-    fun deleteFavoriteMart(@Field("userSeq") userSeq: Int,
-                           @Field("martSeq") martSeq: Int): Single<Response<Unit>>
+    fun deleteFavoriteMart(@Query("userSeq") userSeq: Int,
+                           @Query("martSeq") martSeq: Int): Single<Response<Unit>>
 }

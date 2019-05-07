@@ -43,8 +43,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
     private lateinit var locationManager: LocationManager
     private lateinit var location: Location
-    private lateinit var marker: Marker
-    val latlng = LatLng(37.5083801, 127.0616577)
+    val latlng = LatLng(37.5088255, 127.0631105)
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
@@ -143,7 +142,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                     if (it.tag == Mart.martSeq) {
                         Logger.d("추가 마트 리스트 태그 ${it.tag}")
                         dataBinding.mart = Mart
-                        dataBinding.ivMarketFavorite.isChecked = User.getFavoriteMarts().contains(Mart)
                         dataBinding.ivMarketFavorite.setOnCheckedChangeListener { buttonView, isChecked ->
                             if (isChecked) {
                                 mapViewModel.addFavoriteMart(User.getUser().userSeq, Mart)
@@ -151,6 +149,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                                 mapViewModel.deleteFavoriteMart(User.getUser().userSeq, Mart)
                             }
                         }
+                        dataBinding.ivMarketFavorite.isChecked = User.getFavoriteMarts().contains(Mart)
                     }
                 }
                 true
