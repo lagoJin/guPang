@@ -29,9 +29,10 @@
                 android:layout_marginTop="54dp"
                 android:layout_marginBottom="28dp"
                 android:gravity="start"
-                android:lineSpacingExtra="10sp"
                 android:text="@string/check_cart_message"
-                android:textSize="12sp"
+                android:textSize="14sp"
+                android:textColor="#50585d"
+                android:lineSpacingExtra="8sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,6 +44,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="15dp"
                 android:background="@android:color/transparent"
+                android:textColor="#f24d53"
                 android:text="@string/go_to_cart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/b_no"
