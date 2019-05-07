@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="mart"
+            type="kr.co.express9.client.mvvm.model.data.Mart" />
+
+        <variable
+            name="image_url"
+            type="String" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,20 +26,113 @@
             android:layout_height="?attr/actionBarSize">
 
             <TextView
+                android:id="@+id/tv_leaflet_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/leaflet_title"
-                android:textSize="18sp" />
-
+                android:fontFamily="sans-serif"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_leaflet"
+        <FrameLayout
+            android:id="@+id/fl_leaflet_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/google_map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/fl_leaflet_info"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/round_background"
+                    android:paddingStart="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_leaflet_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@{mart.name}"
+                        android:textColor="#3c3c3c"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="메로나슈퍼" />
+
+                    <TextView
+                        android:id="@+id/tv_leaflet_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@{mart.address}"
+                        android:textColor="#3c3c3c"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_leaflet_text"
+                        tools:text="우리동네 마트라네!" />
+
+                    <TextView
+                        android:id="@+id/tv_leaflet_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@{mart.detail}"
+                        android:textColor="#3c3c3c"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_leaflet_address"
+                        tools:text="내가 하고싶은 시간에 열어서 닫고싶을때 닫는다!" />
+
+                    <Button
+                        android:id="@+id/iv_leaflet_leaflet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="32dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_leaflet_favorite"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/iv_leaflet_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="26dp"
+                        android:button="@drawable/selector_favorite"
+                        android:checked="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/iv_leaflet"
+            bind_image="@{image_url}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

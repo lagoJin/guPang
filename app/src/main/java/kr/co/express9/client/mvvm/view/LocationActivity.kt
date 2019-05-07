@@ -27,6 +27,7 @@ import kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.anyTostring
+import kr.co.express9.client.util.extension.hideKeyboard
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,6 +73,7 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
             bundle.putString("location", document.anyTostring())
             val map = MapFragment()
             map.arguments = bundle
+            this.hideKeyboard()
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, map)
                     .commitNow()

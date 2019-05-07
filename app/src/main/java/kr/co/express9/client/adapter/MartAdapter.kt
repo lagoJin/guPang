@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.kakao.usermgmt.StringSet.type
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMarketBinding
 import kr.co.express9.client.mvvm.model.data.Mart
+import kr.co.express9.client.mvvm.view.LeafletActivity
+import kr.co.express9.client.util.extension.launchActivity
 
 class MartAdapter(private val martList: ArrayList<Mart>, var cb: (Mart) -> Unit) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -36,6 +39,16 @@ class MartAdapter(private val martList: ArrayList<Mart>, var cb: (Mart) -> Unit)
             if (it.title == "삭제") {
                 cb(martList[position])
                 martList.remove(martList[position])
+            } else if (it.title == "전단지 보기") {
+                context.launchActivity<LeafletActivity> {
+                    putExtra("imageUrl", martList[position].leafletImageUrl)
+                }
+                cb(martList[position])
+            } else if (it.title == "마트 위치 보기") {
+                context.launchActivity<LeafletActivity> {
+                    putExtra("type", "마트 위치 보기")
+                    putExtra("mart", martList[position])
+                }
             }
             true
         }
