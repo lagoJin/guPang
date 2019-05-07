@@ -53,7 +53,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
-        val adapter = ArrayAdapter(activity!!, android.R.layout.simple_dropdown_item_1line, kakaoAddressViewModel.addressResult.value!!)
+        val adapter = ArrayAdapter(
+            activity!!,
+            android.R.layout.simple_dropdown_item_1line,
+            kakaoAddressViewModel.addressResult.value!!
+        )
         initLocation()
         dataBinding.mapViewModel = mapViewModel
         dataBinding.kakaoViewModel = kakaoAddressViewModel
@@ -72,22 +76,38 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 MapViewModel.Event.MART_LIST -> {
                     map.clear()
                     mapViewModel.marts.value!!.forEach { Mart ->
-                        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
+                        var bitmapDescription: BitmapDescriptor? =
+                            bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
                         if (User.getFavoriteMarts().contains(Mart)) {
                             bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
                         }
-                        val marker = map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        val marker = map.addMarker(
+                            MarkerOptions().icon(bitmapDescription).position(
+                                LatLng(
+                                    Mart.latitude,
+                                    Mart.longitude
+                                )
+                            )
+                        )
                         marker.tag = Mart.martSeq
                     }
                 }
                 MapViewModel.Event.FAVORITE_REFRESH -> {
                     map.clear()
                     mapViewModel.marts.value!!.forEach { Mart ->
-                        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
+                        var bitmapDescription: BitmapDescriptor? =
+                            bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
                         if (User.getFavoriteMarts().contains(Mart)) {
                             bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite)
                         }
-                        val marker = map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        val marker = map.addMarker(
+                            MarkerOptions().icon(bitmapDescription).position(
+                                LatLng(
+                                    Mart.latitude,
+                                    Mart.longitude
+                                )
+                            )
+                        )
                         marker.tag = Mart.martSeq
                     }
                     if (User.getFavoriteMarts().size > 0) {
@@ -121,10 +141,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         })
 
         compositeDisposable.add(dataBinding.actvMapSearch.textChanges()
-                .filter { it.isNotEmpty() }
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { kakaoAddressViewModel.getAddressList(it as Editable) })
+            .filter { it.isNotEmpty() }
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { kakaoAddressViewModel.getAddressList(it as Editable) })
 
         dataBinding.actvMapSearch.setAdapter(adapter)
         dataBinding.actvMapSearch.setOnItemClickListener { parent, view, position, id ->
@@ -151,7 +171,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
         vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.minimumHeight)
-        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val bitmap =
+            Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
@@ -169,7 +190,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 }
             }
             this.map.setOnMarkerClickListener {
-                dataBinding.clMarketInfo.visibility = View.VISIBLE
+                dataBinding.flMarketInfo.visibility = View.VISIBLE
                 mapViewModel.marts.value!!.forEach { Mart ->
                     if (it.tag == Mart.martSeq) {
                         Logger.d("추가 마트 리스트 태그 ${it.tag}")
@@ -186,6 +207,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 }
                 true
             }
+            this.map.setOnCameraMoveListener {
+                dataBinding.flMarketInfo.visibility = View.GONE
+            }
         }
     }
 
@@ -195,19 +219,36 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         val mapFragment = activity!!.supportFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
-                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        ) {
             TedRx2Permission.with(activity!!)
-                    .setRationaleTitle(R.string.permission_title)
-                    .setRationaleMessage(R.string.permission_content) // "we need permission for read contact and find your location"
-                    .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
-                    .request()
-                    .subscribe({ tedPermissionResult ->
-                        if (tedPermissionResult.isGranted) {
-                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 10f, locationListener)
-                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10f, locationListener)
-                        }
-                    }, { throwable -> })
+                .setRationaleTitle(R.string.permission_title)
+                .setRationaleMessage(R.string.permission_content) // "we need permission for read contact and find your location"
+                .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                .request()
+                .subscribe({ tedPermissionResult ->
+                    if (tedPermissionResult.isGranted) {
+                        locationManager.requestLocationUpdates(
+                            LocationManager.NETWORK_PROVIDER,
+                            3000,
+                            10f,
+                            locationListener
+                        )
+                        locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            3000,
+                            10f,
+                            locationListener
+                        )
+                    }
+                }, { throwable -> })
             return
         }
     }
