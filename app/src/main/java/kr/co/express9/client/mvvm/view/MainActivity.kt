@@ -3,6 +3,7 @@ package kr.co.express9.client.mvvm.view
 import android.app.SearchManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
@@ -106,6 +107,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // searchView.findViewById<ImageView>(androidx.appcompat.R.productSeq.search_button)
         //     .setImageResource(R.drawable.ic_search_24dp)
 
+        // nexus api28에서 title이 보이는 이슈 해결
+        searchView.setOnCloseListener {
+            dataBinding.tvTitle.visibility = View.VISIBLE
+            return@setOnCloseListener false
+        }
+
+        searchView.setOnSearchClickListener {
+            dataBinding.tvTitle.visibility = View.GONE
+        }
+
         // 입력 및 검색 listener
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -156,7 +167,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun setFragment(selectedItemId: Int) {
         selectedFragment = if (toolbarState == ToolbarState.MENU_IS_CREATED) {
             if (searchMenu.isVisible) searchMenu.isVisible = false
-            if (!searchView.isIconified) searchView.onActionViewCollapsed()
+            if (!searchView.isIconified) {
+                searchView.onActionViewCollapsed()
+                dataBinding.tvTitle.visibility = View.VISIBLE
+            }
 
             val fragment = when (selectedItemId) {
                 R.id.bn_home -> {
