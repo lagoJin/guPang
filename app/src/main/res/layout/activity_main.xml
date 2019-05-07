@@ -47,10 +47,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:lineSpacingExtra="-2sp"
+                android:lineSpacingExtra="0sp"
                 android:text="@string/magarine"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="#f24d53"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

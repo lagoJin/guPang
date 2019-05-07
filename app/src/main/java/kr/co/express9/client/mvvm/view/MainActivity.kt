@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.SearchManager
+import android.graphics.Color
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -173,9 +174,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 dataBinding.tvTitle.visibility = View.VISIBLE
             }
 
+            dataBinding.tvTitle.setTextColor(Color.parseColor("#50585d"))
             val fragment = when (selectedItemId) {
                 R.id.bn_home -> {
                     dataBinding.tvTitle.text = getString(R.string.magarine)
+                    dataBinding.tvTitle.setTextColor(Color.parseColor("#f24d53"))
                     homeFragment
                 }
                 R.id.bn_search -> {
