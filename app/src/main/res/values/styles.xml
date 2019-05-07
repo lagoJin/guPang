@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- Customize toolbar icon tint -->
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">@color/grayDark</item>
     </style>
 
     <!-- Style for splash screen -->

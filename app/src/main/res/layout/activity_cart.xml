@@ -165,11 +165,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_hight"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             android:contentInsetStart="0dp"
             android:contentInsetLeft="0dp"
             android:contentInsetEnd="0dp"
             android:contentInsetRight="0dp"
+            android:elevation="4dp"
             app:contentInsetEnd="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
@@ -181,8 +182,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:lineSpacingExtra="0sp"
                 android:text="@string/cart_title"
-                android:textColor="@color/white"
+                android:textColor="#3c3c3c"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
