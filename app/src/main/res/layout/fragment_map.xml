@@ -132,14 +132,15 @@
         </FrameLayout>
 
         <TextView
-                android:clickable="false"
                 android:id="@+id/tv_map_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="2sp"
                 android:padding="16dp"
+                android:background="#b0b0b0"
                 android:text="@string/check_result"
+                android:foreground="?attr/selectableItemBackground"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"

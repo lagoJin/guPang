@@ -10,15 +10,10 @@ import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemMarketBinding
 import kr.co.express9.client.mvvm.model.data.Mart
 
-class MartAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MartAdapter(private val martList: ArrayList<Mart>, var cb: (Mart) -> Unit) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var context: Context
-
-    init {
-        initDummyList()
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -38,18 +33,14 @@ class MartAdapter(private val martList: ArrayList<Mart>, var cb: (Int) -> Unit) 
             popup.show()
         }
         popup.setOnMenuItemClickListener {
-            cb(it.itemId)
-            martList.removeAt(it.itemId)
+            if (it.title == "삭제") {
+                cb(martList[position])
+                martList.remove(martList[position])
+            }
             true
         }
     }
 
     class ViewHolder(internal val binding: ItemMarketBinding) : RecyclerView.ViewHolder(binding.root)
-
-    private fun initDummyList() {
-//        arrayList.add(Market("메로나 슈퍼", "인천 서구 심곡동", "운영시간 9:00 am - 11:30 pm "))
-//        arrayList.add(Market("누가바 슈퍼", "충남 천안시 서북구", "운영시간 12:00 am - 21:00 pm "))
-//        arrayList.add(Market("돼지바 슈퍼", "인천 서구 심곡동", "운영시간 9:00 am - 11:30 pm "))
-    }
 
 }
