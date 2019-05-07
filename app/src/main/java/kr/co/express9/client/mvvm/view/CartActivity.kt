@@ -37,6 +37,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
 
         dataBinding.cartAdapter = cartAdapter
         dataBinding.cartViewModel = cartViewModel
+        dataBinding.bGoToShopping.setOnClickListener { finish() }
 
         cartViewModel.event.observe(this, Observer { event ->
             when (event) {

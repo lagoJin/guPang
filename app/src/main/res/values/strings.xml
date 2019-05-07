@@ -49,6 +49,8 @@
     <string name="total_payment">총 결제예상금액</string>
     <string name="delete_selected_item">삭제</string>
     <string name="purchase_complete">구매완료</string>
+    <string name="no_cart">메모가 비어 있어요!</string>
+    <string name="go_to_shopping">장보러 가기</string>
 
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>
