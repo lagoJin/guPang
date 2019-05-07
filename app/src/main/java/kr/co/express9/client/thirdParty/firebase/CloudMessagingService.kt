@@ -15,7 +15,7 @@ class CloudMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Logger.d("From: ${remoteMessage?.from}")
-        remoteMessage?.data?.isNotEmpty()?.let {
+        remoteMessage?.data?.let {
             Logger.d("Message data payload:" + remoteMessage.data)
         }
 
