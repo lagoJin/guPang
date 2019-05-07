@@ -32,7 +32,7 @@
         <activity android:name=".mvvm.view.LeafletActivity"/>
         <activity android:name=".mvvm.view.ProductActivity"/>
 
-        <service android:name=".util.FCMService">
+        <service android:name=".thirdParty.firebase.CloudMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
