@@ -44,6 +44,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     private lateinit var locationManager: LocationManager
     private lateinit var location: Location
     private lateinit var marker: Marker
+    val latlng = LatLng(37.5083801, 127.0616577)
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
@@ -58,7 +59,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
             when (event) {
                 MapViewModel.Event.MART_LIST -> {
                     map.clear()
-
                     mapViewModel.marts.value!!.forEach { Mart ->
                         var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite)
                         if (User.getFavoriteMarts().contains(Mart)) {
@@ -108,7 +108,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         dataBinding.ivMapLocation.setOnClickListener {
             initLocation()
             if (::map.isInitialized && ::location.isInitialized) {
-                map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
+
+                //LatLng(location.latitude, location.longitude))
+                map.moveCamera(CameraUpdateFactory.newLatLng(latlng))
                 map.animateCamera(CameraUpdateFactory.zoomTo(16f))
             }
         }
@@ -128,6 +130,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
     override fun onMapReady(map: GoogleMap?) {
         map?.let {
             this.map = it
+            this.map.moveCamera(CameraUpdateFactory.newLatLng(latlng))
+            this.map.animateCamera(CameraUpdateFactory.zoomTo(16f))
             this.map.setOnCameraIdleListener {
                 it.projection.visibleRegion.latLngBounds.apply {
                     mapViewModel.getMarts(northeast, southwest)

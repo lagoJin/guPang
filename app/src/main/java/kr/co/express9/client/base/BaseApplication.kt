@@ -14,7 +14,6 @@ import kr.co.express9.client.util.Logger
 import org.koin.android.ext.android.startKoin
 import java.security.MessageDigest
 
-
 class BaseApplication : Application() {
 
     companion object {
