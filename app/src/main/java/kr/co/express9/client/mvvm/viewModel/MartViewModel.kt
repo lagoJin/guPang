@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.viewModel
 
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.MartRepository
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.extension.networkError
 import org.koin.standalone.inject
@@ -16,17 +17,16 @@ class MartViewModel : BaseViewModel<MartViewModel.Event>() {
     }
 
     fun deleteFavoriteMart(martSeq: Int) {
-        martRepository.deleteFavoriteMart(martSeq).subscribe(
-            {
-                if(it.status == StatusEnum.SUCCESS){
+        martRepository.deleteFavoriteMart(User.getUser().userSeq, martSeq).subscribe(
+                {
+                    if (it.status == StatusEnum.SUCCESS) {
 
-                    _event.value = Event.MART_DELETE
-                }
+                        _event.value = Event.MART_DELETE
+                    }
 
-            }, { throwable ->
-                networkError(throwable)
-            }
-        ).apply {
+                }, { throwable ->
+            networkError(throwable)
+        }).apply {
             addDisposable(this)
         }
     }

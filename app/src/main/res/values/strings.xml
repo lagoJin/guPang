@@ -99,8 +99,8 @@
     <string name="menu_delete">삭제</string>
 
     <!--mart menu-->
-    <string name="menu_leaflet">1. 전단지 보기</string>
-    <string name="menu_location">2. 마트 위치 보기</string>
-    <string name="menu_deleted">3. 삭제</string>
+    <string name="menu_leaflet">전단지 보기</string>
+    <string name="menu_location">마트 위치 보기</string>
+    <string name="menu_deleted">삭제</string>
 
 </resources>

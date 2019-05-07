@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.KakaoRepository
+import kr.co.express9.client.mvvm.model.data.Address
 import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.anyTostring
 import org.koin.standalone.inject
@@ -20,6 +21,10 @@ class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
     private val _addressResultSample = MutableLiveData<String>()
     val addressResultSample: LiveData<String>
         get() = _addressResultSample
+
+    private val _realAddress = MutableLiveData<Address>()
+    val realAdress: LiveData<Address>
+        get() = _realAddress
 
     private val _addressResult = MutableLiveData<ArrayList<String>>()
     val addressResult: LiveData<ArrayList<String>>
@@ -78,6 +83,7 @@ class KakaoAddressViewModel : BaseViewModel<KakaoAddressViewModel.Event>() {
                         _event.value = Event.NO_ADDRESS
                     } else {
                         _addressResult.value!!.clear()
+                        _realAddress.value = it
                         it.documents.forEach { document ->
                             _addressResult.value!!.add(document.address_name)
                         }
