@@ -104,6 +104,9 @@ dependencies {
     // map scroll
     implementation "com.yarolegovich:discrete-scrollview:1.4.9"
 
+    // timer
+    implementation "pl.kitek:timertextview:0.0.2"
+
     // test
     implementation "androidx.appcompat:appcompat:1.1.0-alpha04"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"

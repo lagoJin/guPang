@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.Product
+import android.R
+import kr.co.express9.client.util.Logger
+import pl.kitek.timertextview.TimerTextView
+
+
 
 class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
@@ -15,12 +20,19 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
     val product: LiveData<Product>
         get() = _product
 
+    private val _countDown = MutableLiveData<Long>()
+    val countDown: LiveData<Long>
+        get() = _countDown
+
     private val _itemNum = MutableLiveData<Int>().apply { value = 0 }
     val itemNum:LiveData<Int>
         get() = _itemNum
 
     fun setProduct(product: Product) {
         _product.value = product
+        // 시간 파싱해야하는데, 임시로 해둠
+        val futureTimestamp = System.currentTimeMillis() + 10 * 60 * 60 * 1000
+        _countDown.value = futureTimestamp
     }
 
     fun plusItem() {

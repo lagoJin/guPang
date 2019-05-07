@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityProductBinding
@@ -21,7 +22,6 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
         val product = intent.getSerializableExtra("product") as Product
         productViewModel.setProduct(product)
         dataBinding.productViewModel = productViewModel
-
         dataBinding.bAddToCart.setOnClickListener {
             if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_product)
             else {
@@ -29,6 +29,11 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
                 showCheckCartAlert()
             }
         }
+
+        // productViewModel
+        productViewModel.countDown.observe(this, Observer {
+            dataBinding.ttvTimer.setEndTime(it)
+        })
 
         // action bar 등록
         setSupportActionBar(dataBinding.toolbar)
