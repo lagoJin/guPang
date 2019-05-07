@@ -18,8 +18,8 @@ class SuggestionViewModel : BaseViewModel<SuggestionViewModel.Event>() {
 
     }
 
-    private var _selectedSuggestion = MutableLiveData<String>()
-    val selectedSuggestion: LiveData<String>
+    private var _selectedSuggestion = MutableLiveData<String?>()
+    val selectedSuggestion: LiveData<String?>
         get() = _selectedSuggestion
 
     private var suggestedList = ArrayList<String>()
@@ -39,8 +39,8 @@ class SuggestionViewModel : BaseViewModel<SuggestionViewModel.Event>() {
         return cursor
     }
 
-    fun putSuggestion(suggestion: String) {
-        suggestionRepository.putPref(suggestion)
+    fun putSuggestion(suggestion: String?) {
+        suggestion?.let { suggestionRepository.putPref(it) }
         _selectedSuggestion.value = suggestion
     }
 

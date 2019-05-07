@@ -111,6 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // nexus api28에서 title이 보이는 이슈 해결
         searchView.setOnCloseListener {
             dataBinding.tvTitle.visibility = View.VISIBLE
+            suggestionViewModel.putSuggestion(null)
             return@setOnCloseListener false
         }
 
