@@ -146,7 +146,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
 
             override fun onSuggestionClick(index: Int): Boolean {
-                toast(suggestionViewModel.suggestedList[index])
+                val suggestion = suggestionViewModel.selectSuggestion(index)
+                searchView.setQuery(suggestion, true)
                 return true
             }
         })
