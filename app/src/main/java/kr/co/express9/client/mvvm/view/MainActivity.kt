@@ -170,16 +170,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun setFragment(selectedItemId: Int) {
         selectedFragment = if (toolbarState == ToolbarState.MENU_IS_CREATED) {
             if (searchMenu.isVisible) searchMenu.isVisible = false
-            if (!searchView.isIconified) {
-                searchView.onActionViewCollapsed()
-                dataBinding.tvTitle.visibility = View.VISIBLE
-            }
+            if (!searchView.isIconified) searchView.onActionViewCollapsed()
+            dataBinding.tvTitle.visibility = View.VISIBLE
+            dataBinding.ivMagarine.visibility = View.GONE
 
             dataBinding.tvTitle.setTextColor(Color.parseColor("#50585d"))
             val fragment = when (selectedItemId) {
                 R.id.bn_home -> {
-                    dataBinding.tvTitle.text = getString(R.string.magarine)
-                    dataBinding.tvTitle.setTextColor(Color.parseColor("#f24d53"))
+                    dataBinding.ivMagarine.visibility = View.VISIBLE
+                    dataBinding.tvTitle.visibility = View.GONE
                     homeFragment
                 }
                 R.id.bn_search -> {

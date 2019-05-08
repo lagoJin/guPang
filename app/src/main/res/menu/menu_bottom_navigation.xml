@@ -16,10 +16,10 @@
         android:id="@+id/bn_market"
         android:title="@string/menu_mart"
         android:enabled="true"
-        android:icon="@drawable/ic_favorite_click" />
+        android:icon="@drawable/ic_favorite_mart" />
     <item
         android:id="@+id/bn_profile"
         android:title="@string/menu_profile"
         android:enabled="true"
-        android:icon="@drawable/ic_person_outline_24dp" />
+        android:icon="@drawable/ic_my_profile" />
 </menu>
