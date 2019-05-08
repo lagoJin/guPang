@@ -52,6 +52,14 @@
     <string name="no_cart">메모가 비어 있어요!</string>
     <string name="go_to_shopping">장보러 가기</string>
 
+    <!--activity_notification_setting-->
+    <string name="set_sale_notification">할인 알람 설정</string>
+    <string name="let_me_know_notification">할인 알림을 받고 싶은\n품목을 알려주세요!</string>
+    <string name="notification_input_hint">품목 이름 (최대 15자)</string>
+    <string name="add_notification">품목 추가하기</string>
+    <string name="my_notification_list">알림 설정한 항목</string>
+    <string name="please_write_the_notification_name">품목 이름을 입력해주세요.</string>
+
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>
     <string name="agree_with_all_terms">모두 동의합니다</string>

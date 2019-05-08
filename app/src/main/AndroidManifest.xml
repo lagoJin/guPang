@@ -31,6 +31,7 @@
         <activity android:name=".mvvm.view.CartActivity"/>
         <activity android:name=".mvvm.view.LeafletActivity"/>
         <activity android:name=".mvvm.view.ProductActivity"/>
+        <activity android:name=".mvvm.view.NotificationSettingActivity"/>
 
         <service android:name=".thirdParty.firebase.CloudMessagingService">
             <intent-filter>

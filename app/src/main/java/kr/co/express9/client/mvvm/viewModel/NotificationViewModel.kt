@@ -1,0 +1,61 @@
+package kr.co.express9.client.mvvm.viewModel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import kr.co.express9.client.base.BaseViewModel
+import kr.co.express9.client.mvvm.model.NotificationRepository
+import kr.co.express9.client.mvvm.model.data.Notification
+import kr.co.express9.client.mvvm.model.enumData.StatusEnum
+import kr.co.express9.client.util.Logger
+import org.koin.standalone.inject
+
+class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
+
+    private val notificationRepository: NotificationRepository by inject()
+
+    enum class Event {
+        ITEM_NAME_IS_NULL
+    }
+
+    val itemName: MutableLiveData<String> = MutableLiveData() // two way binding
+
+    private val _notificationList = MutableLiveData<ArrayList<Notification>>()
+    val notificationList: LiveData<ArrayList<Notification>>
+        get() = _notificationList
+
+    fun getNotifications() {
+        notificationRepository.getNotifications()
+                .subscribe({
+                    if (it.status == StatusEnum.SUCCESS) _notificationList.value = it.result
+                }, {
+                    Logger.d(it.toString())
+                })
+                .apply { addDisposable(this) }
+    }
+
+    fun addNotification(cb: (isSuccess: Boolean) -> Unit) {
+        if (itemName.value == null) {
+            _event.value = Event.ITEM_NAME_IS_NULL
+            return
+        }
+        notificationRepository.addNotification(itemName.value!!)
+                .subscribe({
+                    cb(it.status == StatusEnum.SUCCESS)
+                }, {
+                    Logger.d(it.toString())
+                })
+                .apply { addDisposable(this) }
+    }
+
+    fun deleteNotification(index: Int, cb: (isSuccess: Boolean) -> Unit) {
+        notificationRepository.deleteNotification(_notificationList.value!![index].text)
+                .subscribe({
+                    cb(it.status == StatusEnum.SUCCESS)
+                }, {
+                    Logger.d(it.toString())
+                })
+                .apply { addDisposable(this) }
+    }
+
+
+}

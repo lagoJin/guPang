@@ -2,10 +2,7 @@ package kr.co.express9.client.di
 
 import kr.co.express9.client.BuildConfig
 import kr.co.express9.client.mvvm.model.*
-import kr.co.express9.client.mvvm.model.api.KakaoAPI
-import kr.co.express9.client.mvvm.model.api.MartAPI
-import kr.co.express9.client.mvvm.model.api.ProductAPI
-import kr.co.express9.client.mvvm.model.api.UserAPI
+import kr.co.express9.client.mvvm.model.api.*
 import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
@@ -57,6 +54,17 @@ val apiModule = module {
             .create(ProductAPI::class.java)
     }
 
+    // NotificationAPI
+    single {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_API_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(NotificationAPI::class.java)
+    }
+
     // KakaoAPI
     single {
         Retrofit.Builder()
@@ -103,6 +111,7 @@ var viewModelModule = module {
     viewModel { SuggestionViewModel() }
     viewModel { ProductViewModel() }
     viewModel { MartViewModel() }
+    viewModel { NotificationViewModel() }
 }
 
 var repositoryModule = module {
@@ -112,6 +121,7 @@ var repositoryModule = module {
     single { MapRepository(get()) }
     single { ProductRepository() }
     single { MartRepository() }
+    single { NotificationRepository() }
 }
 
 var preferenceDataSourceModule = module {
