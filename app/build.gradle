@@ -20,6 +20,7 @@ android {
             buildConfigField 'String', 'KAKAO_API_URL', '"https://dapi.kakao.com/v2/"'
             buildConfigField 'String', 'KAKAO_APP_KEY', '"KakaoAK 5579f7652dca38fc3fd2d437afc40888"'
             buildConfigField 'String', 'KAKAO_ADMIN_KEY', '"KakaoAK 249c095d7023be21d6c20eb4fa3bfa80"'
+            resValue "string", "csv_eamil", "dev.express9@gamil.com"
             resValue "string", "notification_channel_id", "kr.co.express9.client"
         }
         release {
@@ -29,6 +30,7 @@ android {
             buildConfigField 'String', 'KAKAO_API_URL', '"https://dapi.kakao.com/v2/"'
             buildConfigField 'String', 'KAKAO_APP_KEY', '"KakaoAK 5579f7652dca38fc3fd2d437afc40888"'
             buildConfigField 'String', 'KAKAO_ADMIN_KEY', '"KakaoAK 249c095d7023be21d6c20eb4fa3bfa80"'
+            resValue "string", "csv_eamil", "dev.express9@gamil.com"
             resValue "string", "notification_channel_id", "kr.co.express9.client"
         }
     }
