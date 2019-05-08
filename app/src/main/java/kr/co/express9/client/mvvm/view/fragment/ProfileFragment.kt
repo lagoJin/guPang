@@ -9,7 +9,6 @@ import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.NotificationSettingActivity
 import kr.co.express9.client.util.extension.launchActivity
 
-
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
     override fun initStartView(isRestart: Boolean) {
