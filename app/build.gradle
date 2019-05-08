@@ -107,6 +107,9 @@ dependencies {
     // timer
     implementation "pl.kitek:timertextview:0.0.2"
 
+    //image_zoom
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
     // test
     implementation "androidx.appcompat:appcompat:1.1.0-alpha04"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
