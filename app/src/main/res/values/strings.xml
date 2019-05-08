@@ -77,11 +77,9 @@
     <string name="check_result">마트 선택 완료</string>
 
     <!--fragment profile-->
-    <string name="mart_memo">장보기 메모 내역 보기</string>
+    <string name="mart_memo">장보기 메모 내역</string>
     <string name="discount_alert">할인 알림 설정</string>
-    <string name="modify_info">내 정보 수정</string>
     <string name="personal_inquiry">1:1 문의</string>
-    <string name="notice">공지사항</string>
 
     <!--item_product-->
     <string name="product_desc">우리 동네\n인기상품이에요!</string>
