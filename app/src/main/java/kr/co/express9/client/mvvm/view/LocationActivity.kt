@@ -100,26 +100,19 @@ class LocationActivity : BaseActivity<ActivityLocationBinding>(R.layout.activity
 
             setOnFocusChangeListener { view, b ->
                 if (view.hasFocus()) {
-                    dataBinding.llLocationText.animate()
-                            .alpha(0.0f)
-                            .setDuration(300).setListener(object :
-                                    AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator?) {
-                                    super.onAnimationEnd(animation)
-                                    dataBinding.llLocationText.visibility = View.GONE
-                                }
-                            })
+                    dataBinding.llLocationText.animate().alpha(0.0f).setDuration(300).setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            dataBinding.llLocationText.visibility = View.GONE
+                        }
+                    })
                 } else {
-                    dataBinding.llLocationText.animate()
-                            .alpha(1.0f)
-                            .setDuration(300)
-                            .setListener(object :
-                                    AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator?) {
-                                    super.onAnimationEnd(animation)
-                                    dataBinding.llLocationText.visibility = View.VISIBLE
-                                }
-                            })
+                    dataBinding.llLocationText.animate().alpha(1.0f).setDuration(300).setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            dataBinding.llLocationText.visibility = View.VISIBLE
+                        }
+                    })
                 }
             }
 
