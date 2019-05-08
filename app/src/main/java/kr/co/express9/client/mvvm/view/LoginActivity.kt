@@ -13,6 +13,7 @@ import kr.co.express9.client.databinding.AlertAgreeWithTermsBinding
 import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.TermsViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,7 +36,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     // 2. 이미 가입한 유저인지 확인(firebase 토큰, 닉네임 갱신)
                     userViewModel.checkIsOldUser(
                             kakaoUserViewModel.kakaoProfile.value?.id.toString(),
-                            kakaoUserViewModel.kakaoProfile.value?.nickname.toString()
+                            kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                            kakaoUserViewModel.kakaoProfile.value?.profileImagePath
                     )
                 }
                 else -> {
@@ -58,6 +60,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     userViewModel.signup(
                             kakaoUserViewModel.kakaoProfile.value?.id.toString(),
                             kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                            kakaoUserViewModel.kakaoProfile.value?.profileImagePath,
                             termsViewModel.marketingAgreement.value!!
                     )
                     alertDialog.dismiss()

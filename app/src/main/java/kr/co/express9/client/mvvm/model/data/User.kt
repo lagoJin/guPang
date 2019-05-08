@@ -9,6 +9,7 @@ data class User(
         val userSeq: Int,
         val uuid: String,
         val name: String,
+        var image: String?,
         val deviceToken: String,
         val isMarketingAgree: Boolean = true // 서버쪽에 아직 구현이 안됨
 ) : Serializable {

@@ -1,6 +1,5 @@
 package kr.co.express9.client.mvvm.view
 
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -23,7 +22,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                 KakaoUserViewModel.Event.LOGIN -> {
                     userViewModel.checkIsOldUser(
                         kakaoUserViewModel.kakaoProfile.value?.id.toString(),
-                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString()
+                        kakaoUserViewModel.kakaoProfile.value?.nickname.toString(),
+                        kakaoUserViewModel.kakaoProfile.value?.profileImagePath
                     )
                 }
                 else -> launchLoginActivity()
