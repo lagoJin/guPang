@@ -2,9 +2,12 @@ package kr.co.express9.client.mvvm.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.Observable
+import io.reactivex.Single
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.CartRepository
 import kr.co.express9.client.mvvm.model.data.CartProduct
+import kr.co.express9.client.mvvm.model.data.Response
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
@@ -15,7 +18,7 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
     enum class Event {
         SELECTED,
-        NOT_SELECTED
+        NOT_SELECTED,
     }
 
     private val _cartProducts = MutableLiveData<ArrayList<CartProduct>>()
@@ -106,39 +109,34 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
         cb(idx)
     }
 
-    fun deleteCartProduct(cb: (deletedIndex: Int) -> Unit) {
+    fun deleteCartProduct(cb: () -> Unit) {
         // 향후 한번에 배열로 삭제할 수 있도록 변경 될 예정
+        val requestList = ArrayList<Observable<Response<Unit>>>()
         _cartProducts.value!!.forEachIndexed { idx, cartProduct ->
             if (cartProduct.isSelected) {
-                cartRepository.deleteCartProduct(cartProduct.productSeq)
-                        .subscribe({
-                            if (it.status == StatusEnum.SUCCESS) {
-                                _cartProducts.value!!.remove(cartProduct)
-                                checkCartProductIsEmpty()
-                                cb(idx)
-                            }
-                        }, {
-                            Logger.d(it.toString())
-                        }).apply { addDisposable(this) }
+                requestList.add(cartRepository.deleteCartProduct(cartProduct.productSeq).toObservable())
             }
         }
+
+        Observable.merge(requestList)
+                .doOnComplete {
+                    getCartProducts()
+                    cb()
+                }
+                .doOnError { Logger.d(it.toString()) }
+                .subscribe({
+                    Logger.d("$it")
+                }, {
+                    Logger.d(it.toString())
+                }).apply { addDisposable(this) }
+
     }
 
     fun getCartProducts() {
         cartRepository.getCartProducts()
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
-                        marketList.clear()
-                        headerIdx.clear()
-                        it.result.forEachIndexed { i, product ->
-                            product.isExpanded = true // 초기에 다 펼쳐져 있도록 추가 (서버 데이터 파싱시 false)
-                            if (product.martSeq !in marketList) {
-                                product.isHeader = true
-                                marketList.add(product.martSeq)
-                                headerIdx.add(i)
-                            }
-                        }
-                        _cartProducts.value = it.result
+                        _cartProducts.value = setHeader(it.result)
                         checkCartProductIsEmpty()
                     }
                 }, {
@@ -148,5 +146,19 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
     private fun checkCartProductIsEmpty() {
         _cartProductIsEmpty.value = _cartProducts.value!!.size == 0
+    }
+
+    private fun setHeader(cartProductList: ArrayList<CartProduct>): ArrayList<CartProduct> {
+        marketList.clear()
+        headerIdx.clear()
+        cartProductList.forEachIndexed { i, product ->
+            product.isExpanded = true // 초기에 다 펼쳐져 있도록 추가 (서버 데이터 파싱시 false)
+            if (product.martSeq !in marketList) {
+                product.isHeader = true
+                marketList.add(product.martSeq)
+                headerIdx.add(i)
+            }
+        }
+        return cartProductList
     }
 }

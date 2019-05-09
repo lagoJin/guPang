@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemCartBinding
 import kr.co.express9.client.mvvm.model.data.CartProduct
-import kr.co.express9.client.util.Logger
 
 class CartAdapter(val onSelect: (index: Int) -> Unit,
                   val onExpand: (index: Int) -> Unit,

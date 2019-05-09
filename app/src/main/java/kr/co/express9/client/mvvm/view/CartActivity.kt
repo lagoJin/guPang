@@ -44,11 +44,10 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         dataBinding.bDelete.setOnClickListener {
             cartViewModel.deleteCartProduct {
                 toast(R.string.delete_complete)
-                cartAdapter.notifyItemRemoved(it)
                 dataBinding.clCalculator.visibility = View.GONE
             }
         }
-        dataBinding.bPurchaseComplete.setOnClickListener {  }
+        dataBinding.bPurchaseComplete.setOnClickListener { }
 
         cartViewModel.event.observe(this, Observer { event ->
             when (event) {
@@ -58,7 +57,8 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         })
 
         cartViewModel.cartProducts.observe(this, Observer {
-            cartAdapter.cartProducts =  it
+            Logger.d("들어오오오옴")
+            cartAdapter.cartProducts = it
             cartAdapter.notifyDataSetChanged()
         })
 

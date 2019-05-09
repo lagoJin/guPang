@@ -61,11 +61,11 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
      * 장보기 메모담기 확인
      */
     private fun showCheckCartAlert() {
+        productViewModel.resetItem()
         dialog<AlertCheckCartBinding>(R.layout.alert_check_cart) { dialog, binding ->
             binding.bNo.setOnClickListener { dialog.dismiss() }
             binding.bYes.setOnClickListener {
                 launchActivity<CartActivity>()
-                productViewModel.resetItem()
                 dialog.dismiss()
             }
             dialog.show()
