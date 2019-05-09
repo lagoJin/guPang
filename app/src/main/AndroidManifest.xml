@@ -29,6 +29,7 @@
         <activity android:name=".mvvm.view.GuideActivity"/>
         <activity android:name=".mvvm.view.MainActivity"/>
         <activity android:name=".mvvm.view.CartActivity"/>
+        <activity android:name=".mvvm.view.CartHistoryActivity"/>
         <activity android:name=".mvvm.view.LeafletActivity"/>
         <activity android:name=".mvvm.view.ProductActivity"/>
         <activity android:name=".mvvm.view.NotificationSettingActivity"/>

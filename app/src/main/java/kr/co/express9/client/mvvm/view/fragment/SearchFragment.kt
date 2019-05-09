@@ -14,11 +14,12 @@ import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
 import kr.co.express9.client.util.Logger
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.reflect.Method
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
-    private val searchViewModel: SearchViewModel by inject()
+    private val searchViewModel: SearchViewModel by viewModel()
     private val suggestionViewModel: SuggestionViewModel by sharedViewModel()
 
     private lateinit var sSetScrollPosition: Method

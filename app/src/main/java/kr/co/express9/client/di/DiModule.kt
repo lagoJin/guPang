@@ -115,6 +115,7 @@ var viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel() }
     viewModel { CartViewModel() }
+    viewModel { CartHistoryViewModel() }
     viewModel { TermsViewModel() }
     viewModel { UserViewModel() }
     viewModel { SearchViewModel() }

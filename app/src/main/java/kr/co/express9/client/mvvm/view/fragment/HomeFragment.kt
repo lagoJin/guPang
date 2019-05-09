@@ -13,9 +13,10 @@ import kr.co.express9.client.mvvm.view.MainActivity
 import kr.co.express9.client.mvvm.viewModel.HomeViewModel
 import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private val homeViewModel: HomeViewModel by inject()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
         val productAdapter = ProductAdapter(true)

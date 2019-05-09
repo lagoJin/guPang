@@ -225,6 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:lineSpacingExtra="0sp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/cart_title"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

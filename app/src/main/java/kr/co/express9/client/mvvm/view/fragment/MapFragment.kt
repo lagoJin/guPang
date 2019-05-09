@@ -26,7 +26,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.jakewharton.rxbinding3.widget.textChanges
-import com.kakao.util.helper.log.Logger
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kr.co.express9.client.R
@@ -41,14 +40,14 @@ import kr.co.express9.client.mvvm.viewModel.KakaoAddressViewModel
 import kr.co.express9.client.mvvm.viewModel.MapViewModel
 import kr.co.express9.client.util.extension.hideKeyboard
 import kr.co.express9.client.util.extension.launchActivity
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-    private val mapViewModel: MapViewModel by inject()
-    private val kakaoAddressViewModel: KakaoAddressViewModel by inject()
+    private val mapViewModel: MapViewModel by viewModel()
+    private val kakaoAddressViewModel: KakaoAddressViewModel by viewModel()
 
     private lateinit var locationManager: LocationManager
     private lateinit var location: Location
