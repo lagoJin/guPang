@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="cartGoods"
-            type="kr.co.express9.client.mvvm.model.data.CartGoodsDummy" />
+            name="cartProduct"
+            type="kr.co.express9.client.mvvm.model.data.CartProduct" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:background="@color/gray"
-            android:visibility="@{cartGoods.isHeader}"
+            android:visibility="@{cartProduct.isHeader}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,8 +31,8 @@
             android:lineSpacingExtra="0sp"
             android:textColor="@color/fontBlack"
             android:textSize="14sp"
-            android:visibility="@{cartGoods.isHeader}"
-            app:bind_mart_name="@{cartGoods.product.martSeq}"
+            android:visibility="@{cartProduct.isHeader}"
+            app:bind_mart_name="@{cartProduct.martSeq}"
             app:layout_constraintBottom_toBottomOf="@id/v_head"
             app:layout_constraintEnd_toStartOf="@id/iv_arrow"
             app:layout_constraintHorizontal_bias="0"
@@ -45,9 +45,9 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
-            android:rotation="@{cartGoods.isExpanded? 90 : 0}"
+            android:rotation="@{cartProduct.isExpanded? 90 : 0}"
             android:src="@drawable/ic_keyboard_arrow_right_24dp"
-            android:visibility="@{cartGoods.isHeader}"
+            android:visibility="@{cartProduct.isHeader}"
             app:layout_constraintBottom_toBottomOf="@id/v_head"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/v_head" />
@@ -56,17 +56,8 @@
             android:id="@+id/cl_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="@{cartProduct.isExpanded}"
             app:layout_constraintTop_toBottomOf="@id/v_head">
-
-            <View
-                android:id="@+id/v_select"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/yellow"
-                android:visibility="@{cartGoods.isSelected}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_product"
@@ -75,13 +66,32 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="@{cartGoods.isExpanded}"
-                app:bind_image="@{cartGoods.product.imageUrl}"
+                app:bind_image="@{cartProduct.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_shopping_cart_24dp"
                 tools:tint="@color/black" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#3c3c3c32"
+                android:visibility="@{cartProduct.isSelected}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_product"
+                app:layout_constraintEnd_toEndOf="@id/iv_product"
+                app:layout_constraintStart_toStartOf="@id/iv_product"
+                app:layout_constraintTop_toTopOf="@id/iv_product" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_baseline_check_24_px"
+                android:visibility="@{cartProduct.isSelected}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_product"
+                app:layout_constraintEnd_toEndOf="@id/iv_product"
+                app:layout_constraintStart_toStartOf="@id/iv_product"
+                app:layout_constraintTop_toTopOf="@id/iv_product" />
 
             <TextView
                 android:id="@+id/tv_goods_name"
@@ -90,10 +100,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:lineSpacingExtra="0sp"
-                android:text="@{cartGoods.product.name}"
+                android:text="@{cartProduct.productName}"
                 android:textColor="@color/fontBlack"
                 android:textSize="14sp"
-                android:visibility="@{cartGoods.isExpanded}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/iv_product"
@@ -109,8 +118,7 @@
                 android:lineSpacingExtra="0sp"
                 android:textColor="@color/fontBlack"
                 android:textSize="18sp"
-                android:visibility="@{cartGoods.isExpanded}"
-                app:bind_price="@{cartGoods.product.saleUnitPrice}"
+                app:bind_price="@{cartProduct.saleUnitPrice}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/iv_product"
@@ -126,9 +134,8 @@
                 android:lineSpacingExtra="0sp"
                 android:textColor="@color/fontGray"
                 android:textSize="14sp"
-                android:visibility="@{cartGoods.isExpanded}"
                 app:bind_cancel_line="@{true}"
-                app:bind_price="@{cartGoods.product.originalUnitPrice}"
+                app:bind_price="@{cartProduct.originalUnitPrice}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/iv_product"
@@ -141,7 +148,6 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:visibility="@{cartGoods.isExpanded}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -160,7 +166,7 @@
                     android:layout_width="34dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@{String.valueOf(cartGoods.total)}"
+                    android:text="@{String.valueOf(cartProduct.count)}"
                     android:textColor="@color/fontBlack"
                     android:textSize="18sp"
                     tools:text="0" />
@@ -178,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#e6e6e6"
-                android:visibility="@{cartGoods.isExpanded}"
+                android:visibility="@{cartProduct.isExpanded}"
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

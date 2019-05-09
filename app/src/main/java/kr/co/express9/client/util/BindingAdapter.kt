@@ -57,12 +57,6 @@ fun TextView.setPrice(price: Int) {
     this.text = "${nf.format(price)}원"
 }
 
-@BindingAdapter("bind_minus_price")
-fun TextView.setMinusPrice(price: Int) {
-    val nf = NumberFormat.getInstance()
-    this.text = "-${nf.format(price)}원"
-}
-
 @BindingAdapter("bind_cancel_line")
 fun TextView.setCancelLine(draw: Boolean) {
     if (draw) this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

@@ -65,6 +65,17 @@ val apiModule = module {
             .create(NotificationAPI::class.java)
     }
 
+    // CartAPI
+    single {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_API_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(CartAPI::class.java)
+    }
+
     // KakaoAPI
     single {
         Retrofit.Builder()
@@ -122,6 +133,7 @@ var repositoryModule = module {
     single { ProductRepository() }
     single { MartRepository() }
     single { NotificationRepository() }
+    single { CartRepository() }
 }
 
 var preferenceDataSourceModule = module {
