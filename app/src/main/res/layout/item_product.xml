@@ -11,17 +11,17 @@
     </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginBottom="35dp"
             android:layout_marginTop="42dp"
+            android:layout_marginBottom="35dp"
             android:lineSpacingExtra="8sp"
             android:text="@string/product_desc"
             android:textColor="#50585d"
@@ -32,14 +32,13 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
+            android:layout_margin="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="160dp"
-                android:layout_height="233dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_product"
@@ -58,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="11dp"
+                    android:layout_marginEnd="12dp"
                     android:textSize="12sp"
                     app:bind_mart_name="@{product.martSeq}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="6dp"
+                    android:layout_marginEnd="12dp"
                     android:text="@{product.name}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"

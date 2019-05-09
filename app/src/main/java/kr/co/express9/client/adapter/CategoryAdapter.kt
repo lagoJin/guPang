@@ -16,7 +16,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class VH(val b: ItemCategoryBinding) : RecyclerView.ViewHolder(b.root) {
         init {
             // 뷰가 생성되지 않는 버그로 인해 재활용하지 않도록 수정
-//            this.setIsRecyclable(false)
+            this.setIsRecyclable(false)
         }
     }
 
