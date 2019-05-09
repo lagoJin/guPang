@@ -109,16 +109,18 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
     fun deleteCartProduct(cb: (deletedIndex: Int) -> Unit) {
         // 향후 한번에 배열로 삭제할 수 있도록 변경 될 예정
         _cartProducts.value!!.forEachIndexed { idx, cartProduct ->
-            cartRepository.deleteCartProduct(cartProduct.productSeq)
-                    .subscribe({
-                        if(it.status == StatusEnum.SUCCESS) {
-                            _cartProducts.value!!.remove(cartProduct)
-                            checkCartProductIsEmpty()
-                            cb(idx)
-                        }
-                    }, {
-                        Logger.d(it.toString())
-                    }).apply { addDisposable(this) }
+            if (cartProduct.isSelected) {
+                cartRepository.deleteCartProduct(cartProduct.productSeq)
+                        .subscribe({
+                            if (it.status == StatusEnum.SUCCESS) {
+                                _cartProducts.value!!.remove(cartProduct)
+                                checkCartProductIsEmpty()
+                                cb(idx)
+                            }
+                        }, {
+                            Logger.d(it.toString())
+                        }).apply { addDisposable(this) }
+            }
         }
     }
 

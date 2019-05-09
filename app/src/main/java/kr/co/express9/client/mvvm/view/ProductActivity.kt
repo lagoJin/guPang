@@ -26,7 +26,10 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_product)
             else {
                 // 장보기 메모에 상품 추가 예정
-                showCheckCartAlert()
+                productViewModel.addCartProduct{
+                    if(it) showCheckCartAlert()
+                    else toast(R.string.faile_add_product_to_cart)
+                }
             }
         }
 

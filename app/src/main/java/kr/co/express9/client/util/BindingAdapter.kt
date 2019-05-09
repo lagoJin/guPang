@@ -69,10 +69,12 @@ fun setVisibility(view: View, visibility: Boolean) {
 
 @BindingAdapter("bind_mart_name")
 fun martSeq2Name(view: TextView, martSeq: Int) {
+    var martName = view.context.getString(R.string.no_mart_in_favorite_mart_list)
     User.getFavoriteMarts().forEach {
         if(it.martSeq == martSeq) {
-            view.text = it.name
+            martName = it.name
             return@forEach
         }
     }
+    view.text = martName
 }

@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.Product
 import android.R
+import kr.co.express9.client.mvvm.model.CartRepository
+import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
+import org.koin.standalone.inject
 import pl.kitek.timertextview.TimerTextView
-
 
 
 class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
-    enum class Event{
+    private val cartRepository: CartRepository by inject()
+
+    enum class Event {
 
     }
 
@@ -25,7 +29,7 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
         get() = _countDown
 
     private val _itemNum = MutableLiveData<Int>().apply { value = 0 }
-    val itemNum:LiveData<Int>
+    val itemNum: LiveData<Int>
         get() = _itemNum
 
     fun setProduct(product: Product) {
@@ -45,5 +49,14 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
     fun resetItem() {
         _itemNum.value = 0
+    }
+
+    fun addCartProduct(cb: (isSuccess: Boolean) -> Unit) {
+        cartRepository.addCartProduct(_itemNum.value!!, _product.value!!.productSeq)
+                .subscribe({
+                    cb(it.status == StatusEnum.SUCCESS)
+                }, {
+                    Logger.d(it.toString())
+                }).apply { addDisposable(this) }
     }
 }
