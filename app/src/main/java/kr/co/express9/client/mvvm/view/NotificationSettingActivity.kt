@@ -27,14 +27,13 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
     override fun initStartView(isRestart: Boolean) {
         notificationAdapter = NotificationAdapter(onDelete)
         dataBinding.notificationAdapter = notificationAdapter
-
         dataBinding.notificationViewModel = notificationViewModel
         dataBinding.bAddAlarm.setOnClickListener {
-            notificationViewModel.addNotification { toast(R.string.success_to_add_notification) }
+            notificationViewModel.addNotification { addNotification() }
         }
 
         dataBinding.etItemName.setOnEditorActionListener{_, _, _ ->
-            notificationViewModel.addNotification { toast(R.string.success_to_add_notification) }
+            notificationViewModel.addNotification { addNotification() }
             true
         }
 
@@ -55,5 +54,10 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
         })
 
         if (!isRestart) notificationViewModel.getNotifications()
+    }
+
+    private fun addNotification() {
+        toast(R.string.success_to_add_notification)
+        dataBinding.etItemName.setText("")
     }
 }
