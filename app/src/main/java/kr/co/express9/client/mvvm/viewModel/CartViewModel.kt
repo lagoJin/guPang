@@ -92,20 +92,26 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
     }
 
     fun changeAmount(idx: Int, isPlus: Boolean, cb: (idx: Int) -> Unit) {
-        val total = _cartProducts.value!![idx].count
-        _cartProducts.value!![idx].count = when {
+        val cartProduct = _cartProducts.value!![idx]
+        val total = cartProduct.count
+        cartProduct.count = when {
             isPlus -> total + 1
             total > 1 -> total - 1
             else -> 1
         }
 
         // 해당 상품이 선택되어 있는 경우 금액 변경
-        val cart = _cartProducts.value!![idx]
-        if (cart.isSelected) {
-            val price = cart.saleUnitPrice
-            val salePrice = cart.saleUnitPrice - cart.originalUnitPrice
+        if (cartProduct.isSelected) {
+            val price = cartProduct.saleUnitPrice
+            val salePrice = cartProduct.saleUnitPrice - cartProduct.originalUnitPrice
             calculatePrice(isPlus, price, salePrice)
         }
+
+        cartRepository.changeAmount(cartProduct.count, cartProduct.productSeq)
+                .subscribe({
+                }, {
+                    Logger.d("$it")
+                }).apply { addDisposable(this) }
         cb(idx)
     }
 

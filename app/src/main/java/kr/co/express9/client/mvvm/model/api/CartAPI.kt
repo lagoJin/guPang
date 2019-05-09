@@ -15,6 +15,7 @@ interface CartAPI {
                        @Field("productSeq") productSeq: Int,
                        @Field("userSeq") userSeq: Int = User.getUser().userSeq): Single<Response<Unit>>
 
+    @FormUrlEncoded
     @PUT("cart/count")
     fun changeAmount(@Field("count") count: Int,
                      @Field("productSeq") productSeq: Int,
