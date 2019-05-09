@@ -51,6 +51,7 @@
     <string name="purchase_complete">구매완료</string>
     <string name="no_cart">메모가 비어 있어요!</string>
     <string name="go_to_shopping">장보러 가기</string>
+    <string name="delete_complete">삭제완료</string>
 
     <!--activity_notification_setting-->
     <string name="set_sale_notification">할인 알람 설정</string>

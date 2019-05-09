@@ -15,6 +15,10 @@ class CartAdapter(val onSelect: (index: Int) -> Unit,
 
     class VH(val b: ItemCartBinding) : RecyclerView.ViewHolder(b.root)
 
+    enum class Payload(name: String) {
+        UPDATE_CART_PRODUCT("UPDATE_CART_PRODUCT")
+    }
+
     var cartProducts = ArrayList<CartProduct>()
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
@@ -45,9 +49,13 @@ class CartAdapter(val onSelect: (index: Int) -> Unit,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) return super.onBindViewHolder(holder, position, payloads)
-        repeat(payloads.size) {
-            holder as VH
-            holder.b.cartProduct = cartProducts[position]
+        payloads.forEach { payload ->
+            if (payload is Payload) {
+                holder as VH
+                when (payload) {
+                    Payload.UPDATE_CART_PRODUCT -> holder.b.cartProduct = cartProducts[position]
+                }
+            }
         }
     }
 }

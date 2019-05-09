@@ -17,6 +17,6 @@ interface NotificationAPI {
                         @Field("userSeq") userSeq: Int = User.getUser().userSeq): Single<Response<Unit>>
 
     @DELETE("notification/")
-    fun deleteNotification(@Field("text") text: String,
-                           @Field("userSeq") userSeq: Int = User.getUser().userSeq): Single<Response<Unit>>
+    fun deleteNotification(@Query("text") text: String,
+                           @Query("userSeq") userSeq: Int = User.getUser().userSeq): Single<Response<Unit>>
 }

@@ -18,9 +18,9 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
         NOT_SELECTED
     }
 
-    private val _cartProduct = MutableLiveData<ArrayList<CartProduct>>()
-    val cartProduct: LiveData<ArrayList<CartProduct>>
-        get() = _cartProduct
+    private val _cartProducts = MutableLiveData<ArrayList<CartProduct>>()
+    val cartProducts: LiveData<ArrayList<CartProduct>>
+        get() = _cartProducts
 
     private val _totalPrice = MutableLiveData<Int>().apply { value = 0 }
     val totalPrice: LiveData<Int>
@@ -38,7 +38,6 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
     val cartProductIsEmpty: LiveData<Boolean>
         get() = _cartProductIsEmpty
 
-    private var _selectedList = MutableLiveData<ArrayList<Int>>().apply { value = ArrayList() }
     private val marketList = ArrayList<Int>()
     private val headerIdx = ArrayList<Int>()
 
@@ -55,19 +54,22 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
     fun selectGoods(idx: Int, cb: (index: Int) -> Unit) {
         // 상태변경
-        val isSelected = !_cartProduct.value!![idx].isSelected
-        _cartProduct.value!![idx].isSelected = isSelected
-
-        // 선택목록에 갱신
-        if (isSelected) _selectedList.value!!.add(idx)
-        else _selectedList.value!!.remove(idx)
+        val isSelected = !_cartProducts.value!![idx].isSelected
+        _cartProducts.value!![idx].isSelected = isSelected
 
         // 이벤트 전달
-        _event.value = if (_selectedList.value!!.size > 0) Event.SELECTED
+        var isSelectedProduct = false
+        _cartProducts.value!!.forEach {
+            if (it.isSelected) {
+                isSelectedProduct = true
+                return@forEach
+            }
+        }
+        _event.value = if (isSelectedProduct) Event.SELECTED
         else Event.NOT_SELECTED
 
         // 금액변경
-        val cart = _cartProduct.value!![idx]
+        val cart = _cartProducts.value!![idx]
         val price = cart.originalUnitPrice * cart.count
         val salePrice = (cart.saleUnitPrice - cart.originalUnitPrice) * cart.count
         calculatePrice(isSelected, price, salePrice)
@@ -76,26 +78,26 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
     }
 
     fun expandGoods(idx: Int, cb: (startIdx: Int, endIdx: Int) -> Unit) {
-        val marketIdx = marketList.indexOf(_cartProduct.value!![idx].martSeq)
-        val endIdx = if (headerIdx.size == marketIdx + 1) _cartProduct.value!!.size - 1 else headerIdx[marketIdx + 1] - 1
+        val marketIdx = marketList.indexOf(_cartProducts.value!![idx].martSeq)
+        val endIdx = if (headerIdx.size == marketIdx + 1) _cartProducts.value!!.size - 1 else headerIdx[marketIdx + 1] - 1
 
-        val toExpanded = !_cartProduct.value!![idx].isExpanded
+        val toExpanded = !_cartProducts.value!![idx].isExpanded
         for (index in idx..endIdx) {
-            _cartProduct.value!![index].isExpanded = toExpanded
+            _cartProducts.value!![index].isExpanded = toExpanded
         }
         cb(idx, endIdx + 1)
     }
 
     fun changeAmount(idx: Int, isPlus: Boolean, cb: (idx: Int) -> Unit) {
-        val total = _cartProduct.value!![idx].count
-        _cartProduct.value!![idx].count = when {
+        val total = _cartProducts.value!![idx].count
+        _cartProducts.value!![idx].count = when {
             isPlus -> total + 1
             total > 1 -> total - 1
             else -> 1
         }
 
         // 해당 상품이 선택되어 있는 경우 금액 변경
-        val cart = _cartProduct.value!![idx]
+        val cart = _cartProducts.value!![idx]
         if (cart.isSelected) {
             val price = cart.saleUnitPrice
             val salePrice = cart.saleUnitPrice - cart.originalUnitPrice
@@ -104,11 +106,26 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
         cb(idx)
     }
 
-    fun getGoods() {
-        cartRepository.getProducts()
+    fun deleteCartProduct(cb: (deletedIndex: Int) -> Unit) {
+        // 향후 한번에 배열로 삭제할 수 있도록 변경 될 예정
+        _cartProducts.value!!.forEachIndexed { idx, cartProduct ->
+            cartRepository.deleteCartProduct(cartProduct.productSeq)
+                    .subscribe({
+                        if(it.status == StatusEnum.SUCCESS) {
+                            _cartProducts.value!!.remove(cartProduct)
+                            checkCartProductIsEmpty()
+                            cb(idx)
+                        }
+                    }, {
+                        Logger.d(it.toString())
+                    }).apply { addDisposable(this) }
+        }
+    }
+
+    fun getCartProducts() {
+        cartRepository.getCartProducts()
                 .subscribe({
-                    if(it.status == StatusEnum.SUCCESS) {
-                        _cartProductIsEmpty.value = it.result.size == 0
+                    if (it.status == StatusEnum.SUCCESS) {
                         marketList.clear()
                         headerIdx.clear()
                         it.result.forEachIndexed { i, product ->
@@ -119,10 +136,15 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
                                 headerIdx.add(i)
                             }
                         }
-                        _cartProduct.value = it.result
+                        _cartProducts.value = it.result
+                        checkCartProductIsEmpty()
                     }
                 }, {
 
                 }).apply { addDisposable(this) }
+    }
+
+    private fun checkCartProductIsEmpty() {
+        _cartProductIsEmpty.value = _cartProducts.value!!.size == 0
     }
 }

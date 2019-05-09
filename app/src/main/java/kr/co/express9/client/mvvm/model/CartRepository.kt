@@ -13,27 +13,27 @@ class CartRepository : KoinComponent {
 
     private val cartAPI: CartAPI by inject()
 
-    fun addProduct(count: Int, productSeq: Int): Single<Response<Unit>> {
-        return cartAPI.addProduct(count, productSeq).networkCommunication()
+    fun addCartProduct(count: Int, productSeq: Int): Single<Response<Unit>> {
+        return cartAPI.addCartProduct(count, productSeq).networkCommunication()
     }
 
     fun changeAmount(count: Int, productSeq: Int): Single<Response<Unit>> {
         return cartAPI.changeAmount(count, productSeq).networkCommunication()
     }
 
-    fun getProducts(): Single<Response<ArrayList<CartProduct>>> {
-        return cartAPI.getProducts().networkCommunication()
+    fun getCartProducts(): Single<Response<ArrayList<CartProduct>>> {
+        return cartAPI.getCartProducts().networkCommunication()
     }
 
-    fun deleteProduct(productSeq: Int): Single<Response<Unit>> {
-        return cartAPI.deleteProduct(productSeq).networkCommunication()
+    fun deleteCartProduct(productSeq: Int): Single<Response<Unit>> {
+        return cartAPI.deleteCartProduct(productSeq).networkCommunication()
     }
 
     fun getHistoryByMonth(purchaseYm: String): Single<Response<ArrayList<CartHistory>>> {
         return cartAPI.getHistoryByMonth(purchaseYm).networkCommunication()
     }
 
-    fun purchaseProduct(count: Int, productSeq: Int): Single<Response<Unit>> {
-        return cartAPI.purchaseProduct(count, productSeq).networkCommunication()
+    fun purchaseCartProduct(count: Int, productSeq: Int): Single<Response<Unit>> {
+        return cartAPI.purchaseCartProduct(count, productSeq).networkCommunication()
     }
 }
