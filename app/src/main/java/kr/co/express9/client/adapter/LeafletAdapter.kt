@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.express9.client.R
 import kr.co.express9.client.databinding.ItemLeafletBinding
-import kr.co.express9.client.databinding.ItemMapMarketBinding
 
 class LeafletAdapter : RecyclerView.Adapter<LeafletAdapter.ViewHolder>() {
 
@@ -28,7 +27,7 @@ class LeafletAdapter : RecyclerView.Adapter<LeafletAdapter.ViewHolder>() {
     override fun getItemCount(): Int = arrayList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.leaflet = arrayList[position]
+        holder.binding.test.text = arrayList[position].marketTitle
     }
 
     class ViewHolder(internal val binding: ItemLeafletBinding) : RecyclerView.ViewHolder(binding.root)

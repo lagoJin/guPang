@@ -45,8 +45,9 @@
                 android:id="@+id/iv_magarine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/magarine" />
+                android:layout_gravity="center_horizontal"/>
+
+            <!--android:src="@drawable/magarine"-->
 
             <TextView
                 android:id="@+id/tv_title"

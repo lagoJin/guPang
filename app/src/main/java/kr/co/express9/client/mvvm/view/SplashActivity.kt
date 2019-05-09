@@ -1,5 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
+import android.os.Handler
+import android.view.WindowManager
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -33,9 +35,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         userViewModel.event.observe(this, Observer { event ->
             when (event) {
                 UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
+                    delayActivity()
                     toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
-                    launchActivity<LocationActivity>()
-                    finish()
                 }
                 UserViewModel.Event.NEW_USER -> launchLoginActivity()
                 else -> {
@@ -44,10 +45,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         })
     }
 
+    private fun delayActivity() {
+        val hd = Handler()
+        hd.postDelayed({
+            launchActivity<LocationActivity>()
+            finish()
+        }, 1000)
+    }
+
     private fun launchLoginActivity() {
-        launchActivity<LoginActivity>()
         kakaoUserViewModel.removeSessionCallback()
-        finish()
+        delayActivity()
     }
 
     override fun onDestroy() {

@@ -91,6 +91,7 @@ class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_l
     override fun onMapReady(map: GoogleMap) {
         this.map = map
         this.map.uiSettings.isScrollGesturesEnabled = false
+        this.map.uiSettings.isZoomGesturesEnabled = false
         map.addMarker(MarkerOptions().icon(bitmapDescriptorFromVector(this, R.drawable.ic_place_favorite_big)).position(latLng))
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         map.animateCamera(CameraUpdateFactory.zoomTo(16f))
