@@ -16,6 +16,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
     private val kakaoUserViewModel: KakaoUserViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
+    private val hd = Handler()
 
     override fun initStartView(isRestart: Boolean) {
         kakaoUserViewModel.setSessionCallback()
@@ -35,8 +36,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         userViewModel.event.observe(this, Observer { event ->
             when (event) {
                 UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
-                    delayActivity()
-                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+                    hd.postDelayed({
+                        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+                        launchActivity<LocationActivity>()
+                        finish()
+                    }, 1000)
                 }
                 UserViewModel.Event.NEW_USER -> launchLoginActivity()
                 else -> {
@@ -45,17 +49,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         })
     }
 
-    private fun delayActivity() {
-        val hd = Handler()
+    private fun launchLoginActivity() {
+        kakaoUserViewModel.removeSessionCallback()
         hd.postDelayed({
             launchActivity<LocationActivity>()
             finish()
         }, 1000)
-    }
-
-    private fun launchLoginActivity() {
-        kakaoUserViewModel.removeSessionCallback()
-        delayActivity()
     }
 
     override fun onDestroy() {
