@@ -1,73 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="leaflet"
-            type="kr.co.express9.client.adapter.LeafletAdapter.Leaflet" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/round_background">
+    <FrameLayout
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <TextView
-            android:id="@+id/leaflet_title"
+            android:id="@+id/test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@{leaflet.marketTitle}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/leaflet_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="@{leaflet.marketAddress}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/leaflet_title" />
-
-        <TextView
-            android:id="@+id/leaflet_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{leaflet.marketTime}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/leaflet_address" />
-
-        <CheckBox
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/selector_favorite"
-            app:layout_constraintBottom_toTopOf="@+id/leaflet_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/leaflet_image"
-            bind_image="@{leaflet.url}"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/leaflet_time" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>

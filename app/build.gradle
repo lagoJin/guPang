@@ -19,6 +19,8 @@ android {
             buildConfigField 'String', 'BASE_API_URL', '"http://magarine.mooo.com/api/"'
             buildConfigField 'String', 'KAKAO_API_URL', '"https://dapi.kakao.com/v2/"'
             buildConfigField 'String', 'KAKAO_APP_KEY', '"KakaoAK 5579f7652dca38fc3fd2d437afc40888"'
+            buildConfigField 'String', 'KAKAO_ADMIN_KEY', '"KakaoAK 249c095d7023be21d6c20eb4fa3bfa80"'
+            resValue "string", "csv_eamil", "dev.express9@gamil.com"
             resValue "string", "notification_channel_id", "kr.co.express9.client"
         }
         release {
@@ -27,6 +29,8 @@ android {
             buildConfigField 'String', 'BASE_API_URL', '"http://magarine.mooo.com/api/"'
             buildConfigField 'String', 'KAKAO_API_URL', '"https://dapi.kakao.com/v2/"'
             buildConfigField 'String', 'KAKAO_APP_KEY', '"KakaoAK 5579f7652dca38fc3fd2d437afc40888"'
+            buildConfigField 'String', 'KAKAO_ADMIN_KEY', '"KakaoAK 249c095d7023be21d6c20eb4fa3bfa80"'
+            resValue "string", "csv_eamil", "dev.express9@gamil.com"
             resValue "string", "notification_channel_id", "kr.co.express9.client"
         }
     }
@@ -103,6 +107,15 @@ dependencies {
 
     // map scroll
     implementation "com.yarolegovich:discrete-scrollview:1.4.9"
+
+    // timer
+    implementation "pl.kitek:timertextview:0.0.2"
+
+    //image_zoom
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    //circle_imageview
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     // test
     implementation "androidx.appcompat:appcompat:1.1.0-alpha04"

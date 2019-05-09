@@ -14,7 +14,6 @@ import kr.co.express9.client.util.Logger
 import org.koin.android.ext.android.startKoin
 import java.security.MessageDigest
 
-
 class BaseApplication : Application() {
 
     companion object {
@@ -29,7 +28,7 @@ class BaseApplication : Application() {
         startKoin(this, diModule)
         KakaoSDK.init(KakaoSDKAdapter(this))
         Hawk.init(this)
-                .setLogInterceptor { Logger.d("Preference Logger :: $it") }
+//                .setLogInterceptor { Logger.d("Preference Logger :: $it") }
                 .build()
         getKeyHash()
     }

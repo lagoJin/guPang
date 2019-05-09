@@ -4,20 +4,22 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.*
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_search.view.*
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CategoryAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentSearchBinding
 import kr.co.express9.client.mvvm.view.MainActivity
 import kr.co.express9.client.mvvm.viewModel.SearchViewModel
+import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
 import kr.co.express9.client.util.Logger
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.reflect.Method
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
     private val searchViewModel: SearchViewModel by inject()
+    private val suggestionViewModel: SuggestionViewModel by sharedViewModel()
 
     private lateinit var sSetScrollPosition: Method
     private lateinit var sSelectTab: Method
@@ -34,6 +36,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
 
         /**
+         * suggestionViewModel
+         * - sharedViewModel
+         */
+        suggestionViewModel.selectedSuggestion.observe(this, Observer {
+            searchViewModel.searchProducts(null, it)
+        })
+
+        /**
          * searchViewModel
          */
         searchViewModel.categoryList.observe(this, Observer { categoryList ->
@@ -41,9 +51,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             categoryAdapter.notifyDataSetChanged()
             dataBinding.tablayout.removeAllTabs()
             categoryList.forEachIndexed { _, category ->
-                // 수량이 안올라감 확인 필요
-//                val tabName = "${category.name} (${category.total})"
-                val tabName = category.name
+                val tabName = if(category.total != 0) {
+                    "${category.name} (${category.total})"
+                } else {
+                    category.name
+                }
                 dataBinding.tablayout.addTab(dataBinding.tablayout.newTab().setText(tabName))
             }
         })

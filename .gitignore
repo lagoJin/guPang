@@ -134,6 +134,7 @@ obj/
 # User-specific configurations
 .idea/caches/
 .idea/libraries/
+.idea/codeStyles/
 .idea/shelf/
 .idea/.name
 .idea/compiler.xml
@@ -212,3 +213,6 @@ gradle-app.setting
 ### Gradle Patch ###
 
 # End of https://www.gitignore.io/api/gradle,android,androidstudio
+svg/drawable/
+svg/more.svg
+svg/flyer.svg

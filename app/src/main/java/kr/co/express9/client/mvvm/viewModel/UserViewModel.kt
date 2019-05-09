@@ -38,7 +38,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      * 이미 가입한 유저인지 확인 (수정필요)
      * - old user인 경우 device token, id 갱신
      */
-    fun checkIsOldUser(uuid: String, name: String) {
+    fun checkIsOldUser(uuid: String, name: String, image: String?) {
         getDeviceToken()
                 .flatMap {
                     userRepository.login(uuid, name, it)
@@ -56,6 +56,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                     // 이미 가입한 유저인지 확인
                     Logger.d("getInfo : $it")
                     if (it.status == StatusEnum.SUCCESS) {
+                        it.result.image = image
                         putPref(it.result) { loadFavoriteMarts(it.result.userSeq) }
                     }
                 }, {
@@ -71,6 +72,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
     fun signup(
             uuid: String,
             name: String,
+            image: String?,
             isMarketingAgree: Boolean
     ) {
         // 회원가입
@@ -82,6 +84,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
+                        it.result.image = image
                         putPref(it.result) {
                             loadFavoriteMarts(it.result.userSeq)
                         }

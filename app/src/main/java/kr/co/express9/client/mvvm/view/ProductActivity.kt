@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityProductBinding
@@ -21,14 +22,21 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
         val product = intent.getSerializableExtra("product") as Product
         productViewModel.setProduct(product)
         dataBinding.productViewModel = productViewModel
-
         dataBinding.bAddToCart.setOnClickListener {
             if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_product)
             else {
                 // 장보기 메모에 상품 추가 예정
-                showCheckCartAlert()
+                productViewModel.addCartProduct{
+                    if(it) showCheckCartAlert()
+                    else toast(R.string.faile_add_product_to_cart)
+                }
             }
         }
+
+        // productViewModel
+        productViewModel.countDown.observe(this, Observer {
+            dataBinding.ttvTimer.setEndTime(it)
+        })
 
         // action bar 등록
         setSupportActionBar(dataBinding.toolbar)
@@ -53,11 +61,11 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
      * 장보기 메모담기 확인
      */
     private fun showCheckCartAlert() {
+        productViewModel.resetItem()
         dialog<AlertCheckCartBinding>(R.layout.alert_check_cart) { dialog, binding ->
             binding.bNo.setOnClickListener { dialog.dismiss() }
             binding.bYes.setOnClickListener {
                 launchActivity<CartActivity>()
-                productViewModel.resetItem()
                 dialog.dismiss()
             }
             dialog.show()

@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.SearchManager
+import android.graphics.Color
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -110,6 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // nexus api28에서 title이 보이는 이슈 해결
         searchView.setOnCloseListener {
             dataBinding.tvTitle.visibility = View.VISIBLE
+            suggestionViewModel.putSuggestion(null)
             return@setOnCloseListener false
         }
 
@@ -146,7 +148,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
 
             override fun onSuggestionClick(index: Int): Boolean {
-                toast(suggestionViewModel.suggestedList[index])
+                val suggestion = suggestionViewModel.selectSuggestion(index)
+                searchView.setQuery(suggestion, true)
                 return true
             }
         })
@@ -167,14 +170,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun setFragment(selectedItemId: Int) {
         selectedFragment = if (toolbarState == ToolbarState.MENU_IS_CREATED) {
             if (searchMenu.isVisible) searchMenu.isVisible = false
-            if (!searchView.isIconified) {
-                searchView.onActionViewCollapsed()
-                dataBinding.tvTitle.visibility = View.VISIBLE
-            }
+            if (!searchView.isIconified) searchView.onActionViewCollapsed()
+            dataBinding.tvTitle.visibility = View.VISIBLE
+            dataBinding.ivMagarine.visibility = View.GONE
 
+            dataBinding.tvTitle.setTextColor(Color.parseColor("#50585d"))
             val fragment = when (selectedItemId) {
                 R.id.bn_home -> {
-                    dataBinding.tvTitle.text = getString(R.string.magarine)
+                    dataBinding.ivMagarine.visibility = View.VISIBLE
+                    dataBinding.tvTitle.visibility = View.GONE
                     homeFragment
                 }
                 R.id.bn_search -> {

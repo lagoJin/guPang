@@ -4,6 +4,8 @@ import android.app.SearchManager
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.provider.BaseColumns
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.SuggestionRepository
 import kr.co.express9.client.util.Logger
@@ -16,7 +18,11 @@ class SuggestionViewModel : BaseViewModel<SuggestionViewModel.Event>() {
 
     }
 
-    var suggestedList = ArrayList<String>()
+    private var _selectedSuggestion = MutableLiveData<String?>()
+    val selectedSuggestion: LiveData<String?>
+        get() = _selectedSuggestion
+
+    private var suggestedList = ArrayList<String>()
 
     fun getSuggestionCursor(search: String): Cursor {
         suggestedList.clear()
@@ -30,11 +36,16 @@ class SuggestionViewModel : BaseViewModel<SuggestionViewModel.Event>() {
                 suggestedList.add(str)
             }
         }
-        Logger.d("getSuggestionCursor $search / $suggestedList / ${suggestionRepository.suggestionList}")
         return cursor
     }
 
-    fun putSuggestion(suggestion: String) {
-        suggestionRepository.putPref(suggestion)
+    fun putSuggestion(suggestion: String?) {
+        suggestion?.let { suggestionRepository.putPref(it) }
+        _selectedSuggestion.value = suggestion
+    }
+
+    fun selectSuggestion(index: Int): String {
+        _selectedSuggestion.value = suggestedList[index]
+        return suggestedList[index]
     }
 }

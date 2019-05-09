@@ -12,10 +12,14 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
 import kr.co.express9.client.base.BaseViewModel
+import kr.co.express9.client.mvvm.model.KakaoRepository
 import kr.co.express9.client.util.Logger
+import org.koin.standalone.inject
 
 
 class KakaoUserViewModel : BaseViewModel<KakaoUserViewModel.Event>() {
+
+    val kakaoRepository: KakaoRepository by inject()
 
     enum class Event {
         LOGIN,

@@ -30,22 +30,11 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
     val isMarts: LiveData<Boolean>
         get() = _isMarts
 
-    private fun initCategory(): Boolean {
-        _isMarts.value = User.getFavoriteMarts().size > 0
-        if (_isMarts.value!!) {
-            CategoryEnum.values().forEach {
-                if (_categoryList.value == null) _categoryList.value = ArrayList()
-                _categoryList.value!!.add(Category(it.key, 0, ArrayList()))
-            }
-        }
-        return _isMarts.value!!
-    }
-
     fun searchProducts(category: String?, name: String?) {
-        if (!initCategory()) return
+        _isMarts.value = User.getFavoriteMarts().size > 0
+        if (!_isMarts.value!!) return
         productRepository.searchProducts(category, name)
                 .subscribe({
-                    Logger.d("searchProducts $it")
                     if (it.status == StatusEnum.SUCCESS) setCategory(it.result)
                 }, {
                     Logger.d(it.toString())
@@ -54,30 +43,34 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
     }
 
     private fun setCategory(products: ArrayList<Product>) {
+        val tempBucket = ArrayList<Category>()
+        CategoryEnum.values().forEach {
+            tempBucket.add(Category(it.key, 0, ArrayList()))
+        }
         products.forEach { product ->
             var isETC = true
             suggestionRepository.putPref(product.name)
-            _categoryList.value!!.forEachIndexed { i, category ->
+            tempBucket.forEachIndexed { i, category ->
                 when (category.name) {
                     CategoryEnum.TOTAL.key -> {
-                        category.total += 1
-                        category.products.add(product)
+                        tempBucket[i].total += 1
+                        tempBucket[i].products.add(product)
                     }
                     product.category -> {
-                        category.total += 1
-                        category.products.add(product)
+                        tempBucket[i].total += 1
+                        tempBucket[i].products.add(product)
                         isETC = false
                     }
                 }
 
-                _categoryList.value!![i] = category
+                tempBucket[i] = category
             }
             if (isETC) {
                 val categorySize = CategoryEnum.values().size - 1
-                _categoryList.value!![categorySize].total += 1
-                _categoryList.value!![categorySize].products.add(product)
+                tempBucket[categorySize].total += 1
+                tempBucket[categorySize].products.add(product)
             }
-            Logger.d("_categoryList.value ${_categoryList.value}")
+            _categoryList.value = tempBucket
         }
     }
 }
