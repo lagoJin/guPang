@@ -112,7 +112,7 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
     fun deleteCartProduct(cb: () -> Unit) {
         // 향후 한번에 배열로 삭제할 수 있도록 변경 될 예정
         val requestList = ArrayList<Observable<Response<Unit>>>()
-        _cartProducts.value!!.forEachIndexed { idx, cartProduct ->
+        _cartProducts.value!!.forEachIndexed { _, cartProduct ->
             if (cartProduct.isSelected) {
                 requestList.add(cartRepository.deleteCartProduct(cartProduct.productSeq).toObservable())
             }
@@ -129,7 +129,28 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
                 }, {
                     Logger.d(it.toString())
                 }).apply { addDisposable(this) }
+    }
 
+    fun purchaseCartProduct(cb: () -> Unit) {
+        // 향후 한번에 배열로 완료할 수 있도록 변경 될 예정
+        val requestList = ArrayList<Observable<Response<Unit>>>()
+        _cartProducts.value!!.forEachIndexed { _, cartProduct ->
+            if (cartProduct.isSelected) {
+                requestList.add(cartRepository.purchaseCartProduct(cartProduct.count, cartProduct.productSeq).toObservable())
+            }
+        }
+
+        Observable.merge(requestList)
+                .doOnComplete {
+                    getCartProducts()
+                    cb()
+                }
+                .doOnError { Logger.d(it.toString()) }
+                .subscribe({
+                    Logger.d("$it")
+                }, {
+                    Logger.d(it.toString())
+                }).apply { addDisposable(this) }
     }
 
     fun getCartProducts() {

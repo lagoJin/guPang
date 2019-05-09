@@ -10,7 +10,6 @@ import kr.co.express9.client.adapter.CartAdapter.Payload
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityCartBinding
 import kr.co.express9.client.mvvm.viewModel.CartViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -47,7 +46,12 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
                 dataBinding.clCalculator.visibility = View.GONE
             }
         }
-        dataBinding.bPurchaseComplete.setOnClickListener { }
+        dataBinding.bPurchaseComplete.setOnClickListener {
+            cartViewModel.purchaseCartProduct {
+                toast(R.string.purchase_complete)
+                dataBinding.clCalculator.visibility = View.GONE
+            }
+        }
 
         cartViewModel.event.observe(this, Observer { event ->
             when (event) {
@@ -57,7 +61,6 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         })
 
         cartViewModel.cartProducts.observe(this, Observer {
-            Logger.d("들어오오오옴")
             cartAdapter.cartProducts = it
             cartAdapter.notifyDataSetChanged()
         })
