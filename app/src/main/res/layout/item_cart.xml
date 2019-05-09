@@ -56,6 +56,7 @@
             android:id="@+id/cl_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:visibility="@{cartProduct.isExpanded}"
             app:layout_constraintTop_toBottomOf="@id/v_head">
 
@@ -63,8 +64,6 @@
                 android:id="@+id/iv_product"
                 android:layout_width="80dp"
                 android:layout_height="77dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 app:bind_image="@{cartProduct.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +95,6 @@
                 android:id="@+id/tv_goods_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:lineSpacingExtra="0sp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -182,14 +180,14 @@
                     android:text="+"
                     android:textColor="@color/fontGrayDark" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="#e6e6e6"
-                android:visibility="@{cartProduct.isExpanded}"
-                app:layout_constraintTop_toBottomOf="@id/tv_goods_price" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#e6e6e6"
+            android:visibility="@{cartProduct.isExpanded}"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

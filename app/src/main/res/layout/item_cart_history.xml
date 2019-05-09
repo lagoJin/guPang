@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cartHistory"
+            type="kr.co.express9.client.mvvm.model.data.CartHistory" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/v_head"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="#f6f6f6"
+            android:visibility="@{cartHistory.isHeader}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="0sp"
+            android:text="@{cartHistory.purchaseYmd}"
+            android:textColor="#3c3c3c"
+            android:textSize="14sp"
+            android:visibility="@{cartHistory.isHeader}"
+            app:layout_constraintBottom_toBottomOf="@id/v_head"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/v_head"
+            tools:text="04/21 (목)" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="0sp"
+            android:text="@{cartHistory.totalPrice}"
+            android:textColor="#3c3c3c"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/v_head"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/v_head"
+            tools:text="총 78,990원" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/v_head">
+
+            <ImageView
+                android:id="@+id/iv_product"
+                android:layout_width="80dp"
+                android:layout_height="77dp"
+                app:bind_image="@{cartHistory.imageUrl}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_shopping_cart_24dp"
+                tools:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_mart_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="0sp"
+                android:maxLines="1"
+                android:paddingStart="28dp"
+                android:paddingEnd="16dp"
+                android:text="@{cartHistory.martName}"
+                android:textColor="#b0b0b0"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/iv_product"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="메로나슈퍼" />
+
+            <TextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="0sp"
+                android:maxLines="1"
+                android:paddingStart="28dp"
+                android:paddingEnd="16dp"
+                android:text="@{cartHistory.productName}"
+                android:textColor="#3c3c3c"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/iv_product"
+                app:layout_constraintTop_toBottomOf="@id/tv_mart_name"
+                tools:text="아주아주긴이름인데요여…" />
+
+            <TextView
+                android:id="@+id/tv_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="0sp"
+                android:paddingStart="28dp"
+                android:paddingEnd="2dp"
+                android:text="@{cartHistory.itemPrice}"
+                android:textColor="#3c3c3c"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:bind_price="@{cartHistory.originalUnitPrice}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/iv_product"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+                tools:text="23,200원" />
+
+            <ImageView
+                android:id="@+id/iv_dash"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_slash_copy"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
+                app:layout_constraintStart_toEndOf="@id/tv_product_price"
+                app:layout_constraintTop_toTopOf="@id/tv_product_price" />
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="0sp"
+                android:text="@{cartHistory.count}"
+                android:textColor="#3c3c3c"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
+                app:layout_constraintStart_toEndOf="@id/iv_dash"
+                app:layout_constraintTop_toTopOf="@id/tv_product_price"
+                tools:text="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="0sp"
+                android:textColor="#3c3c3c"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
+                app:layout_constraintStart_toEndOf="@id/tv_number"
+                app:layout_constraintTop_toTopOf="@id/tv_product_price"
+                tools:text="개" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#e6e6e6"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

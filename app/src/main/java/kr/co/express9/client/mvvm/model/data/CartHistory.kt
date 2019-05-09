@@ -7,7 +7,12 @@ data class CartHistory(
         val martSeq: Int,
         val martName: String,
         val productName: String,
+        val imageUrl: String, // 임시 이미지
         val originalUnitPrice: Int,
         val saleUnitPrice: Int,
-        val count: Int
+        val count: Int,
+        // front data
+        var isHeader: Boolean = false,
+        var totalPrice: Int,
+        var itemPrice: Int
 )

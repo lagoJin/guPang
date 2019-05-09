@@ -54,6 +54,9 @@
     <string name="go_to_shopping">장보러 가기</string>
     <string name="delete_complete">삭제완료</string>
 
+    <!--activity_cart_history-->
+    <string name="no_cart_history">메모 내역이 비어 있어요!</string>
+
     <!--activity_notification_setting-->
     <string name="set_sale_notification">할인 알람 설정</string>
     <string name="let_me_know_notification">할인 알림을 받고 싶은\n품목을 알려주세요!</string>

@@ -76,7 +76,7 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
     }
 
     private fun isNotification() {
-        _isNotification.value = notificationList.value!!.size > 0
+        _isNotification.value = _notificationList.value!!.size > 0
     }
 
 
