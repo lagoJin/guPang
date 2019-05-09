@@ -61,6 +61,10 @@
     <string name="add_notification">품목 추가하기</string>
     <string name="my_notification_list">알림 설정한 항목</string>
     <string name="please_write_the_notification_name">품목 이름을 입력해주세요.</string>
+    <string name="already_has_notification">이미 등록된 알림입니다.</string>
+    <string name="success_to_delete_notification">삭제되었습니다.</string>
+    <string name="success_to_add_notification">추가되었습니다.</string>
+    <string name="no_notification">알림을 추가해주세요.</string>
 
     <!--alert_agree_with_terms-->
     <string name="please_agree_with_terms">이용약관에 동의해 주세요.</string>
