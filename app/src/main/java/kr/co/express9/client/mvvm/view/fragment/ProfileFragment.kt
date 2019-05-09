@@ -5,6 +5,7 @@ import com.bumptech.glide.Glide
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentProfileBinding
+import kr.co.express9.client.mvvm.model.data.CartHistory
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.NotificationSettingActivity
 import kr.co.express9.client.util.extension.launchActivity
@@ -14,7 +15,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     override fun initStartView(isRestart: Boolean) {
         val user = User.getUser()
         dataBinding.tvName.text = user.name
-        dataBinding.llCartMemoHistory.setOnClickListener {}
+        dataBinding.llCartMemoHistory.setOnClickListener {
+//            activity?.launchActivity<CartHistoryActivity>()
+        }
         dataBinding.llNotificationSetting.setOnClickListener {
             activity?.launchActivity<NotificationSettingActivity>()
         }
@@ -29,7 +32,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private fun sendEmail() {
         val emailIntent = Intent(Intent.ACTION_SEND)
-        val csvEmail = getString(R.string.csv_eamil)
+        val csvEmail = getString(R.string.csv_email)
 
         try {
             emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(csvEmail))
