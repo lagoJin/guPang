@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
 import android.app.Activity
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
@@ -32,7 +33,7 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
             notificationViewModel.addNotification { addNotification() }
         }
 
-        dataBinding.etItemName.setOnEditorActionListener{_, _, _ ->
+        dataBinding.etItemName.setOnEditorActionListener { _, _, _ ->
             notificationViewModel.addNotification { addNotification() }
             true
         }
@@ -53,11 +54,23 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
             imm.hideSoftInputFromWindow(dataBinding.etItemName.windowToken, 0)
         })
 
+        // action bar 등록
+        setSupportActionBar(dataBinding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         if (!isRestart) notificationViewModel.getNotifications()
     }
 
     private fun addNotification() {
         toast(R.string.success_to_add_notification)
         dataBinding.etItemName.setText("")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

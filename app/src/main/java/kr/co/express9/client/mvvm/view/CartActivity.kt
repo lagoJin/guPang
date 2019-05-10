@@ -70,7 +70,6 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
         if (!isRestart) cartViewModel.getCartProducts()
     }
 
