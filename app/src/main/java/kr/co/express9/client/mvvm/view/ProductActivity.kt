@@ -22,11 +22,12 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
     private val productViewModel: ProductViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
+        dataBinding.lifecycleOwner = this
         val productIntent = intent.getSerializableExtra("product")
         val productSeq = intent.getSerializableExtra("productSeq")
-        if(productIntent != null) {
+        if (productIntent != null) {
             productViewModel.setProduct(productIntent as Product)
-        } else if(productSeq != null) {
+        } else if (productSeq != null) {
             productViewModel.getProduct(productSeq as Int) {
                 if(it == null) toast("상품정보를 불러오는데 실패했습니다.")
                 else productViewModel.setProduct(it)
@@ -38,8 +39,8 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_product)
             else {
                 // 장보기 메모에 상품 추가 예정
-                productViewModel.addCartProduct{
-                    if(it) showCheckCartAlert()
+                productViewModel.addCartProduct {
+                    if (it) showCheckCartAlert()
                     else toast(R.string.faile_add_product_to_cart)
                 }
             }

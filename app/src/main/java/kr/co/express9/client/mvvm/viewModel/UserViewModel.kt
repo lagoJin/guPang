@@ -59,6 +59,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                         Single.error(Throwable("${it.result}"))
                     }
                 }
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     // 이미 가입한 유저인지 확인
                     Logger.d("getInfo : $it")
@@ -66,8 +67,10 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                         it.result.image = image
                         putPref(it.result) { loadFavoriteMarts(it.result.userSeq) }
                     }
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
+                    hideProgress()
                 })
                 .apply { addDisposable(this) }
     }
@@ -89,6 +92,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                     if (it.status == StatusEnum.SUCCESS) userRepository.getInfo(it.result.toInteger())
                     else Single.error(Throwable("${it.result}"))
                 }
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
                         it.result.image = image
@@ -96,8 +100,10 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                             loadFavoriteMarts(it.result.userSeq)
                         }
                     }
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
+                    hideProgress()
                 })
                 .apply { addDisposable(this) }
     }
@@ -108,19 +114,22 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
      */
     fun loadFavoriteMarts(userSeq: Int) {
         martRepository.getFavoriteMarts(userSeq)
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     _event.value = if (it.status == StatusEnum.SUCCESS) {
                         // preference에 저장
                         Logger.d("내가 좋아요 마트 ${it.result.anyTostring()}")
-                        if(it.result.size > 0) {
+                        if (it.result.size > 0) {
                             martRepository.putFavoriteMartsPref(it.result)
                             Event.FAVORITE_MARTS_LOADED_SUCCESS
                         } else {
                             Event.NO_FAVORITE_MARTS
                         }
                     } else Event.FAVORITE_MARTS_LOADED_FAIL
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
+                    hideProgress()
                 })
                 .apply { addDisposable(this) }
     }

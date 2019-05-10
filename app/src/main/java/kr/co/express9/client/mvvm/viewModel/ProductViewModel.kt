@@ -60,19 +60,25 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
     fun addCartProduct(cb: (isSuccess: Boolean) -> Unit) {
         cartRepository.addCartProduct(_itemNum.value!!, _product.value!!.productSeq)
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     cb(it.status == StatusEnum.SUCCESS)
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
+                    hideProgress()
                 }).apply { addDisposable(this) }
     }
 
     fun getProduct(productSeq: Int, cb: (Product?) -> Unit) {
         productRepository.getProduct(productSeq)
+                .doOnSubscribe { showProgress() }
             .subscribe({
                 if(it.status == StatusEnum.SUCCESS) cb(it.result)
+                hideProgress()
             }, {
                 Logger.d(it.toString())
+                hideProgress()
             }).apply { addDisposable(this) }
     }
 

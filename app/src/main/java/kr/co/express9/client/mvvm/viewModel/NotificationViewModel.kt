@@ -49,15 +49,17 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
 
     fun getNotifications() {
         notificationRepository.getNotifications()
-            .subscribe({
-                if (it.status == StatusEnum.SUCCESS) {
-                    _notificationList.value = it.result
-                    isNotification()
-                }
-            }, {
-                Logger.d(it.toString())
-            })
-            .apply { addDisposable(this) }
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    if (it.status == StatusEnum.SUCCESS) {
+                        _notificationList.value = it.result
+                        isNotification()
+                    }
+                    hideProgress()
+                }, {
+                    Logger.d(it.toString())
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     fun addNotification(cb: (isSuccess: Boolean) -> Unit) {
@@ -74,24 +76,29 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
             }
         }
         notificationRepository.addNotification(itemName.value!!)
-            .subscribe({
-                cb(it.status == StatusEnum.SUCCESS)
-                if (it.status == StatusEnum.SUCCESS) getNotifications()
-            }, {
-                Logger.d(it.toString())
-            })
-            .apply { addDisposable(this) }
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    cb(it.status == StatusEnum.SUCCESS)
+                    if (it.status == StatusEnum.SUCCESS) getNotifications()
+                    hideProgress()
+                }, {
+                    Logger.d(it.toString())
+                    hideProgress()
+                })
+                .apply { addDisposable(this) }
     }
 
     fun deleteNotification(index: Int, cb: (isSuccess: Boolean) -> Unit) {
         notificationRepository.deleteNotification(_notificationList.value!![index].text)
-            .subscribe({
-                cb(it.status == StatusEnum.SUCCESS)
-                if (it.status == StatusEnum.SUCCESS) getNotifications()
-            }, {
-                Logger.d(it.toString())
-            })
-            .apply { addDisposable(this) }
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    cb(it.status == StatusEnum.SUCCESS)
+                    if (it.status == StatusEnum.SUCCESS) getNotifications()
+                    hideProgress()
+                }, {
+                    Logger.d(it.toString())
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     private fun isNotification() {

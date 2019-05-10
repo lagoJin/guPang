@@ -168,13 +168,15 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
 
     fun getCartProducts() {
         cartRepository.getCartProducts()
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
                         _cartProducts.value = setHeader(it.result)
                         checkCartProductIsEmpty()
                     }
+                    hideProgress()
                 }, {
-
+                    hideProgress()
                 }).apply { addDisposable(this) }
     }
 

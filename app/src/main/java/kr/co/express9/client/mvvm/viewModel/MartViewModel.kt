@@ -25,18 +25,21 @@ class MartViewModel : BaseViewModel<MartViewModel.Event>() {
     }
 
     fun deleteFavoriteMart(martSeq: Int) {
-        martRepository.deleteFavoriteMart(User.getUser().userSeq, martSeq).subscribe(
-            {
-                if (it.status == StatusEnum.SUCCESS) {
-                    _event.value = Event.MART_DELETE
-                    removeFavoriteMart(martSeq)
+        martRepository.deleteFavoriteMart(User.getUser().userSeq, martSeq)
+                .doOnSubscribe { showProgress() }
+                .subscribe(
+                        {
+                            if (it.status == StatusEnum.SUCCESS) {
+                                _event.value = Event.MART_DELETE
+                                removeFavoriteMart(martSeq)
+                            }
+                            hideProgress()
+                        }, { throwable ->
+                    networkError(throwable)
+                    hideProgress()
+                }).apply {
+                    addDisposable(this)
                 }
-
-            }, { throwable ->
-                networkError(throwable)
-            }).apply {
-            addDisposable(this)
-        }
     }
 
     private fun removeFavoriteMart(martSeq: Int) {
