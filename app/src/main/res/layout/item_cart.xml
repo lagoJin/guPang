@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:background="@color/gray"
+            android:foreground="?attr/selectableItemBackground"
             android:visibility="@{cartProduct.isHeader}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
