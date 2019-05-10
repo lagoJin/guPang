@@ -22,8 +22,16 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
     private val productViewModel: ProductViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
-        val product = intent.getSerializableExtra("product") as Product
-        productViewModel.setProduct(product)
+        val productIntent = intent.getSerializableExtra("product")
+        val productSeq = intent.getSerializableExtra("productSeq")
+        if(productIntent != null) {
+            productViewModel.setProduct(productIntent as Product)
+        } else if(productSeq != null) {
+            productViewModel.getProduct(productSeq as Int) {
+                productViewModel.setProduct(it)
+            }
+        }
+
         dataBinding.productViewModel = productViewModel
         dataBinding.bAddToCart.setOnClickListener {
             if (productViewModel.itemNum.value == 0) toast(R.string.choose_number_of_product)

@@ -6,6 +6,7 @@ import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.Product
 import android.R
 import kr.co.express9.client.mvvm.model.CartRepository
+import kr.co.express9.client.mvvm.model.ProductRepository
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
@@ -15,6 +16,7 @@ import pl.kitek.timertextview.TimerTextView
 class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
     private val cartRepository: CartRepository by inject()
+    private val productRepository: ProductRepository by inject()
 
     enum class Event {
 
@@ -58,5 +60,14 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
                 }, {
                     Logger.d(it.toString())
                 }).apply { addDisposable(this) }
+    }
+
+    fun getProduct(productSeq: Int, cb: (Product) -> Unit) {
+        productRepository.getProduct(productSeq)
+            .subscribe({
+                if(it.status == StatusEnum.SUCCESS) cb(it.result)
+            }, {
+                Logger.d(it.toString())
+            }).apply { addDisposable(this) }
     }
 }

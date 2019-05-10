@@ -15,7 +15,7 @@ interface ProductAPI {
     ): Single<Response<ArrayList<Product>>>
 
     @GET("info")
-    fun getProduct(@Query("productSeq") productSeq: String): Single<Response<Product>>
+    fun getProduct(@Query("productSeq") productSeq: Int): Single<Response<Product>>
 
     @GET("search")
     fun searchProducts(

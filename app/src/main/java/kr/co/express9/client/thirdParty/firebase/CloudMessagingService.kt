@@ -2,16 +2,20 @@ package kr.co.express9.client.thirdParty.firebase
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.TaskStackBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import kr.co.express9.client.R
 import kr.co.express9.client.mvvm.model.NotificationRepository
 import kr.co.express9.client.mvvm.model.data.Notification
+import kr.co.express9.client.mvvm.view.ProductActivity
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -25,12 +29,12 @@ class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
 
         remoteMessage?.data?.let {
             Logger.d("Message data payload:" + remoteMessage.data)
-//            val notification = Gson().fromJson(it.body.toString(), Notification::class.java)
+            val notification = Gson().fromJson(it["body"], Notification::class.java)
+            sendNotification(notification)
         }
 
         // Check if message contains a notification payload.
         remoteMessage?.notification?.let {
-            Logger.d("온다아아 $it")
             val notification = Gson().fromJson(it.body.toString(), Notification::class.java)
             sendNotification(notification)
         }
@@ -50,12 +54,23 @@ class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
         val title = getString(R.string.noti_title, notification.keyword)
         val body = getString(R.string.noti_body, notification.martName)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
 
+        val stackBuilder = TaskStackBuilder.create(this)
+        val productIntent = Intent(this, ProductActivity::class.java)
+
+        productIntent.putExtra("productSeq", notification.productSeq)
+        stackBuilder.addNextIntent(productIntent)
+
+        val resultPendingIntent = stackBuilder.getPendingIntent(
+            0,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        notificationBuilder.setContentIntent(resultPendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

@@ -20,7 +20,7 @@ class ProductRepository : KoinComponent {
         return productAPI.getProducts().networkCommunication()
     }
 
-    fun getProduct(productSeq: String): Single<Response<Product>> {
+    fun getProduct(productSeq: Int): Single<Response<Product>> {
         return productAPI.getProduct(productSeq).networkCommunication()
     }
 
