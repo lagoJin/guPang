@@ -9,9 +9,11 @@ import kr.co.express9.client.adapter.CategoryAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentSearchBinding
 import kr.co.express9.client.mvvm.view.MainActivity
+import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.SearchViewModel
 import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
 import kr.co.express9.client.util.Logger
+import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,7 +21,9 @@ import java.lang.reflect.Method
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+
     private val searchViewModel: SearchViewModel by viewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
     private val suggestionViewModel: SuggestionViewModel by sharedViewModel()
 
     private lateinit var sSetScrollPosition: Method
@@ -35,6 +39,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             val mainActivity = activity as MainActivity
             mainActivity.setBottomNavigation(R.id.bn_market)
         }
+
+        /**
+         * mainViewModel
+         * - sharedViewModel
+         */
+        mainViewModel.event.observe(this, Observer {event ->
+            when(event) {
+                MainViewModel.Event.CHANGE_FAVORITE_MART -> searchViewModel.searchProducts(null, null)
+            }
+        })
 
         /**
          * suggestionViewModel

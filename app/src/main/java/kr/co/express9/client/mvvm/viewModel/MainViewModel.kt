@@ -22,4 +22,8 @@ class MainViewModel : BaseViewModel<MainViewModel.Event>() {
     fun setSelectedBottomNavigationItemId(itemId: Int) {
         if(_selectedBottomNavigationItemId.value != itemId) _selectedBottomNavigationItemId.value = itemId
     }
+
+    fun setChangeFavoriteMartEvent() {
+        _event.value = Event.CHANGE_FAVORITE_MART
+    }
 }

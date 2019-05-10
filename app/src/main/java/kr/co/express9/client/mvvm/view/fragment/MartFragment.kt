@@ -8,13 +8,16 @@ import kr.co.express9.client.databinding.FragmentMartBinding
 import kr.co.express9.client.mvvm.model.data.Mart
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.LeafletActivity
+import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.MartViewModel
 import kr.co.express9.client.util.extension.launchActivity
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MartFragment : BaseFragment<FragmentMartBinding>(R.layout.fragment_mart) {
 
     private val martViewModel: MartViewModel by viewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     private val martList = User.getFavoriteMarts()
     private lateinit var martAdapter: MartAdapter
@@ -32,12 +35,8 @@ class MartFragment : BaseFragment<FragmentMartBinding>(R.layout.fragment_mart) {
 
         martViewModel.event.observe(this, Observer { event ->
             when (event) {
-                MartViewModel.Event.MART_ADD -> {
-
-                }
-                MartViewModel.Event.MART_DELETE -> {
-
-                }
+                MartViewModel.Event.MART_ADD -> mainViewModel.setChangeFavoriteMartEvent()
+                MartViewModel.Event.MART_DELETE -> mainViewModel.setChangeFavoriteMartEvent()
             }
         })
 
