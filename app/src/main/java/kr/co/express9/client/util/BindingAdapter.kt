@@ -15,6 +15,9 @@ import com.bumptech.glide.Glide
 import kr.co.express9.client.R
 import kr.co.express9.client.mvvm.model.data.User
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @BindingAdapter("bind_adapter")
 fun RecyclerView.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
@@ -28,7 +31,7 @@ fun ViewPager2.setBindAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHol
 
 @BindingAdapter("bind_auto_complete_text")
 fun AutoCompleteTextView.setBindArrayAdapter(adapter: ArrayAdapter<String>) {
-    adapter.let { this.setAdapter(it)}
+    adapter.let { this.setAdapter(it) }
 }
 
 @BindingAdapter("bind_array_adapter_list")
@@ -45,9 +48,9 @@ fun AutoCompleteTextView.setBindArray(dataList: ArrayList<String>) {
 fun ImageView.setImageUrl(profileUrl: String?) {
     if (!TextUtils.isEmpty(profileUrl)) {
         Glide.with(this.context)
-                .load(profileUrl)
-                .error(R.drawable.ic_error_24dp)
-                .into(this)
+            .load(profileUrl)
+            .error(R.drawable.ic_error_24dp)
+            .into(this)
     }
 }
 
@@ -55,6 +58,26 @@ fun ImageView.setImageUrl(profileUrl: String?) {
 fun TextView.setPrice(price: Int) {
     val nf = NumberFormat.getInstance()
     this.text = "${nf.format(price)}원"
+}
+
+@BindingAdapter("bind_date")
+fun TextView.setDate(yyyyMMdd: String) {
+    val sdf = SimpleDateFormat("yyyyMMdd")
+    val date = sdf.parse(yyyyMMdd)
+    val cal = Calendar.getInstance()
+    cal.time = date
+    val dayOfWeek = when (cal.get(Calendar.DAY_OF_WEEK)) {
+        1 -> "일"
+        2 -> "월"
+        3 -> "화"
+        4 -> "수"
+        5 -> "목"
+        6 -> "금"
+        else -> "토"
+    }
+    val month = yyyyMMdd.substring(4, 6)
+    val day = yyyyMMdd.substring(6, 8)
+    this.text = "$month/$day ($dayOfWeek)"
 }
 
 @BindingAdapter("bind_cancel_line")
@@ -71,7 +94,7 @@ fun setVisibility(view: View, visibility: Boolean) {
 fun martSeq2Name(view: TextView, martSeq: Int) {
     var martName = view.context.getString(R.string.no_mart_in_favorite_mart_list)
     User.getFavoriteMarts().forEach {
-        if(it.martSeq == martSeq) {
+        if (it.martSeq == martSeq) {
             martName = it.name
             return@forEach
         }

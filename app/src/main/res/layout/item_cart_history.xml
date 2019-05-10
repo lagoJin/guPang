@@ -30,10 +30,10 @@
             android:layout_marginStart="16dp"
             android:fontFamily="sans-serif"
             android:lineSpacingExtra="0sp"
-            android:text="@{cartHistory.purchaseYmd}"
             android:textColor="#3c3c3c"
             android:textSize="14sp"
             android:visibility="@{cartHistory.isHeader}"
+            app:bind_date="@{cartHistory.purchaseYmd}"
             app:layout_constraintBottom_toBottomOf="@id/v_head"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,17 +43,32 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="sans-serif"
             android:lineSpacingExtra="0sp"
-            android:text="@{String.valueOf(cartHistory.totalPrice)}"
+            android:text="총"
             android:textColor="#3c3c3c"
             android:textSize="14sp"
             android:visibility="@{cartHistory.isHeader}"
             app:layout_constraintBottom_toBottomOf="@id/v_head"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_price"
+            app:layout_constraintTop_toTopOf="@id/v_head" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="0sp"
+            android:textColor="#3c3c3c"
+            android:textSize="14sp"
+            android:visibility="@{cartHistory.isHeader}"
+            app:bind_price="@{cartHistory.totalPrice}"
+            app:layout_constraintBottom_toBottomOf="@id/v_head"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/v_head"
-            tools:text="총 78,990원" />
+            tools:text="78,990원" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_body"
