@@ -35,15 +35,17 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
 
     fun getNotifications() {
         notificationRepository.getNotifications()
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) {
                         _notificationList.value = it.result
                         isNotification()
                     }
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     fun addNotification(cb: (isSuccess: Boolean) -> Unit) {
@@ -54,30 +56,35 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
 
         // 이미 동일 항목이 있는 경우
         _notificationList.value!!.forEach {
-            if(it.text == itemName.value) {
+            if (it.text == itemName.value) {
                 _event.value = Event.ALREADY_HAS_NOTIFICATION
                 return@addNotification
             }
         }
         notificationRepository.addNotification(itemName.value!!)
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     cb(it.status == StatusEnum.SUCCESS)
-                    if(it.status == StatusEnum.SUCCESS) getNotifications()
+                    if (it.status == StatusEnum.SUCCESS) getNotifications()
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
+                    hideProgress()
                 })
                 .apply { addDisposable(this) }
     }
 
     fun deleteNotification(index: Int, cb: (isSuccess: Boolean) -> Unit) {
         notificationRepository.deleteNotification(_notificationList.value!![index].text)
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     cb(it.status == StatusEnum.SUCCESS)
-                    if(it.status == StatusEnum.SUCCESS) getNotifications()
+                    if (it.status == StatusEnum.SUCCESS) getNotifications()
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     private fun isNotification() {

@@ -39,10 +39,13 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
         _isMarts.value = User.getFavoriteMarts().size > 0
         if (!_isMarts.value!!) return
         productRepository.searchProducts(category, name)
+                .doOnSubscribe { showProgress() }
                 .subscribe({
                     if (it.status == StatusEnum.SUCCESS) setCategory(it.result)
+                    hideProgress()
                 }, {
                     Logger.d(it.toString())
+                    hideProgress()
                 })
                 .apply { addDisposable(this) }
     }

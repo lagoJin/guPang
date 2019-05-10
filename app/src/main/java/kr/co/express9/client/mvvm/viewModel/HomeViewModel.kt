@@ -21,7 +21,7 @@ class HomeViewModel : BaseViewModel<HomeViewModel.Event>() {
 
     private val _products = MutableLiveData<ArrayList<Product>>()
     val products: LiveData<ArrayList<Product>>
-        get() =_products
+        get() = _products
 
     private val _isMarts = MutableLiveData<Boolean>()
     val isMarts: LiveData<Boolean>
@@ -36,15 +36,17 @@ class HomeViewModel : BaseViewModel<HomeViewModel.Event>() {
         if (!_isMarts.value!!) return
 
         productRepository.getProducts()
-            .subscribe({
-                if(it.status == StatusEnum.SUCCESS) {
-                    _products.value = it.result
-                    if(it.result.size == 0) _event.value = Event.NO_PRODUCTS
-                }
-            }, {
-                Logger.d(it.toString())
-            })
-            .apply { addDisposable(this) }
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    if (it.status == StatusEnum.SUCCESS) {
+                        _products.value = it.result
+                        if (it.result.size == 0) _event.value = Event.NO_PRODUCTS
+                    }
+                    hideProgress()
+                }, {
+                    Logger.d(it.toString())
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     private fun showProgress() {

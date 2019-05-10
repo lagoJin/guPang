@@ -42,7 +42,7 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
         var month = _historyMonth.value!!.split(".")[1].toInt() + 1
 
         // 이번 달 보다 큰 경우 요청 못하도록 추가해야함
-        if(month == 13) {
+        if (month == 13) {
             year += 1
             month = 1
         }
@@ -52,7 +52,7 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
     fun beforeMonth() {
         var year = _historyMonth.value!!.split(".")[0].toInt()
         var month = _historyMonth.value!!.split(".")[1].toInt() - 1
-        if(month == 0) {
+        if (month == 0) {
             year -= 1
             month = 12
         }
@@ -63,14 +63,16 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
         val stringMonth = if (month < 10) "0$month" else month.toString()
         _historyMonth.value = "$year.$stringMonth"
         cartRepository.getHistoryByMonth("$year$stringMonth")
-            .subscribe({
-                if(it.status == StatusEnum.SUCCESS) {
-                    _cartHistory.value = setHeader(it.result)
-                    checkIsCartHistory()
-                }
-            }, {
-
-            }).apply { addDisposable(this) }
+                .doOnSubscribe { showProgress() }
+                .subscribe({
+                    if (it.status == StatusEnum.SUCCESS) {
+                        _cartHistory.value = setHeader(it.result)
+                        checkIsCartHistory()
+                    }
+                    hideProgress()
+                }, {
+                    hideProgress()
+                }).apply { addDisposable(this) }
     }
 
     private fun setHeader(cartHistoryList: ArrayList<CartHistory>): ArrayList<CartHistory> {
@@ -89,7 +91,7 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
             }
             groupIdx.add(i)
             totalPrice += cartHistory.itemPrice
-            groupIdx.forEach { cartHistoryList[it].totalPrice = totalPrice}
+            groupIdx.forEach { cartHistoryList[it].totalPrice = totalPrice }
         }
         return cartHistoryList
     }

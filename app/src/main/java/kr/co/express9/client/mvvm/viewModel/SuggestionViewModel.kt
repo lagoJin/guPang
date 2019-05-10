@@ -19,10 +19,6 @@ class SuggestionViewModel : BaseViewModel<SuggestionViewModel.Event>() {
 
     }
 
-    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
-    val progressView: LiveData<Int>
-        get() = _progressView
-
     private var _selectedSuggestion = MutableLiveData<String?>()
     val selectedSuggestion: LiveData<String?>
         get() = _selectedSuggestion
@@ -54,11 +50,4 @@ class SuggestionViewModel : BaseViewModel<SuggestionViewModel.Event>() {
         return suggestedList[index]
     }
 
-    private fun showProgress() {
-        _progressView.value = View.VISIBLE
-    }
-
-    private fun hideProgress() {
-        _progressView.value = View.INVISIBLE
-    }
 }
