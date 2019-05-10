@@ -43,6 +43,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var selectedFragment: Fragment
     private lateinit var toolbarMenu: Menu
     private lateinit var searchMenu: MenuItem
+    private lateinit var alarmMenu: MenuItem
+    private lateinit var cartMenu: MenuItem
     private lateinit var searchView: SearchView
     private var toolbarState = ToolbarState.MENU_IS_NOT_CREATED
 
@@ -87,9 +89,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
         menuInflater.inflate(R.menu.menu_search, toolbarMenu)
         menuInflater.inflate(R.menu.menu_cart, toolbarMenu)
+        menuInflater.inflate(R.menu.menu_alarm, toolbarMenu)
 
-        dataBinding.toolbar.menu.findItem(R.id.search).isVisible = false
+        cartMenu = dataBinding.toolbar.menu.findItem(R.id.cart)
+        alarmMenu = dataBinding.toolbar.menu.findItem(R.id.alarm)
         searchMenu = dataBinding.toolbar.menu.findItem(R.id.search)
+
+        dataBinding.toolbar.menu.findItem(R.id.alarm).isVisible = false
+        dataBinding.toolbar.menu.findItem(R.id.search).isVisible = false
 
         val adapter = SimpleCursorAdapter(
             this,
@@ -169,12 +176,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
      */
     private fun setFragment(selectedItemId: Int) {
         selectedFragment = if (toolbarState == ToolbarState.MENU_IS_CREATED) {
+            if (cartMenu.isVisible) cartMenu.isVisible = false
+            if (alarmMenu.isVisible) alarmMenu.isVisible = false
             if (searchMenu.isVisible) searchMenu.isVisible = false
             if (!searchView.isIconified) searchView.onActionViewCollapsed()
             dataBinding.tvTitle.visibility = View.VISIBLE
             dataBinding.ivMagarine.visibility = View.GONE
 
-            dataBinding.tvTitle.setTextColor(Color.parseColor("#50585d"))
+            dataBinding.tvTitle.setTextColor(Color.parseColor("#ffffff"))
             val fragment = when (selectedItemId) {
                 R.id.bn_home -> {
                     dataBinding.ivMagarine.visibility = View.VISIBLE
@@ -192,6 +201,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 }
                 else -> {
                     dataBinding.tvTitle.text = getString(R.string.menu_profile)
+                    cartMenu.isVisible = false
+                    alarmMenu.isVisible = true
                     profileFragment
                 }
             }

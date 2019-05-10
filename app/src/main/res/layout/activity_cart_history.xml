@@ -60,8 +60,9 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:foreground="?attr/selectableItemBackground"
                 android:onClick="@{_ -> cartHistoryViewModel.beforeMonth()}"
-                android:padding="12dp"
+                android:padding="16dp"
                 android:rotation="180"
                 android:src="@drawable/ic_arrowright" />
 
@@ -73,15 +74,16 @@
                 android:gravity="center"
                 android:lineSpacingExtra="0sp"
                 android:text="@{cartHistoryViewModel.historyMonth}"
-                android:textSize="18sp"
                 android:textColor="#3c3c3c"
+                android:textSize="18sp"
                 tools:text="2019.05" />
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:foreground="?attr/selectableItemBackground"
                 android:onClick="@{_ -> cartHistoryViewModel.nextMonth()}"
-                android:padding="12dp"
+                android:padding="16dp"
                 android:src="@drawable/ic_arrowright" />
         </LinearLayout>
 
