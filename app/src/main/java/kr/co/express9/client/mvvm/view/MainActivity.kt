@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,9 +24,7 @@ import kr.co.express9.client.mvvm.view.fragment.ProfileFragment
 import kr.co.express9.client.mvvm.view.fragment.SearchFragment
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
 import kr.co.express9.client.mvvm.viewModel.SuggestionViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
-import kr.co.express9.client.util.extension.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -95,6 +95,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         alarmMenu = dataBinding.toolbar.menu.findItem(R.id.alarm)
         searchMenu = dataBinding.toolbar.menu.findItem(R.id.search)
 
+        dataBinding.toolbar.menu.findItem(R.id.alarm).isVisible = true
         dataBinding.toolbar.menu.findItem(R.id.alarm).isVisible = false
         dataBinding.toolbar.menu.findItem(R.id.search).isVisible = false
 
@@ -110,6 +111,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         searchView = searchMenu.actionView as SearchView
         searchView.queryHint = getString(R.string.menu_search_hint)
         searchView.suggestionsAdapter = adapter
+        val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        editText.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         // searchView icon tint (style의 colorControlNormal로 대체)
         // searchView.findViewById<ImageView>(androidx.appcompat.R.productSeq.search_button)
@@ -176,7 +179,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
      */
     private fun setFragment(selectedItemId: Int) {
         selectedFragment = if (toolbarState == ToolbarState.MENU_IS_CREATED) {
-            if (cartMenu.isVisible) cartMenu.isVisible = false
+            if (!cartMenu.isVisible) cartMenu.isVisible = true
             if (alarmMenu.isVisible) alarmMenu.isVisible = false
             if (searchMenu.isVisible) searchMenu.isVisible = false
             if (!searchView.isIconified) searchView.onActionViewCollapsed()
