@@ -50,7 +50,7 @@ fun ImageView.setImageUrl(profileUrl: String?) {
         Glide.with(this.context)
             .load(profileUrl)
             .thumbnail(0.1f)
-            .error(R.drawable.ic_error_24dp)
+            .error(R.mipmap.ic_launcher)
             .into(this)
     }
 }
