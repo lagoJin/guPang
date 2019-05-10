@@ -24,13 +24,13 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         context = baseContext
-        Logger.init(BuildConfig.DEBUG, getString(kr.co.express9.client.R.string.app_name))
+        Logger.init(BuildConfig.IS_DEBUG, getString(kr.co.express9.client.R.string.app_name)) // log 안찍도록 설정
         startKoin(this, diModule)
         KakaoSDK.init(KakaoSDKAdapter(this))
         Hawk.init(this)
                 .setLogInterceptor { Logger.d("Preference Logger :: $it") }
                 .build()
-        getKeyHash()
+        if(BuildConfig.IS_DEBUG) getKeyHash()
     }
 
     private fun getKeyHash() {

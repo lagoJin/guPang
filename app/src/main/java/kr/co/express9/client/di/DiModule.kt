@@ -91,7 +91,6 @@ val apiModule = module {
     // OkHttpClient
     single {
         OkHttpClient.Builder().addInterceptor(get() as HttpLoggingInterceptor).build()
-
     }
 
     // HttpLoggingInterceptor
