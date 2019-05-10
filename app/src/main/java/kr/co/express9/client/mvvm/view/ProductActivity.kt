@@ -2,6 +2,7 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
@@ -33,6 +34,13 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
                 else productViewModel.setProduct(it)
             }
         }
+
+        productViewModel.event.observe(this, Observer {event ->
+            when(event) {
+                ProductViewModel.Event.REMAIN_24HOUR -> dataBinding.ttvTimer.visibility = View.INVISIBLE
+            }
+
+        })
 
         dataBinding.productViewModel = productViewModel
         dataBinding.bAddToCart.setOnClickListener {

@@ -12,6 +12,7 @@ import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.inject
 import pl.kitek.timertextview.TimerTextView
+import java.text.SimpleDateFormat
 
 
 class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
@@ -20,7 +21,7 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
     private val productRepository: ProductRepository by inject()
 
     enum class Event {
-
+        REMAIN_24HOUR
     }
 
     private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
@@ -41,9 +42,16 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
 
     fun setProduct(product: Product) {
         _product.value = product
-        // 시간 파싱해야하는데, 임시로 해둠
-        val futureTimestamp = System.currentTimeMillis() + 10 * 60 * 60 * 1000
-        _countDown.value = futureTimestamp
+
+        val startDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(product.startAt)
+        val endDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(product.endAt)
+        val timer = endDate.time - startDate.time
+
+//        _countDown.value = System.currentTimeMillis() + timer
+        if(timer < 24 * 3600 * 1000) _countDown.value = System.currentTimeMillis() + timer
+        else _event.value = Event.REMAIN_24HOUR
+
+//        _countDown.value = futureTimestamp
     }
 
     fun plusItem() {

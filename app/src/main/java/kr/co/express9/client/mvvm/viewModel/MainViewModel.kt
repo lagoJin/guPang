@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.R
@@ -9,6 +10,10 @@ class MainViewModel : BaseViewModel<MainViewModel.Event>() {
     enum class Event {
         CHANGE_FAVORITE_MART
     }
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     /**
      * BottomNavigation
@@ -25,5 +30,13 @@ class MainViewModel : BaseViewModel<MainViewModel.Event>() {
 
     fun setChangeFavoriteMartEvent() {
         _event.value = Event.CHANGE_FAVORITE_MART
+    }
+
+    fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 }

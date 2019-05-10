@@ -34,7 +34,6 @@ class HomeViewModel : BaseViewModel<HomeViewModel.Event>() {
     fun getProducts() {
         _isMarts.value = User.getFavoriteMarts().size > 0
         if (!_isMarts.value!!) return
-
         productRepository.getProducts()
                 .doOnSubscribe { showProgress() }
                 .subscribe({
