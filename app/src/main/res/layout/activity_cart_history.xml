@@ -71,8 +71,8 @@
                 android:gravity="center"
                 android:lineSpacingExtra="0sp"
                 android:text="@{cartHistoryViewModel.historyMonth}"
-                android:textColor="#3c3c3c"
                 android:textSize="18sp"
+                android:textColor="#3c3c3c"
                 tools:text="2019.05" />
 
             <ImageView
@@ -106,7 +106,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-medium"
                 android:lineSpacingExtra="0sp"
-                android:text="@string/cart_title"
+                android:text="@string/cart_history_title"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.Toolbar>

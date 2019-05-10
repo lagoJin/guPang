@@ -55,6 +55,7 @@
     <string name="delete_complete">삭제완료</string>
 
     <!--activity_cart_history-->
+    <string name="cart_history_title">장보기 메모 내역</string>
     <string name="no_cart_history">메모 내역이 비어 있어요!</string>
 
     <!--activity_notification_setting-->
