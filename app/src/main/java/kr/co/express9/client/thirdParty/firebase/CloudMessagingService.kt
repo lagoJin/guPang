@@ -8,20 +8,23 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import kr.co.express9.client.R
+import kr.co.express9.client.mvvm.model.data.FCM
 import kr.co.express9.client.util.Logger
 
 class CloudMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Logger.d("From: ${remoteMessage?.from}")
+
         remoteMessage?.data?.let {
             Logger.d("Message data payload:" + remoteMessage.data)
         }
 
         // Check if message contains a notification payload.
         remoteMessage?.notification?.let {
-            Logger.d("Message Notification Body: ${it.body}")
+            val fcm = Gson().fromJson(it.body.toString(), FCM::class.java)
             sendNotification(it)
         }
     }
