@@ -57,7 +57,7 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
         }
         products.forEach { product ->
             var isETC = true
-            suggestionRepository.putPref(product.name)
+//            suggestionRepository.putPref(product.name)
             tempBucket.forEachIndexed { i, category ->
                 when (category.name) {
                     CategoryEnum.TOTAL.key -> {

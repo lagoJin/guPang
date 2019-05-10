@@ -49,6 +49,7 @@ fun ImageView.setImageUrl(profileUrl: String?) {
     if (!TextUtils.isEmpty(profileUrl)) {
         Glide.with(this.context)
             .load(profileUrl)
+            .thumbnail(0.1f)
             .error(R.drawable.ic_error_24dp)
             .into(this)
     }

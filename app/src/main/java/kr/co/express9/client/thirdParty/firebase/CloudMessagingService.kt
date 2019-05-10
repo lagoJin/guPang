@@ -15,12 +15,11 @@ import com.google.gson.Gson
 import kr.co.express9.client.R
 import kr.co.express9.client.mvvm.model.NotificationRepository
 import kr.co.express9.client.mvvm.model.data.Notification
+import kr.co.express9.client.mvvm.view.MainActivity
 import kr.co.express9.client.mvvm.view.ProductActivity
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
 
@@ -63,16 +62,16 @@ class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
 
-        val stackBuilder = TaskStackBuilder.create(this)
         val productIntent = Intent(this, ProductActivity::class.java)
-
         productIntent.putExtra("productSeq", notification.productSeq)
-        stackBuilder.addNextIntent(productIntent)
+        val mainIntent = Intent(this, MainActivity::class.java)
 
-        val resultPendingIntent = stackBuilder.getPendingIntent(
-            0,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(mainIntent)
+            addNextIntentWithParentStack(productIntent)
+            getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT)
+        }
+
         notificationBuilder.setContentIntent(resultPendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
