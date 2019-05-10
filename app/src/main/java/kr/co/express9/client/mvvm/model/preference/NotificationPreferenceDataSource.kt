@@ -26,7 +26,7 @@ class NotificationPreferenceDataSource : KoinComponent {
             NotificationPref.NOTIFICATION_HISTORY.name,
             ArrayList()
         )
-        ArrayList<Notification>().add(notification)
+        notificationHistory.add(notification)
         Hawk.put(NotificationPref.NOTIFICATION_HISTORY.name, notificationHistory)
     }
 }

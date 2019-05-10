@@ -115,8 +115,8 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
 
     fun getNotificationHistoryPref() {
         val notiHistory = notificationRepository.getNotificationHistoryPref()
-        Logger.d("아러나일 ${notiHistory!!.value}")
-        _isNotificationHistory.value = notiHistory != null
-        notiHistory?.let { _notificationHistoryList.value = it.value }
+        _isNotificationHistory.value = notiHistory!!.value!!.size > 0
+        Logger.d("아러나일 ${notiHistory.value}")
+        notiHistory.let { _notificationHistoryList.value = it.value }
     }
 }
