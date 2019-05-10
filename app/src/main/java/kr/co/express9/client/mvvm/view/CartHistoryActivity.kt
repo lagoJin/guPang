@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.view
 
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.adapter.CartHistoryAdapter
@@ -22,7 +23,18 @@ class CartHistoryActivity : BaseActivity<ActivityCartHistoryBinding>(R.layout.ac
             cartHistoryAdapter.cartHistory = it
             cartHistoryAdapter.notifyDataSetChanged()
         })
+        // action bar 등록
+        setSupportActionBar(dataBinding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (!isRestart) cartHistoryViewModel.getHistoryByMonth()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

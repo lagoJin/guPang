@@ -80,9 +80,4 @@ class CartActivity : BaseActivity<ActivityCartBinding>(R.layout.activity_cart) {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        return super.onCreateOptionsMenu(menu)
-    }
 }

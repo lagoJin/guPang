@@ -24,6 +24,9 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
     val isCartHistory: LiveData<Boolean>
         get() = _isCartHistory
 
+    private val dateList = ArrayList<String>()
+    private val headerIdx = ArrayList<Int>()
+
     enum class Event {
 
     }
@@ -37,15 +40,36 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
     }
 
     fun getHistoryByMonth() {
-        cartRepository.getHistoryByMonth("201405")
+        cartRepository.getHistoryByMonth("201905")
             .subscribe({
                 if(it.status == StatusEnum.SUCCESS) {
-                    _cartHistory.value = it.result
+                    _cartHistory.value = setHeader(it.result)
                     checkIsCartHistory()
                 }
             }, {
 
             }).apply { addDisposable(this) }
+    }
+
+    private fun setHeader(cartHistoryList: ArrayList<CartHistory>): ArrayList<CartHistory> {
+        dateList.clear()
+        headerIdx.clear()
+        var totalPrice = 0
+        val groupIdx = ArrayList<Int>()
+        cartHistoryList.forEachIndexed { i, cartHistory ->
+            cartHistory.itemPrice = cartHistory.saleUnitPrice * cartHistory.count
+            if (cartHistory.purchaseYmd !in dateList) {
+                groupIdx.clear()
+                totalPrice = 0
+                cartHistory.isHeader = true
+                dateList.add(cartHistory.purchaseYmd)
+                headerIdx.add(i)
+            }
+            groupIdx.add(i)
+            totalPrice += cartHistory.itemPrice
+            groupIdx.forEach { cartHistoryList[it].totalPrice = totalPrice}
+        }
+        return cartHistoryList
     }
 
     private fun checkIsCartHistory() {

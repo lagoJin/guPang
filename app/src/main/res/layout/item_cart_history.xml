@@ -46,9 +46,10 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif"
             android:lineSpacingExtra="0sp"
-            android:text="@{cartHistory.totalPrice}"
+            android:text="@{String.valueOf(cartHistory.totalPrice)}"
             android:textColor="#3c3c3c"
             android:textSize="14sp"
+            android:visibility="@{cartHistory.isHeader}"
             app:layout_constraintBottom_toBottomOf="@id/v_head"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/v_head"
@@ -120,11 +121,10 @@
                 android:lineSpacingExtra="0sp"
                 android:paddingStart="28dp"
                 android:paddingEnd="2dp"
-                android:text="@{cartHistory.itemPrice}"
                 android:textColor="#3c3c3c"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:bind_price="@{cartHistory.originalUnitPrice}"
+                app:bind_price="@{cartHistory.itemPrice}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/iv_product"
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="0sp"
-                android:text="@{cartHistory.count}"
+                android:text="@{String.valueOf(cartHistory.count)}"
                 android:textColor="#3c3c3c"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
@@ -159,12 +159,12 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="0sp"
+                android:text="개"
                 android:textColor="#3c3c3c"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
                 app:layout_constraintStart_toEndOf="@id/tv_number"
-                app:layout_constraintTop_toTopOf="@id/tv_product_price"
-                tools:text="개" />
+                app:layout_constraintTop_toTopOf="@id/tv_product_price" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

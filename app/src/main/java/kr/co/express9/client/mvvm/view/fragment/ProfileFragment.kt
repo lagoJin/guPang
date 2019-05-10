@@ -7,6 +7,7 @@ import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentProfileBinding
 import kr.co.express9.client.mvvm.model.data.CartHistory
 import kr.co.express9.client.mvvm.model.data.User
+import kr.co.express9.client.mvvm.view.CartHistoryActivity
 import kr.co.express9.client.mvvm.view.NotificationSettingActivity
 import kr.co.express9.client.util.extension.launchActivity
 
@@ -16,7 +17,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         val user = User.getUser()
         dataBinding.tvName.text = user.name
         dataBinding.llCartMemoHistory.setOnClickListener {
-//            activity?.launchActivity<CartHistoryActivity>()
+            activity?.launchActivity<CartHistoryActivity>()
+
         }
         dataBinding.llNotificationSetting.setOnClickListener {
             activity?.launchActivity<NotificationSettingActivity>()
