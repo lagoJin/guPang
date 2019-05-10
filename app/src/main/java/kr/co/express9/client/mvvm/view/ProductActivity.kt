@@ -2,6 +2,8 @@ package kr.co.express9.client.mvvm.view
 
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
@@ -13,6 +15,7 @@ import kr.co.express9.client.util.extension.dialog
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_product) {
 
@@ -54,6 +57,13 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_cart, menu)
+
+        // set menu tint
+        var drawable = menu.findItem(R.id.cart).icon
+        drawable = DrawableCompat.wrap(drawable)
+        DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.white))
+        menu.findItem(R.id.cart).icon = drawable
+
         return super.onCreateOptionsMenu(menu)
     }
 

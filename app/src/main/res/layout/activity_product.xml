@@ -119,6 +119,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@drawable/shape_round_box"
+                        android:foreground="?attr/selectableItemBackground"
                         android:onClick="@{_ -> productViewModel.minusItem()}"
                         android:text="-" />
 
@@ -135,7 +136,9 @@
                         android:id="@+id/b_plus"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+
                         android:background="@drawable/shape_round_box"
+                        android:foreground="?attr/selectableItemBackground"
                         android:onClick="@{_ -> productViewModel.plusItem()}"
                         android:text="+" />
                 </LinearLayout>
@@ -189,6 +192,7 @@
             android:layout_height="48dp"
             android:background="@drawable/shape_rec_gradient"
             android:fontFamily="sans-serif-medium"
+            android:foreground="?attr/selectableItemBackground"
             android:lineSpacingExtra="2sp"
             android:text="@string/add_to_cart_memo"
             android:textColor="@color/white"
