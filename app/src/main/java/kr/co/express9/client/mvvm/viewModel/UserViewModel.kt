@@ -27,6 +27,7 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
         NEW_USER,
         LOGOUT,
         FAVORITE_MARTS_LOADED_SUCCESS,
+        NO_FAVORITE_MARTS,
         FAVORITE_MARTS_LOADED_FAIL
     }
 
@@ -105,8 +106,12 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                     _event.value = if (it.status == StatusEnum.SUCCESS) {
                         // preference에 저장
                         Logger.d("내가 좋아요 마트 ${it.result.anyTostring()}")
-                        martRepository.putFavoriteMartsPref(it.result)
-                        Event.FAVORITE_MARTS_LOADED_SUCCESS
+                        if(it.result.size > 0) {
+                            martRepository.putFavoriteMartsPref(it.result)
+                            Event.FAVORITE_MARTS_LOADED_SUCCESS
+                        } else {
+                            Event.NO_FAVORITE_MARTS
+                        }
                     } else Event.FAVORITE_MARTS_LOADED_FAIL
                 }, {
                     Logger.d(it.toString())

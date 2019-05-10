@@ -48,7 +48,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         userViewModel.event.observe(this, Observer { event ->
             when (event) {
                 UserViewModel.Event.NEW_USER -> getAgreeWithTerms() // 3. 약관 동의
-                UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> launchActivity()
+                UserViewModel.Event.NO_FAVORITE_MARTS -> {
+                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+                    launchActivity<LocationActivity>()
+                    finish()
+                }
+                UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
+                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+                    launchActivity<MainActivity>()
+                    finish()
+                }
                 else -> {
                 }
             }
@@ -97,11 +106,5 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 .setView(binding.root).create()
 
         alertDialog.show()
-    }
-
-    private fun launchActivity() {
-        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
-        launchActivity<LocationActivity>()
-        finish()
     }
 }
