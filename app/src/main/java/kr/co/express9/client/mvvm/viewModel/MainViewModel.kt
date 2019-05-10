@@ -7,7 +7,7 @@ import kr.co.express9.client.base.BaseViewModel
 
 class MainViewModel : BaseViewModel<MainViewModel.Event>() {
     enum class Event {
-        SESSION_CLOSED
+        CHANGE_FAVORITE_MART
     }
 
     /**
