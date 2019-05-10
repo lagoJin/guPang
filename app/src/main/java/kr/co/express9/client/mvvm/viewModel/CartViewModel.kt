@@ -105,7 +105,7 @@ class CartViewModel : BaseViewModel<CartViewModel.Event>() {
             else -> 1
         }
 
-        if(cartProduct.count == 1) return
+        if(cartProduct.count == 0) return
 
         // 해당 상품이 선택되어 있는 경우 금액 변경
         if (cartProduct.isSelected) {
