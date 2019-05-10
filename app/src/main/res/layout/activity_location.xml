@@ -98,14 +98,16 @@
                 android:id="@+id/b_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="go to main(임시)" />
+                android:text="go to main(임시)"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/b_temp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
-                android:text="logout(임시)" />
+                android:text="logout(임시)"
+                android:visibility="gone" />
         </LinearLayout>
 
         <ProgressBar
