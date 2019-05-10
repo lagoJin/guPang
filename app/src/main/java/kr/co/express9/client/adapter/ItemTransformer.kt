@@ -37,8 +37,7 @@ class ItemTransformer : DiscreteScrollItemTransformer {
                 min(if (position < 0) 1f else Math.abs(1f - position), 0.9f)
             }
 
-            view.scaleX = scale
-            //view.scaleY = scale
+
             view.pivotX = width * 0.5f
             view.pivotY = height * 0.5f
         }
