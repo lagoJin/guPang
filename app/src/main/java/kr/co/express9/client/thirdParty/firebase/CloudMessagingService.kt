@@ -10,22 +10,29 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import kr.co.express9.client.R
-import kr.co.express9.client.mvvm.model.data.FCM
+import kr.co.express9.client.mvvm.model.NotificationRepository
+import kr.co.express9.client.mvvm.model.data.Notification
 import kr.co.express9.client.util.Logger
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class CloudMessagingService : FirebaseMessagingService() {
+class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
+
+    private val notificationRepository: NotificationRepository by inject()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Logger.d("From: ${remoteMessage?.from}")
 
         remoteMessage?.data?.let {
             Logger.d("Message data payload:" + remoteMessage.data)
+//            val notification = Gson().fromJson(it.body.toString(), Notification::class.java)
         }
 
         // Check if message contains a notification payload.
         remoteMessage?.notification?.let {
-            val fcm = Gson().fromJson(it.body.toString(), FCM::class.java)
-            sendNotification(it)
+            Logger.d("온다아아 $it")
+            val notification = Gson().fromJson(it.body.toString(), Notification::class.java)
+            sendNotification(notification)
         }
     }
 
@@ -34,15 +41,18 @@ class CloudMessagingService : FirebaseMessagingService() {
         // sent registration to server
     }
 
-    private fun sendNotification(remoteMessageNotification: RemoteMessage.Notification) {
+    private fun sendNotification(notification: Notification) {
+        notificationRepository.addNotificationHistoryPref(notification)
 
         val channelId = getString(R.string.notification_channel_id)
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val title = getString(R.string.noti_title, notification.keyword)
+        val body = getString(R.string.noti_body, notification.martName)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(remoteMessageNotification.title)
-                .setContentText(remoteMessageNotification.body)
+                .setContentTitle(title)
+                .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
 

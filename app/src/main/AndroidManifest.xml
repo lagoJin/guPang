@@ -16,6 +16,8 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
         <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
                 android:name=".mvvm.view.SplashActivity"
                 android:theme="@style/SplashTheme">
             <intent-filter>
@@ -24,15 +26,42 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".mvvm.view.LoginActivity"/>
-        <activity android:name=".mvvm.view.LocationActivity"/>
-        <activity android:name=".mvvm.view.GuideActivity"/>
-        <activity android:name=".mvvm.view.MainActivity"/>
-        <activity android:name=".mvvm.view.CartActivity"/>
-        <activity android:name=".mvvm.view.CartHistoryActivity"/>
-        <activity android:name=".mvvm.view.LeafletActivity"/>
-        <activity android:name=".mvvm.view.ProductActivity"/>
-        <activity android:name=".mvvm.view.NotificationSettingActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.LoginActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.LocationActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.GuideActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.MainActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.CartActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.CartHistoryActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.LeafletActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.ProductActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
+                android:name=".mvvm.view.NotificationSettingActivity"/>
 
         <service android:name=".thirdParty.firebase.CloudMessagingService">
             <intent-filter>

@@ -109,6 +109,10 @@
     <!--item_cart-->
     <string name="no_mart_in_favorite_mart_list">단골 등록해제한 마트입니다.</string>
 
+    <!--FCM-->
+    <string name="noti_title">\'%s\' 할인 상품이 떴어요!</string>
+    <string name="noti_body">%s로 사러 가 볼까요?</string>
+
     <!--menu-->
     <string name="menu_home">홈</string>
     <string name="menu_search">검색</string>

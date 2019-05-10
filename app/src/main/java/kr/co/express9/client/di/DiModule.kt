@@ -4,6 +4,7 @@ import kr.co.express9.client.BuildConfig
 import kr.co.express9.client.mvvm.model.*
 import kr.co.express9.client.mvvm.model.api.*
 import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
+import kr.co.express9.client.mvvm.model.preference.NotificationPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.SuggestionPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
 import kr.co.express9.client.mvvm.view.fragment.HomeFragment
@@ -141,6 +142,7 @@ var preferenceDataSourceModule = module {
     single { UserPreferenceDataSource() }
     single { MartPreferenceDataSource() }
     single { SuggestionPreferenceDataSource() }
+    single { NotificationPreferenceDataSource() }
 }
 
 var diModule = listOf(
