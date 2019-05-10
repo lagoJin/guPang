@@ -7,6 +7,7 @@ import kr.co.express9.client.adapter.LeafletAdapter
 import kr.co.express9.client.adapter.ProductAdapter
 import kr.co.express9.client.base.BaseFragment
 import kr.co.express9.client.databinding.FragmentHomeBinding
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.MainActivity
 import kr.co.express9.client.mvvm.viewModel.HomeViewModel
 import kr.co.express9.client.mvvm.viewModel.MainViewModel
@@ -20,13 +21,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun initStartView(isRestart: Boolean) {
-
         /**
          * dataBinding
          */
         val productAdapter = ProductAdapter(true)
         dataBinding.homeViewModel = homeViewModel
         dataBinding.productAdapter = productAdapter
+        dataBinding.homeTitle = User.getUser().name
 
         dataBinding.llOopsLayout.setOnClickListener {
             val mainActivity = activity as MainActivity
@@ -43,8 +44,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
          * mainViewModel
          * - sharedViewModel
          */
-        mainViewModel.event.observe(this, Observer {event ->
-            when(event) {
+        mainViewModel.event.observe(this, Observer { event ->
+            when (event) {
                 MainViewModel.Event.CHANGE_FAVORITE_MART -> homeViewModel.getProducts()
             }
         })

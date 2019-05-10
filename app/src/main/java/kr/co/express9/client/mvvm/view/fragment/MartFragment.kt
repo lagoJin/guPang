@@ -26,7 +26,6 @@ class MartFragment : BaseFragment<FragmentMartBinding>(R.layout.fragment_mart) {
 
         martAdapter = MartAdapter(martList) { Mart ->
             martViewModel.deleteFavoriteMart(Mart.martSeq)
-            martAdapter.notifyDataSetChanged()
         }
 
         dataBinding.martAdapter = martAdapter
@@ -36,7 +35,10 @@ class MartFragment : BaseFragment<FragmentMartBinding>(R.layout.fragment_mart) {
         martViewModel.event.observe(this, Observer { event ->
             when (event) {
                 MartViewModel.Event.MART_ADD -> mainViewModel.setChangeFavoriteMartEvent()
-                MartViewModel.Event.MART_DELETE -> mainViewModel.setChangeFavoriteMartEvent()
+                MartViewModel.Event.MART_DELETE ->{
+                    mainViewModel.setChangeFavoriteMartEvent()
+                    martAdapter.notifyDataSetChanged()
+                }
             }
         })
 

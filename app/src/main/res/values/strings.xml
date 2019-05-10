@@ -83,6 +83,7 @@
     <string name="go_to_cart">장보기 메모로</string>
 
     <!--fragment_home-->
+    <string name="home_title">%s님,\n즐거운 장보기 되세요.</string>
     <string name="cart_description">장보기 메모</string>
     <string name="oops">Oops…</string>
     <string name="no_marts">단골 마트가\n없네요!</string>

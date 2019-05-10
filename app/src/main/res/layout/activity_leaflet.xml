@@ -102,11 +102,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_leaflet_address"
                         tools:text="내가 하고싶은 시간에 열어서 닫고싶을때 닫는다!" />
 
-                    <Button
+                    <ImageView
+                        android:src="@drawable/ic_flayer"
                         android:id="@+id/iv_leaflet_leaflet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
+                        android:foreground="?attr/selectableItemBackground"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/iv_leaflet_favorite"
                         app:layout_constraintTop_toTopOf="parent" />

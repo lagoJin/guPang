@@ -20,10 +20,12 @@ import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.base.BaseApplication.Companion.context
 import kr.co.express9.client.databinding.ActivityLeafletBinding
+import kr.co.express9.client.mvvm.model.MartRepository
 import kr.co.express9.client.mvvm.model.data.Mart
-import kr.co.express9.client.mvvm.viewModel.LeafletViewModel
+import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.util.extension.launchActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kr.co.express9.client.util.extension.networkError
+import org.koin.android.ext.android.inject
 
 class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_leaflet), OnMapReadyCallback {
 
@@ -31,6 +33,7 @@ class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_l
     private lateinit var attacher: PhotoViewAttacher
     private lateinit var latLng: LatLng
     private lateinit var mart: Mart
+    private val martRepository: MartRepository by inject()
 
     override fun initStartView(isRestart: Boolean) {
         setSupportActionBar(dataBinding.toolbar)
@@ -68,9 +71,26 @@ class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_l
 
         dataBinding.ivLeafletFavorite.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-
+                martRepository.deleteFavoriteMart(User.getUser().userSeq, mart.martSeq)
+                        .subscribe(
+                                { result ->
+                                    val favoriteMarts = User.getFavoriteMarts()
+                                    if (favoriteMarts.contains(mart)) {
+                                        favoriteMarts.remove(mart)
+                                        User.putFavoriteMarts(favoriteMarts)
+                                    }
+                                },
+                                { throwable ->
+                                    networkError(throwable)
+                                }
+                        )
             } else {
-
+                martRepository.addFavoriteMart(User.getUser().userSeq, mart.martSeq)
+                        .subscribe({ result ->
+                            val favoriteMarts = User.getFavoriteMarts()
+                            favoriteMarts.add(mart)
+                            User.putFavoriteMarts(favoriteMarts)
+                        }, { throwable -> networkError(throwable) })
             }
         }
     }

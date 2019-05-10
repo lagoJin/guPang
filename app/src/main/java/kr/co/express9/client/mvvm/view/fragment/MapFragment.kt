@@ -56,11 +56,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
 
     @SuppressLint("MissingPermission")
     override fun initStartView(isRestart: Boolean) {
-        val adapter = ArrayAdapter(
-                activity!!,
-                android.R.layout.simple_dropdown_item_1line,
-                kakaoAddressViewModel.addressResult.value!!
-        )
+        val adapter = ArrayAdapter(activity!!, android.R.layout.simple_dropdown_item_1line, kakaoAddressViewModel.addressResult.value!!)
         initLocation()
         dataBinding.mapViewModel = mapViewModel
         dataBinding.kakaoViewModel = kakaoAddressViewModel
@@ -73,8 +69,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                 MapViewModel.Event.MART_LIST -> {
                     map.clear()
                     mapViewModel.marts.value!!.forEach { Mart ->
-                        var bitmapDescription: BitmapDescriptor? =
-                                bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite_big)
+                        var bitmapDescription: BitmapDescriptor? = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_non_favorite_big)
                         if (User.getFavoriteMarts().contains(Mart)) {
                             bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite_big)
                         }
@@ -90,7 +85,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
                         if (User.getFavoriteMarts().contains(Mart)) {
                             bitmapDescription = bitmapDescriptorFromVector(activity!!, R.drawable.ic_place_favorite_big)
                         }
-                        val marker = map.addMarker(MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
+                        val marker = map.addMarker(
+                                MarkerOptions().icon(bitmapDescription).position(LatLng(Mart.latitude, Mart.longitude)))
                         marker.tag = Mart.martSeq
                     }
                     if (User.getFavoriteMarts().size > 0) {
@@ -220,8 +216,15 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map), OnM
         val mapFragment = activity!!.supportFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
-                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+        ) {
             TedRx2Permission.with(activity!!)
                     .setRationaleTitle(R.string.permission_title)
                     .setRationaleMessage(R.string.permission_content) // "we need permission for read contact and find your location"
