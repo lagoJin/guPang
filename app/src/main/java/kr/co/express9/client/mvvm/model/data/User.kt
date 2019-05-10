@@ -3,6 +3,7 @@ package kr.co.express9.client.mvvm.model.data
 import com.orhanobut.hawk.Hawk
 import kr.co.express9.client.mvvm.model.preference.MartPreferenceDataSource
 import kr.co.express9.client.mvvm.model.preference.UserPreferenceDataSource
+import kr.co.express9.client.util.Logger
 import java.io.Serializable
 
 data class User(
@@ -26,7 +27,7 @@ data class User(
         fun getFavoriteMartsSeqList(): String {
             val martSeqList = ArrayList<Int>()
             getFavoriteMarts().forEach { martSeqList.add(it.martSeq) }
-            return martSeqList.joinToString()
+            return martSeqList.joinToString(",")
         }
 
         fun putFavoriteMarts(list: ArrayList<Mart>) {
