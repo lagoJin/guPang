@@ -56,7 +56,7 @@
 
     <!--activity_cart_history-->
     <string name="cart_history_title">장보기 메모 내역</string>
-    <string name="no_cart_history">메모 내역이 비어 있어요!</string>
+    <string name="no_cart_history">이번 달엔 메모가 없네요!</string>
 
     <!--activity_notification_setting-->
     <string name="set_sale_notification">할인 알람 설정</string>
