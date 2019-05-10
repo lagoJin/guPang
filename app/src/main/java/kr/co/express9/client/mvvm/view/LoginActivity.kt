@@ -1,7 +1,7 @@
 package kr.co.express9.client.mvvm.view
 
+//import kr.co.express9.client.util.extension.toast
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -13,7 +13,6 @@ import kr.co.express9.client.databinding.AlertAgreeWithTermsBinding
 import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.TermsViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
-import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,12 +50,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             when (event) {
                 UserViewModel.Event.NEW_USER -> getAgreeWithTerms() // 3. 약관 동의
                 UserViewModel.Event.NO_FAVORITE_MARTS -> {
-                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+//                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<LocationActivity>()
                     finish()
                 }
                 UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
-                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+//                    toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
                     launchActivity<MainActivity>()
                     finish()
                 }

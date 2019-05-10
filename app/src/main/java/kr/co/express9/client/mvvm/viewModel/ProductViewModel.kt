@@ -67,7 +67,7 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
                 }).apply { addDisposable(this) }
     }
 
-    fun getProduct(productSeq: Int, cb: (Product) -> Unit) {
+    fun getProduct(productSeq: Int, cb: (Product?) -> Unit) {
         productRepository.getProduct(productSeq)
             .subscribe({
                 if(it.status == StatusEnum.SUCCESS) cb(it.result)

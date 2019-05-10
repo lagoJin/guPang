@@ -28,7 +28,8 @@ class ProductActivity : BaseActivity<ActivityProductBinding>(R.layout.activity_p
             productViewModel.setProduct(productIntent as Product)
         } else if(productSeq != null) {
             productViewModel.getProduct(productSeq as Int) {
-                productViewModel.setProduct(it)
+                if(it == null) toast("상품정보를 불러오는데 실패했습니다.")
+                else productViewModel.setProduct(it)
             }
         }
 

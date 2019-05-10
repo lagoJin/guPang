@@ -19,6 +19,8 @@ import kr.co.express9.client.mvvm.view.ProductActivity
 import kr.co.express9.client.util.Logger
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
 
@@ -46,6 +48,7 @@ class CloudMessagingService : FirebaseMessagingService(), KoinComponent {
     }
 
     private fun sendNotification(notification: Notification) {
+        notification.getMilliseconds = System.currentTimeMillis()
         notificationRepository.addNotificationHistoryPref(notification)
 
         val channelId = getString(R.string.notification_channel_id)

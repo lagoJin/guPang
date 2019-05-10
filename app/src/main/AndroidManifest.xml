@@ -60,6 +60,10 @@
         <activity
                 android:configChanges="orientation"
                 android:screenOrientation="portrait"
+                android:name=".mvvm.view.NotificationActivity"/>
+        <activity
+                android:configChanges="orientation"
+                android:screenOrientation="portrait"
                 android:name=".mvvm.view.NotificationSettingActivity"/>
 
         <service android:name=".thirdParty.firebase.CloudMessagingService">

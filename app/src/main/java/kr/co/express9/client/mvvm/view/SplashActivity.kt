@@ -8,7 +8,7 @@ import kr.co.express9.client.databinding.ActivitySplashBinding
 import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
-import kr.co.express9.client.util.extension.toast
+//import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
@@ -36,7 +36,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
             when (event) {
                 UserViewModel.Event.NO_FAVORITE_MARTS -> {
                     hd.postDelayed({
-                        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+//                        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
                         launchActivity<LocationActivity>()
                         finish()
                     }, 1000)
@@ -44,7 +44,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                 }
                 UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
                     hd.postDelayed({
-                        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
+//                        toast(R.string.login_success, kakaoUserViewModel.kakaoProfile.value?.nickname!!)
                         launchActivity<MainActivity>()
                         finish()
                     }, 1000)

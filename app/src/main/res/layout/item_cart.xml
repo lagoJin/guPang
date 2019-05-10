@@ -72,23 +72,10 @@
                 tools:src="@drawable/ic_shopping_cart_24dp"
                 tools:tint="@color/black" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="#3c3c3c32"
-                android:visibility="@{cartProduct.isSelected}"
-                app:layout_constraintBottom_toBottomOf="@id/iv_product"
-                app:layout_constraintEnd_toEndOf="@id/iv_product"
-                app:layout_constraintStart_toStartOf="@id/iv_product"
-                app:layout_constraintTop_toTopOf="@id/iv_product" />
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_baseline_check_24_px"
-                android:visibility="@{cartProduct.isSelected}"
-                app:layout_constraintBottom_toBottomOf="@id/iv_product"
-                app:layout_constraintEnd_toEndOf="@id/iv_product"
+                android:src="@{!cartProduct.isSelected? @drawable/ic_unchecked : @drawable/ic_checked }"
                 app:layout_constraintStart_toStartOf="@id/iv_product"
                 app:layout_constraintTop_toTopOf="@id/iv_product" />
 

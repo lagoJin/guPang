@@ -23,6 +23,9 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
     val progressView: LiveData<Int>
         get() = _progressView
 
+    /**
+     * Notification
+     */
     val itemName: MutableLiveData<String> = MutableLiveData() // two way binding
 
     private val _notificationList = MutableLiveData<ArrayList<Notification>>()
@@ -33,17 +36,28 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
     val isNotification: LiveData<Boolean>
         get() = _isNotification
 
+    /**
+     * Notification History
+     */
+    private val _notificationHistoryList = MutableLiveData<ArrayList<Notification>>()
+    val notificationHistoryList: LiveData<ArrayList<Notification>>
+        get() = _notificationHistoryList
+
+    private val _isNotificationHistory = MutableLiveData<Boolean>().apply { value = false }
+    val isNotificationHistory: LiveData<Boolean>
+        get() = _isNotificationHistory
+
     fun getNotifications() {
         notificationRepository.getNotifications()
-                .subscribe({
-                    if (it.status == StatusEnum.SUCCESS) {
-                        _notificationList.value = it.result
-                        isNotification()
-                    }
-                }, {
-                    Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+            .subscribe({
+                if (it.status == StatusEnum.SUCCESS) {
+                    _notificationList.value = it.result
+                    isNotification()
+                }
+            }, {
+                Logger.d(it.toString())
+            })
+            .apply { addDisposable(this) }
     }
 
     fun addNotification(cb: (isSuccess: Boolean) -> Unit) {
@@ -54,30 +68,30 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
 
         // 이미 동일 항목이 있는 경우
         _notificationList.value!!.forEach {
-            if(it.text == itemName.value) {
+            if (it.text == itemName.value) {
                 _event.value = Event.ALREADY_HAS_NOTIFICATION
                 return@addNotification
             }
         }
         notificationRepository.addNotification(itemName.value!!)
-                .subscribe({
-                    cb(it.status == StatusEnum.SUCCESS)
-                    if(it.status == StatusEnum.SUCCESS) getNotifications()
-                }, {
-                    Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+            .subscribe({
+                cb(it.status == StatusEnum.SUCCESS)
+                if (it.status == StatusEnum.SUCCESS) getNotifications()
+            }, {
+                Logger.d(it.toString())
+            })
+            .apply { addDisposable(this) }
     }
 
     fun deleteNotification(index: Int, cb: (isSuccess: Boolean) -> Unit) {
         notificationRepository.deleteNotification(_notificationList.value!![index].text)
-                .subscribe({
-                    cb(it.status == StatusEnum.SUCCESS)
-                    if(it.status == StatusEnum.SUCCESS) getNotifications()
-                }, {
-                    Logger.d(it.toString())
-                })
-                .apply { addDisposable(this) }
+            .subscribe({
+                cb(it.status == StatusEnum.SUCCESS)
+                if (it.status == StatusEnum.SUCCESS) getNotifications()
+            }, {
+                Logger.d(it.toString())
+            })
+            .apply { addDisposable(this) }
     }
 
     private fun isNotification() {
@@ -92,5 +106,10 @@ class NotificationViewModel : BaseViewModel<NotificationViewModel.Event>() {
         _progressView.value = View.INVISIBLE
     }
 
-
+    fun getNotificationHistoryPref() {
+        val notiHistory = notificationRepository.getNotificationHistoryPref()
+        Logger.d("아러나일 ${notiHistory!!.value}")
+        _isNotificationHistory.value = notiHistory != null
+        notiHistory?.let { _notificationHistoryList.value = it.value }
+    }
 }

@@ -78,6 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.cart -> launchActivity<CartActivity>()
+            R.id.alarm -> launchActivity<NotificationActivity>()
         }
         return super.onOptionsItemSelected(item)
     }
