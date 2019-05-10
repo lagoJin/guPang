@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.viewModel
 
 import android.content.Intent
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kakao.auth.ISessionCallback
@@ -31,6 +32,10 @@ class KakaoUserViewModel : BaseViewModel<KakaoUserViewModel.Event>() {
     private val _kakaoProfile = MutableLiveData<MeV2Response>()
     val kakaoProfile: LiveData<MeV2Response>
         get() = _kakaoProfile
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     private val sessionCallback = object : ISessionCallback {
         override fun onSessionOpened() {
@@ -104,5 +109,13 @@ class KakaoUserViewModel : BaseViewModel<KakaoUserViewModel.Event>() {
                 _event.value = Event.LOGOUT
             }
         })
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 }

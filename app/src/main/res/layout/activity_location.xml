@@ -98,16 +98,22 @@
                 android:id="@+id/b_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="go to main(임시)"
-                android:visibility="gone" />
+                android:text="go to main(임시)" />
 
             <Button
                 android:id="@+id/b_temp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
-                android:text="logout(임시)"
-                android:visibility="gone" />
+                android:text="logout(임시)" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{userViewModel.progressView}" />
+
     </FrameLayout>
 </layout>

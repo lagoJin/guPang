@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
 import kr.co.express9.client.mvvm.model.data.Product
 import android.R
+import android.view.View
 import kr.co.express9.client.mvvm.model.CartRepository
 import kr.co.express9.client.mvvm.model.ProductRepository
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
@@ -21,6 +22,10 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
     enum class Event {
 
     }
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     private val _product = MutableLiveData<Product>()
     val product: LiveData<Product>
@@ -69,5 +74,13 @@ class ProductViewModel : BaseViewModel<ProductViewModel.Event>() {
             }, {
                 Logger.d(it.toString())
             }).apply { addDisposable(this) }
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 }

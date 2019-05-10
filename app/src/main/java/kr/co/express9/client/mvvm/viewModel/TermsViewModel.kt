@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
@@ -10,6 +11,10 @@ class TermsViewModel: BaseViewModel<TermsViewModel.Event>() {
         AGREE,
         DISAGREE
     }
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     // two-way binding
     val requiredTermsAgreement = MutableLiveData<Boolean>().apply { value = false }
@@ -31,5 +36,13 @@ class TermsViewModel: BaseViewModel<TermsViewModel.Event>() {
     fun agreement() {
         if(requiredTermsAgreement.value!!) _event.value = Event.AGREE
         else _event.value = Event.DISAGREE
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 }

@@ -40,6 +40,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                         launchActivity<LocationActivity>()
                         finish()
                     }, 1000)
+
                 }
                 UserViewModel.Event.FAVORITE_MARTS_LOADED_SUCCESS -> {
                     hd.postDelayed({

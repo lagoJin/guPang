@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
@@ -21,6 +22,10 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
     enum class Event {
 
     }
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     private val _categoryList = MutableLiveData<ArrayList<Category>>()
     val categoryList: LiveData<ArrayList<Category>>
@@ -72,5 +77,13 @@ class SearchViewModel : BaseViewModel<SearchViewModel.Event>() {
             }
             _categoryList.value = tempBucket
         }
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 }
