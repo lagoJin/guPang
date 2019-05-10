@@ -1,6 +1,8 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import io.reactivex.Single
@@ -34,6 +36,10 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
     private val _user by lazy { getPref() }
     val user: LiveData<User>
         get() = _user!!
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     /**
      * 이미 가입한 유저인지 확인 (수정필요)
@@ -156,6 +162,14 @@ class UserViewModel : BaseViewModel<UserViewModel.Event>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { next() }
                 .apply { addDisposable(this) }
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 
 }

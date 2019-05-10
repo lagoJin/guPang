@@ -26,6 +26,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private lateinit var alertDialog: AlertDialog
 
+
+
     override fun initStartView(isRestart: Boolean) {
         // kakao session
         kakaoUserViewModel.setSessionCallback()

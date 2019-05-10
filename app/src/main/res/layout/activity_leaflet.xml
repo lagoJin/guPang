@@ -23,7 +23,9 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/shape_round_gradient"
+            android:elevation="4dp">
 
             <TextView
                 android:id="@+id/tv_leaflet_title"
@@ -103,12 +105,12 @@
                         tools:text="내가 하고싶은 시간에 열어서 닫고싶을때 닫는다!" />
 
                     <ImageView
-                        android:src="@drawable/ic_flayer"
                         android:id="@+id/iv_leaflet_leaflet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
                         android:foreground="?attr/selectableItemBackground"
+                        android:src="@drawable/ic_flayer"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/iv_leaflet_favorite"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -120,6 +122,7 @@
                         android:layout_marginEnd="26dp"
                         android:button="@drawable/selector_favorite"
                         android:checked="false"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

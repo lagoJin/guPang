@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
@@ -27,6 +28,10 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
     private val _marts = MutableLiveData<List<Mart>>()
     val marts: LiveData<List<Mart>>
         get() = _marts
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     fun getMarts(northEast: LatLng, southWest: LatLng) {
         marketRepository.getMarts(southWest.latitude, northEast.latitude, southWest.longitude, northEast.longitude)
@@ -64,6 +69,14 @@ class MapViewModel : BaseViewModel<MapViewModel.Event>() {
                 },
                 { throwable -> }
         ).apply { addDisposable(this) }
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 
 }

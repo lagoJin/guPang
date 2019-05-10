@@ -119,7 +119,7 @@ class LeafletActivity : BaseActivity<ActivityLeafletBinding>(R.layout.activity_l
 
     private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
-        vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.minimumHeight)
+        vectorDrawable!!.setBounds(0, 0, 100, 140)
         val bitmap =
                 Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)

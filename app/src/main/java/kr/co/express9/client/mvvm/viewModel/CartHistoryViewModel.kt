@@ -1,5 +1,6 @@
 package kr.co.express9.client.mvvm.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.co.express9.client.base.BaseViewModel
@@ -24,6 +25,10 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
     private val _isCartHistory = MutableLiveData<Boolean>().apply { value = false }
     val isCartHistory: LiveData<Boolean>
         get() = _isCartHistory
+
+    private val _progressView = MutableLiveData<Int>().apply { value = View.INVISIBLE }
+    val progressView: LiveData<Int>
+        get() = _progressView
 
     private val dateList = ArrayList<String>()
     private val headerIdx = ArrayList<Int>()
@@ -91,6 +96,14 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
 
     private fun checkIsCartHistory() {
         _isCartHistory.value = _cartHistory.value!!.size > 0
+    }
+
+    private fun showProgress() {
+        _progressView.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _progressView.value = View.INVISIBLE
     }
 
 }
