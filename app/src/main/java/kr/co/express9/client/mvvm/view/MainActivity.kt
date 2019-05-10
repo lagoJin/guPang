@@ -113,6 +113,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         searchView.suggestionsAdapter = adapter
         val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         editText.setTextColor(ContextCompat.getColor(this, R.color.white))
+        editText.setHintTextColor(ContextCompat.getColor(this, R.color.white_50))
 
         // searchView icon tint (style의 colorControlNormal로 대체)
         // searchView.findViewById<ImageView>(androidx.appcompat.R.productSeq.search_button)

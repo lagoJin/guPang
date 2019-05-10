@@ -8,6 +8,7 @@
     <color name="grayDark">#61686c</color>
     <color name="gray">#f6f6f6</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
     <color name="yellow">#FFC107</color>
 
     <color name="fontBlack">#3c3c3c</color>
