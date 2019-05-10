@@ -1,6 +1,7 @@
 package kr.co.express9.client.mvvm.view.fragment
 
 import android.content.Intent
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import kr.co.express9.client.R
 import kr.co.express9.client.base.BaseFragment
@@ -8,10 +9,15 @@ import kr.co.express9.client.databinding.FragmentProfileBinding
 import kr.co.express9.client.mvvm.model.data.CartHistory
 import kr.co.express9.client.mvvm.model.data.User
 import kr.co.express9.client.mvvm.view.CartHistoryActivity
+import kr.co.express9.client.mvvm.view.LoginActivity
 import kr.co.express9.client.mvvm.view.NotificationSettingActivity
+import kr.co.express9.client.mvvm.viewModel.UserViewModel
 import kr.co.express9.client.util.extension.launchActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
+
+    private val userViewModel: UserViewModel by viewModel()
 
     override fun initStartView(isRestart: Boolean) {
         val user = User.getUser()
@@ -20,9 +26,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             activity?.launchActivity<CartHistoryActivity>()
 
         }
+
         dataBinding.llNotificationSetting.setOnClickListener {
             activity?.launchActivity<NotificationSettingActivity>()
         }
+
         dataBinding.llInquire.setOnClickListener { sendEmail() }
         user.image?.let {
             Glide.with(this)
@@ -30,6 +38,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                 .error(R.drawable.ic_account_64_px)
                 .into(dataBinding.ivProfile)
         }
+
+        dataBinding.llLogout.setOnClickListener { userViewModel.logout() }
+
+        userViewModel.event.observe(this, Observer { event ->
+            when (event) {
+                UserViewModel.Event.LOGOUT -> activity!!.launchActivity<LoginActivity> {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+            }
+        })
     }
 
     private fun sendEmail() {
