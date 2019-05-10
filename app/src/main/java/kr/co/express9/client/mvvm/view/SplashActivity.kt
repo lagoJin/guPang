@@ -8,6 +8,7 @@ import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivitySplashBinding
 import kr.co.express9.client.mvvm.viewModel.KakaoUserViewModel
 import kr.co.express9.client.mvvm.viewModel.UserViewModel
+import kr.co.express9.client.util.Logger
 import kr.co.express9.client.util.extension.launchActivity
 import kr.co.express9.client.util.extension.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,7 +53,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
     private fun launchLoginActivity() {
         kakaoUserViewModel.removeSessionCallback()
         hd.postDelayed({
-            launchActivity<LocationActivity>()
+            launchActivity<LoginActivity>()
             finish()
         }, 1000)
     }
