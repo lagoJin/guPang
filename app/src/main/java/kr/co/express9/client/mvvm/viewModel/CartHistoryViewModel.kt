@@ -7,6 +7,7 @@ import kr.co.express9.client.mvvm.model.CartRepository
 import kr.co.express9.client.mvvm.model.data.CartHistory
 import kr.co.express9.client.mvvm.model.enumData.StatusEnum
 import org.koin.standalone.inject
+import java.util.*
 
 class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
 
@@ -32,15 +33,31 @@ class CartHistoryViewModel : BaseViewModel<CartHistoryViewModel.Event>() {
     }
 
     fun nextMonth() {
-        getHistoryByMonth()
+        var year = _historyMonth.value!!.split(".")[0].toInt()
+        var month = _historyMonth.value!!.split(".")[1].toInt() + 1
+
+        // 이번 달 보다 큰 경우 요청 못하도록 추가해야함
+        if(month == 13) {
+            year += 1
+            month = 1
+        }
+        getHistoryByMonth(year, month)
     }
 
     fun beforeMonth() {
-        getHistoryByMonth()
+        var year = _historyMonth.value!!.split(".")[0].toInt()
+        var month = _historyMonth.value!!.split(".")[1].toInt() - 1
+        if(month == 0) {
+            year -= 1
+            month = 12
+        }
+        getHistoryByMonth(year, month)
     }
 
-    fun getHistoryByMonth() {
-        cartRepository.getHistoryByMonth("201905")
+    fun getHistoryByMonth(year: Int, month: Int) {
+        val stringMonth = if (month < 10) "0$month" else month.toString()
+        _historyMonth.value = "$year.$stringMonth"
+        cartRepository.getHistoryByMonth("$year$stringMonth")
             .subscribe({
                 if(it.status == StatusEnum.SUCCESS) {
                     _cartHistory.value = setHeader(it.result)

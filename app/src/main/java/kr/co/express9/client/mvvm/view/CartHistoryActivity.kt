@@ -8,6 +8,7 @@ import kr.co.express9.client.base.BaseActivity
 import kr.co.express9.client.databinding.ActivityCartHistoryBinding
 import kr.co.express9.client.mvvm.viewModel.CartHistoryViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class CartHistoryActivity : BaseActivity<ActivityCartHistoryBinding>(R.layout.activity_cart_history) {
 
@@ -28,7 +29,14 @@ class CartHistoryActivity : BaseActivity<ActivityCartHistoryBinding>(R.layout.ac
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (!isRestart) cartHistoryViewModel.getHistoryByMonth()
+        if (!isRestart) {
+            val date = Date(System.currentTimeMillis())
+            val cal = Calendar.getInstance()
+            cal.time = date
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH) + 1
+            cartHistoryViewModel.getHistoryByMonth(year, month)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
