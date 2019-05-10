@@ -7,11 +7,12 @@ data class Product(
         val martSeq: Int,
         val category: String,
         val name: String,
-        val saleUnitPrice: Int, // 임시값. 현재 api에서 안보냄
+        val saleUnitPrice: Int,
         val originalUnitPrice: Int,
         val detail: String,
         val startAt: String,
         val endAt: String,
         val status: String,
-        val imageUrl: String
+        val imageUrl: String,
+        val detailImageUrl: String
 ) : Serializable
