@@ -27,7 +27,9 @@
                 <ImageView
                     android:id="@+id/iv_product"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
                     app:bind_image="@{productViewModel.product.imageUrl}"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/ic_shopping_cart_24dp"
