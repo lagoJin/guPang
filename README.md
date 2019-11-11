@@ -1,5 +1,5 @@
 # 그팽 - 마가린(마트 가격 내린다)
 
-## link : http://magarine.mooo.com  
+## link : https://magarine-9ec6f.firebaseapp.com/
 
 ### 동네 주변에 존재하는 마트에 전단지 정보를 모바일로 손쉽게 제공하여 소비자들이 합리적인 소비를 할 수 있게 하기 위해 만든 어플리케이션이다.
